@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Android_Project/CosyMusic/app/src/main/res/drawable/ic_about.xml" value="0.1805" />
+        <entry key="..\:/Android_Project/CosyMusic/app/src/main/res/drawable/ic_back.xml" value="0.1935" />
+        <entry key="..\:/Android_Project/CosyMusic/app/src/main/res/drawable/ic_cancel.xml" value="0.1935" />
+        <entry key="..\:/Android_Project/CosyMusic/app/src/main/res/drawable/ic_cloud.xml" value="0.2075" />
+        <entry key="..\:/Android_Project/CosyMusic/app/src/main/res/drawable/ic_envelop.xml" value="0.172" />
+        <entry key="..\:/Android_Project/CosyMusic/app/src/main/res/drawable/ic_feedback.xml" value="0.172" />
+        <entry key="..\:/Android_Project/CosyMusic/app/src/main/res/drawable/ic_history.xml" value="0.1" />
+        <entry key="..\:/Android_Project/CosyMusic/app/src/main/res/drawable/ic_love.xml" value="0.1195" />
+        <entry key="..\:/Android_Project/CosyMusic/app/src/main/res/drawable/ic_menu.xml" value="0.172" />
+        <entry key="..\:/Android_Project/CosyMusic/app/src/main/res/drawable/ic_music.xml" value="0.2075" />
+        <entry key="..\:/Android_Project/CosyMusic/app/src/main/res/drawable/ic_pause.xml" value="0.1935" />
+        <entry key="..\:/Android_Project/CosyMusic/app/src/main/res/drawable/ic_play.xml" value="0.1935" />
+        <entry key="..\:/Android_Project/CosyMusic/app/src/main/res/drawable/ic_player_menu.xml" value="0.1935" />
+        <entry key="..\:/Android_Project/CosyMusic/app/src/main/res/drawable/ic_praise.xml" value="0.172" />
+        <entry key="..\:/Android_Project/CosyMusic/app/src/main/res/drawable/ic_ranklist.xml" value="0.2075" />
+        <entry key="..\:/Android_Project/CosyMusic/app/src/main/res/drawable/ic_search.xml" value="0.172" />
+        <entry key="..\:/Android_Project/CosyMusic/app/src/main/res/drawable/ic_settings.xml" value="0.172" />
+        <entry key="..\:/Android_Project/CosyMusic/app/src/main/res/drawable/local_folder.xml" value="0.1235" />
+        <entry key="..\:/Android_Project/CosyMusic/app/src/main/res/drawable/slightly_large_text_form.xml" value="0.172" />
+        <entry key="..\:/Android_Project/CosyMusic/app/src/main/res/drawable/test.xml" value="0.1805" />
+        <entry key="..\:/Android_Project/CosyMusic/app/src/main/res/drawable/text_bold_form.xml" value="0.1935" />
+        <entry key="..\:/Android_Project/CosyMusic/app/src/main/res/drawable/text_cursor_drawable.xml" value="0.1935" />
+        <entry key="..\:/Android_Project/CosyMusic/app/src/main/res/layout/activity_base.xml" value="0.22826086956521738" />
+        <entry key="..\:/Android_Project/CosyMusic/app/src/main/res/layout/activity_main.xml" value="0.176" />
+        <entry key="..\:/Android_Project/CosyMusic/app/src/main/res/layout/activity_search.xml" value="0.2" />
+        <entry key="..\:/Android_Project/CosyMusic/app/src/main/res/layout/fragment_discover.xml" value="0.176" />
+        <entry key="..\:/Android_Project/CosyMusic/app/src/main/res/layout/fragment_home.xml" value="0.2" />
+        <entry key="..\:/Android_Project/CosyMusic/app/src/main/res/layout/header_layout_user_info.xml" value="0.264" />
+        <entry key="..\:/Android_Project/CosyMusic/app/src/main/res/layout/header_user_info.xml" value="0.22826086956521738" />
+        <entry key="..\:/Android_Project/CosyMusic/app/src/main/res/layout/item_music.xml" value="0.4" />
+        <entry key="..\:/Android_Project/CosyMusic/app/src/main/res/layout/mini_player.xml" value="0.4" />
+        <entry key="..\:/Android_Project/CosyMusic/app/src/main/res/menu/nav_menu.xml" value="0.25364583333333335" />
+        <entry key="..\:/Android_Project/CosyMusic/app/src/main/res/xml/net_config.xml" value="0.1" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>

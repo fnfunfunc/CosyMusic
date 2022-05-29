@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+
+        <item android:id="@+id/settingBtn"
+            android:title="@string/setting"
+            android:icon="@drawable/ic_setting"/>
+
+        <item android:id="@+id/feedbackBtn"
+            android:title="@string/feedback"
+            android:icon="@drawable/ic_feedback"/>
+
+        <item android:id="@+id/praiseBtn"
+            android:title="@string/praise"
+            android:icon="@drawable/ic_praise"/>
+
+        <item android:id="@+id/aboutBtn"
+            android:title="@string/about"
+            android:icon="@drawable/ic_about"/>
+
+    </group>
+
+</menu>

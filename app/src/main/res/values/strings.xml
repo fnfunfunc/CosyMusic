@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">CosyMusic</string>
+    <string name="test">测试</string>
+    <string name="my">我的</string>
+    <string name="discover">发现</string>
+    <string name="menu">菜单</string>
+    <string name="search">搜索</string>
+    <string name="setting">设置</string>
+    <string name="feedback">反馈</string>
+    <string name="praise">赞赏</string>
+    <string name="about">关于</string>
+    <string name="local">本地</string>
+    <string name="cloud_drive">云盘</string>
+    <string name="like">喜欢</string>
+    <string name="history">历史</string>
+    <string name="rank_list">排行榜</string>
+    <string name="recommended_music_menu">歌单推荐</string>
+    <string name="new_song_express">新歌速递</string>
+    <string name="hot_search">热门搜索</string>
+</resources>
