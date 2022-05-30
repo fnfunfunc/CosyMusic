@@ -92,7 +92,7 @@
             android:layout_marginStart="20dp"
             android:layout_marginTop="25dp"
             android:text="@string/hot_search"
-            android:textAppearance="@style/boldTextStyle"
+            android:textAppearance="@style/bold_text_style"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 

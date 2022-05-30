@@ -16,8 +16,8 @@ data class MusicResponse(val result: Result, val code: Int){
         @SerializedName("ar") val artist: List<ArtistInfo>?,
         @SerializedName("al") val album: AlbumInfo,
         val pop: Int,     //热度
-        @Embedded
-        val neteaseInfo: NeteaseInfo
+        val privilege: Privilege,
+        @SerializedName("dt") val duration: Int
     )
 
     data class ArtistInfo(
@@ -27,10 +27,9 @@ data class MusicResponse(val result: Result, val code: Int){
 
     data class AlbumInfo(val picUrl: String)
 
-    data class NeteaseInfo(
-        val fee: Int,   //是否为网易云Vip歌曲，1代表是
-        val pl: Int,    //若为0，则为无效歌曲，代表网易云无版权
-        @SerializedName("maxbr") val maxBr: Int,    //最大音质
-
+    data class Privilege(
+        val fee: Int, //是否为网易云Vip歌曲，1代表是
+        val pl: Int, //网易云是否有版权，0代表无
+        @SerializedName("maxbr") val maxBr: Int, //最高音质
     )
 }

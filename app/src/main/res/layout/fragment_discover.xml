@@ -63,7 +63,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:text="@string/new_song_express"
-                android:textAppearance="@style/boldTextStyle" />
+                android:textAppearance="@style/bold_text_style" />
 
 
             <TextView
@@ -73,7 +73,7 @@
                 android:layout_marginStart="19dp"
                 android:layout_marginTop="300dp"
                 android:text="@string/recommended_music_menu"
-                android:textAppearance="@style/boldTextStyle" />
+                android:textAppearance="@style/bold_text_style" />
 
         </LinearLayout>
 

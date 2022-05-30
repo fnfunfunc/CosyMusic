@@ -1,7 +1,7 @@
 package com.musicapp.cosymusic.util
 
 import android.widget.Toast
-import com.musicapp.cosymusic.application.MainApplication
+import com.musicapp.cosymusic.application.App
 
 /**
  * @author Eternal Epoch
@@ -9,5 +9,5 @@ import com.musicapp.cosymusic.application.MainApplication
  */
 
 fun toast(text: String){
-    Toast.makeText(MainApplication.context, text, Toast.LENGTH_SHORT).show()
+    Toast.makeText(App.context, text, Toast.LENGTH_SHORT).show()
 }

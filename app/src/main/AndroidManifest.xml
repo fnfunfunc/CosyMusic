@@ -3,8 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.musicapp.cosymusic">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
+
+
     <application
-        android:name=".application.MainApplication"
+        android:name=".application.App"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -16,11 +20,13 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".activity.PlayerActivity"
+            android:exported="false" />
+        <activity
             android:name=".activity.SearchActivity"
             android:exported="false" />
-
         <activity
-            android:name=".activity.BaseActivity"
+            android:name=".base.BaseActivity"
             android:exported="false" />
         <activity
             android:name=".activity.MainActivity"
@@ -31,12 +37,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <service
-            android:name=".PlayerService"
+            android:name=".service.PlayerService"
             android:enabled="true"
-            android:exported="true"></service>
+            android:exported="true" />
     </application>
 
-    <uses-permission android:name="android.permission.INTERNET" />
 
 </manifest>

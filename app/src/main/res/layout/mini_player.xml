@@ -36,7 +36,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/playerQueue"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_play" />
+        app:srcCompat="@drawable/ic_mini_play" />
 
     <ImageView
         android:id="@+id/playerQueue"

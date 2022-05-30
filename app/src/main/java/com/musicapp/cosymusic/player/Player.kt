@@ -3,6 +3,7 @@ package com.musicapp.cosymusic.player
 import android.content.Context
 import android.media.MediaPlayer
 import android.net.Uri
+import com.musicapp.cosymusic.application.App
 
 /**
  * @author Eternal Epoch
@@ -14,7 +15,18 @@ object Player {
 
     init {
         mediaPlayer.setOnPreparedListener{ it.start() }
+        mediaPlayer.setOnCompletionListener {
+            val size = App.playQueue.size
+            val nextPosition = (App.playPositionInQueue + 1) % size
+            App.playPositionInQueue = nextPosition
+            App.getMusicSourceById(App.playQueue[nextPosition].id)
+            App.playSongData.value = App.playQueue[nextPosition]
+            App.playState.value = false
+            changeSong = true
+        }
     }
+
+    var changeSong = false
 
     val isPlaying get() = mediaPlayer.isPlaying
 
@@ -41,4 +53,5 @@ object Player {
 
     fun setDataSource(context: Context, uri: Uri) = mediaPlayer.setDataSource(context, uri)
 
+    fun seekTo(msec: Int) = mediaPlayer.seekTo(msec)
 }

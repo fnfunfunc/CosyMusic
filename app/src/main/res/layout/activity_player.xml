@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.PlayerActivity">
+
+    <com.musicapp.cosymusic.widget.TimeTextView
+        android:id="@+id/ttvEnd"
+        android:layout_width="40dp"
+        android:layout_height="16dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/playProgressBar" />
+
+
+    <com.musicapp.cosymusic.widget.TimeTextView
+        android:id="@+id/ttvStart"
+        android:layout_width="40dp"
+        android:layout_height="16dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="5dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/playProgressBar" />
+
+    <TextView
+        android:id="@+id/musicName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="40dp"
+        android:text="@string/test"
+        android:textAppearance="@style/bold_text_style"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/artistName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="22dp"
+        android:layout_marginTop="5dp"
+        android:text="@string/test"
+        android:textColor="#757575"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/musicName" />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/albumImage"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:src="@drawable/ic_music"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <SeekBar
+        android:id="@+id/playProgressBar"
+        android:layout_width="0dp"
+        android:layout_height="20dp"
+        android:alpha="0.72"
+        android:minHeight="4dp"
+        android:maxHeight="2dp"
+        android:layout_marginBottom="25dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginStart="20dp"
+        android:progressDrawable="@drawable/bg_seekbar_background"
+        android:thumb="@drawable/bg_seekbar_thumb"
+        android:splitTrack="false"
+        app:layout_constraintBottom_toTopOf="@+id/playerController"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@+id/playerController"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_marginBottom="30dp"
+        android:contentDescription="@string/play_controller"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/ic_play" />
+
+    <ImageView
+        android:id="@+id/ivPlayPrev"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="42dp"
+        android:layout_marginEnd="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/playerController"
+        app:srcCompat="@drawable/ic_play_prev" />
+
+    <ImageView
+        android:id="@+id/ivPlayNext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="42dp"
+        android:layout_marginStart="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/playerController"
+        app:srcCompat="@drawable/ic_play_next" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

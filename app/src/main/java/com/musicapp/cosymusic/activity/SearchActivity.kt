@@ -2,7 +2,6 @@ package com.musicapp.cosymusic.activity
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.net.Uri
 import android.util.Log
 import android.view.View
 import android.view.inputmethod.EditorInfo
@@ -12,11 +11,9 @@ import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.musicapp.cosymusic.adapter.NeteaseMusicAdapter
-import com.musicapp.cosymusic.application.MainApplication
+import com.musicapp.cosymusic.base.BaseActivity
 import com.musicapp.cosymusic.databinding.ActivitySearchBinding
 import com.musicapp.cosymusic.model.netease.MusicResponse
-import com.musicapp.cosymusic.player.Player
-import com.musicapp.cosymusic.util.toast
 import com.musicapp.cosymusic.viewmodel.SearchViewModel
 
 class SearchActivity : BaseActivity() {
@@ -87,25 +84,16 @@ class SearchActivity : BaseActivity() {
                 musicDataList.clear()
                 musicDataList.addAll(musicResponse.songs)
                 musicAdapter.notifyDataSetChanged()
+                binding.rvPlayList.scrollToPosition(0)  //回到最上方
             } else {
                 Toast.makeText(this, "未能查询到任何歌曲信息", Toast.LENGTH_SHORT).show()
                 Log.e("SearchActivity", result.exceptionOrNull().toString())
             }
         }
 
-        viewModel.musicSourceResponse.observe(this) { result ->
-            val response = result.getOrNull()
-            if (response != null) {
-                val url = response[0].url
-                Player.reset()
-                Player.setDataSource(MainApplication.context, Uri.parse(url))
-                Player.prepareAsync()
-                MainApplication.playState.value = true
-            } else {
-                toast("播放失败，请重试")
-            }
-        }
+
     }
+
 
     private fun search(){
         //关闭软键盘
