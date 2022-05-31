@@ -11,7 +11,7 @@ import com.bumptech.glide.Glide
 import com.musicapp.cosymusic.R
 import com.musicapp.cosymusic.application.App
 import com.musicapp.cosymusic.model.netease.MusicResponse
-import com.musicapp.cosymusic.player.Player
+import com.musicapp.cosymusic.service.PlayerQueue
 import com.musicapp.cosymusic.util.toast
 import com.musicapp.cosymusic.viewmodel.SearchViewModel
 
@@ -42,12 +42,12 @@ class NeteaseMusicAdapter(private val viewModel: SearchViewModel,
                 toast("网易云暂无版权")
                 return@setOnClickListener
             }
-            App.playQueue.clear()
-            App.playQueue.addAll(musicData)
-            App.playPositionInQueue = position
-            App.playSongData.value = music
-            Player.changeSong = true
-            App.getMusicSourceById(music.id)
+            //App.playQueue.clear()
+            //App.playQueue.addAll(musicData)
+            App.playerController.value?.savePlayList(musicData.toMutableList())
+            //权宜之计，实际上不应该让PlayerQueue被除了PlayerService之外的地方访问
+            PlayerQueue.currentPosition.value = position
+            App.playerController.value?.playMusic(music, false)
         }
         return viewHolder
     }

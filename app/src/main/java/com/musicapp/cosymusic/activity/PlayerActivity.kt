@@ -3,18 +3,24 @@ package com.musicapp.cosymusic.activity
 
 import android.view.WindowManager
 import android.widget.SeekBar
+import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.musicapp.cosymusic.R
 import com.musicapp.cosymusic.application.App
 import com.musicapp.cosymusic.base.BaseActivity
 import com.musicapp.cosymusic.databinding.ActivityPlayerBinding
-import com.musicapp.cosymusic.player.Player
+//import com.musicapp.cosymusic.player.Player
+import com.musicapp.cosymusic.player.PlayerViewModel
 import java.util.*
 
 
 class PlayerActivity : BaseActivity() {
 
     private val binding by lazy { ActivityPlayerBinding.inflate(layoutInflater) }
+
+    private val viewModel: PlayerViewModel by lazy {
+        ViewModelProvider(this).get(PlayerViewModel::class.java)
+    }
 
     override fun initView() {
         setContentView(binding.root)
@@ -24,15 +30,15 @@ class PlayerActivity : BaseActivity() {
 
         binding.ttvStart.setText(0)
         binding.ttvEnd.setText(0)
-        App.playSongData.value?.let {
+        App.playerController.value?.musicData?.value?.let {
             binding.musicName.text = it.name
             binding.artistName.text = it.artist?.get(0)?.name
             Glide.with(this).load(it.album.picUrl).into(binding.albumImage)
 
             //在有songData的情况下进行此操作
-            binding.playProgressBar.max = Player.duration
-            binding.ttvStart.setText(Player.currentPosition)
-            binding.ttvEnd.setText(Player.duration)
+            binding.playProgressBar.max = viewModel.duration.value?: 0
+            binding.ttvStart.setText(viewModel.duration.value?:0)
+            binding.ttvEnd.setText(viewModel.duration.value?: 0)
 
             Timer().schedule(timerTask, 0, 900)
         }
@@ -40,14 +46,8 @@ class PlayerActivity : BaseActivity() {
 
 
     override fun initListeners() {
-        binding.playerController.setOnClickListener {
-            if(Player.isPlaying){
-                Player.pause()
-                App.playState.value = false
-            }else{
-                Player.start()
-                App.playState.value = true
-            }
+        binding.ivPlayerController.setOnClickListener {
+            viewModel.changePlayState()
         }
 
         binding.playProgressBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener{
@@ -56,26 +56,35 @@ class PlayerActivity : BaseActivity() {
             override fun onStartTrackingTouch(bar: SeekBar?){ }
 
             override fun onStopTrackingTouch(bar: SeekBar) {
-                Player.seekTo(bar.progress)
+                App.playerController.value?.seekTo(bar.progress)
             }
         })
+
+        binding.ivPlayPrev.setOnClickListener { viewModel.playPrev() }
+
+        binding.ivPlayNext.setOnClickListener { viewModel.playNext() }
     }
 
     override fun initObservers() {
-        App.playState.observe(this){ isPlaying ->
+        App.playerController.value?.playState?.observe(this){ isPlaying ->
             if(isPlaying){
-                Glide.with(this).load(R.drawable.ic_pause).into(binding.playerController)
+                Glide.with(this).load(R.drawable.ic_pause).into(binding.ivPlayerController)
             }else{
-                Glide.with(this).load(R.drawable.ic_play).into(binding.playerController)
+                Glide.with(this).load(R.drawable.ic_play).into(binding.ivPlayerController)
             }
         }
 
-        App.playSongData.observe(this){ musicData ->
+        App.playerController.value?.musicData?.observe(this){ musicData ->
             binding.musicName.text = musicData.name
             binding.artistName.text = musicData.artist?.get(0)?.name?:"未知"
             Glide.with(this).load(musicData.album.picUrl).into(binding.albumImage)
             binding.playProgressBar.max = musicData.duration
             binding.ttvEnd.setText(musicData.duration)
+        }
+
+        viewModel.progress.observe(this){ progress ->
+            binding.ttvStart.setText(progress)
+            binding.playProgressBar.progress = progress
         }
     }
 
@@ -86,10 +95,7 @@ class PlayerActivity : BaseActivity() {
 
     private val timerTask = object : TimerTask(){
         override fun run() {
-            runOnUiThread {
-                binding.ttvStart.setText(Player.currentPosition)
-                binding.playProgressBar.progress = Player.currentPosition
-            }
+            viewModel.refreshProgress()
         }
     }
 }

@@ -4,6 +4,7 @@ import android.content.ComponentName
 import android.content.ServiceConnection
 import android.os.IBinder
 import com.musicapp.cosymusic.application.App
+import com.musicapp.cosymusic.util.LogUtil
 
 /**
  * @author Eternal Epoch

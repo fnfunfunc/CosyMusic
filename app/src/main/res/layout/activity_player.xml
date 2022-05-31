@@ -72,12 +72,12 @@
         android:progressDrawable="@drawable/bg_seekbar_background"
         android:thumb="@drawable/bg_seekbar_thumb"
         android:splitTrack="false"
-        app:layout_constraintBottom_toTopOf="@+id/playerController"
+        app:layout_constraintBottom_toTopOf="@+id/ivPlayerController"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView
-        android:id="@+id/playerController"
+        android:id="@+id/ivPlayerController"
         android:layout_width="56dp"
         android:layout_height="56dp"
         android:layout_marginBottom="30dp"
@@ -94,7 +94,7 @@
         android:layout_marginBottom="42dp"
         android:layout_marginEnd="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/playerController"
+        app:layout_constraintEnd_toStartOf="@+id/ivPlayerController"
         app:srcCompat="@drawable/ic_play_prev" />
 
     <ImageView
@@ -104,7 +104,7 @@
         android:layout_marginBottom="42dp"
         android:layout_marginStart="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/playerController"
+        app:layout_constraintStart_toEndOf="@+id/ivPlayerController"
         app:srcCompat="@drawable/ic_play_next" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

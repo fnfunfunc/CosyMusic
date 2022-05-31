@@ -10,7 +10,6 @@ import com.musicapp.cosymusic.activity.ActivityCollector
 import com.musicapp.cosymusic.activity.PlayerActivity
 import com.musicapp.cosymusic.application.App
 import com.musicapp.cosymusic.databinding.MiniPlayerBinding
-import com.musicapp.cosymusic.player.Player
 import com.musicapp.cosymusic.util.toast
 
 abstract class BaseActivity : AppCompatActivity() {
@@ -40,25 +39,26 @@ abstract class BaseActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        App.musicSourceResponse.observe(this) { result ->
-            if(!Player.changeSong) return@observe
+        /*App.musicSourceResponse.observe(this) { result ->
+            val player = App.playerController.value!!
+            if(!player.changeSong) return@observe
             val response = result.getOrNull()
             if (response != null) {
                 val url = response[0].url
-                Player.reset()
-                Player.setDataSource(App.context, Uri.parse(url))
-                Player.prepareAsync()
-                Player.changeSong = false
-                App.playState.value = true
+                player.reset()
+                player.setDataSource(App.context, Uri.parse(url))
+                player.prepareAsync()
+                player.changeSong = false
+                player.playState.value = true
             } else {
                 toast("播放失败，请重试")
             }
-        }
+        }*/
     }
 
     override fun onPause() {
         super.onPause()
-        App.musicSourceResponse.removeObservers(this)
+        //App.musicSourceResponse.removeObservers(this)
     }
 
     override fun onDestroy() {
@@ -73,27 +73,21 @@ abstract class BaseActivity : AppCompatActivity() {
                 this@BaseActivity.startActivity(intent)
             }
 
-            playerController.setOnClickListener {
-                if(Player.isPlaying){
-                    Player.pause()
-                    App.playState.value = false
-                }else{
-                    Player.start()
-                    App.playState.value = true
-                }
+            ivPlayerController.setOnClickListener {
+                App.playerController.value?.changePlayState()
             }
 
-            App.playState.observe(this@BaseActivity){ state ->
+            App.playerController.value?.playState?.observe(this@BaseActivity){ state ->
                 if(state == true){
                     Glide.with(this@BaseActivity)
-                        .load(R.drawable.ic_mini_pause).into(playerController)
+                        .load(R.drawable.ic_mini_pause).into(ivPlayerController)
                 }else{
                     Glide.with(this@BaseActivity)
-                        .load(R.drawable.ic_mini_play).into(playerController)
+                        .load(R.drawable.ic_mini_play).into(ivPlayerController)
                 }
             }
 
-            App.playSongData.observe(this@BaseActivity){ musicData ->
+            App.playerController.value?.musicData?.observe(this@BaseActivity){ musicData ->
                 musicName.text = musicData.name
                 artistName.text = musicData.artist?.get(0)?.name ?: "未知"
                 Glide.with(this@BaseActivity).load(musicData.album.picUrl).into(albumImage)

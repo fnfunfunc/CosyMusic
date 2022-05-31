@@ -29,7 +29,7 @@
     </androidx.cardview.widget.CardView>
 
     <ImageView
-        android:id="@+id/playerController"
+        android:id="@+id/ivPlayerController"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:scaleType="center"
@@ -58,7 +58,7 @@
         android:text="有所思"
         android:textColor="@color/black"
         android:textSize="16sp"
-        app:layout_constraintEnd_toStartOf="@+id/playerController"
+        app:layout_constraintEnd_toStartOf="@+id/ivPlayerController"
         app:layout_constraintStart_toEndOf="@+id/cvCover"
         app:layout_constraintTop_toTopOf="parent" />
 
