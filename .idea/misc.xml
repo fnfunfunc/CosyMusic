@@ -3,6 +3,9 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Android_Project/CosyMusic/app/src/main/res/drawable/bg_button_oval.xml" value="0.2085" />
+        <entry key="..\:/Android_Project/CosyMusic/app/src/main/res/drawable/bg_rounded_rectangle.xml" value="0.2085" />
+        <entry key="..\:/Android_Project/CosyMusic/app/src/main/res/drawable/bg_search_text.xml" value="0.134" />
         <entry key="..\:/Android_Project/CosyMusic/app/src/main/res/drawable/bg_seekbar_background.xml" value="0.134" />
         <entry key="..\:/Android_Project/CosyMusic/app/src/main/res/drawable/bg_seekbar_thumb.xml" value="0.135" />
         <entry key="..\:/Android_Project/CosyMusic/app/src/main/res/drawable/ic_about.xml" value="0.1805" />
@@ -37,8 +40,9 @@
         <entry key="..\:/Android_Project/CosyMusic/app/src/main/res/drawable/text_cursor_drawable.xml" value="0.1935" />
         <entry key="..\:/Android_Project/CosyMusic/app/src/main/res/layout/activity_base.xml" value="0.22826086956521738" />
         <entry key="..\:/Android_Project/CosyMusic/app/src/main/res/layout/activity_main.xml" value="0.176" />
+        <entry key="..\:/Android_Project/CosyMusic/app/src/main/res/layout/activity_play_history.xml" value="0.152" />
         <entry key="..\:/Android_Project/CosyMusic/app/src/main/res/layout/activity_player.xml" value="0.136" />
-        <entry key="..\:/Android_Project/CosyMusic/app/src/main/res/layout/activity_search.xml" value="0.2" />
+        <entry key="..\:/Android_Project/CosyMusic/app/src/main/res/layout/activity_search.xml" value="0.536" />
         <entry key="..\:/Android_Project/CosyMusic/app/src/main/res/layout/dialog_player.xml" value="0.176" />
         <entry key="..\:/Android_Project/CosyMusic/app/src/main/res/layout/fragment_discover.xml" value="0.176" />
         <entry key="..\:/Android_Project/CosyMusic/app/src/main/res/layout/fragment_home.xml" value="0.2" />

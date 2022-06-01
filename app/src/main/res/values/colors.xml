@@ -12,6 +12,7 @@
     <color name="deep_blue">#0F4ADD</color>
     <color name="sky_blue">#7FD2F4</color>
     <color name="grey">#888888</color>
+    <color name="shallow_grey">#EEEEEE</color>
 
     <color name="app_theme_color">#FFDB2C1F</color>
 

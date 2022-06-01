@@ -16,8 +16,11 @@ import android.support.v4.media.session.MediaSessionCompat
 import androidx.core.app.NotificationCompat
 import androidx.lifecycle.MutableLiveData
 import com.musicapp.cosymusic.R
+import com.musicapp.cosymusic.activity.ActivityCollector
+import com.musicapp.cosymusic.activity.PlayHistoryActivity
 import com.musicapp.cosymusic.application.App.Companion.mmkv
 import com.musicapp.cosymusic.base.BaseMediaService
+import com.musicapp.cosymusic.local.PlayHistory
 import com.musicapp.cosymusic.model.netease.MusicResponse
 import com.musicapp.cosymusic.util.Config
 import com.musicapp.cosymusic.util.LogUtil
@@ -152,6 +155,9 @@ class PlayerService : BaseMediaService() {
         fun play(){
             if(isPrepared){
                 mediaSessionCallback?.onPlay()
+                if(ActivityCollector.getCurrentActivity() !is PlayHistoryActivity) {
+                    PlayHistory.addPlayHistory(musicData.value!!)//添加到播放历史中
+                }
             }
         }
 
@@ -169,14 +175,23 @@ class PlayerService : BaseMediaService() {
             isPrepared = true
             play()
 
-            val url = musicData.value?.album?.picUrl
+            sendMusicBroadcast()
+            /*val url = musicData.value?.album?.picUrl
             if(url != null){
                 albumCoverBitmap.value = BitmapFactory.decodeFile(url)
-            }
+            }*/
         }
 
         override fun onCompletion(p0: MediaPlayer?) {
             playNext()
+        }
+
+        fun isPlaying(): MutableLiveData<Boolean> = playState
+
+        fun sendMusicBroadcast(){
+            val intent = Intent(Config.MUSIC_BROADCAST)
+            intent.`package` = packageName
+            sendBroadcast(intent)
         }
 
         /**

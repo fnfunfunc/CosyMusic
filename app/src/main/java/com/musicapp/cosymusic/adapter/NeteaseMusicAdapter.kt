@@ -13,15 +13,13 @@ import com.musicapp.cosymusic.application.App
 import com.musicapp.cosymusic.model.netease.MusicResponse
 import com.musicapp.cosymusic.service.PlayerQueue
 import com.musicapp.cosymusic.util.toast
-import com.musicapp.cosymusic.viewmodel.SearchViewModel
 
 
 /**
  * @author Eternal Epoch
  * @date 2022/5/29 16:33
  */
-class NeteaseMusicAdapter(private val viewModel: SearchViewModel,
-                          private val musicData: List<MusicResponse.MusicData>) :
+class NeteaseMusicAdapter(private val musicData: List<MusicResponse.MusicData>) :
     RecyclerView.Adapter<NeteaseMusicAdapter.ViewHolder>() {
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -42,8 +40,6 @@ class NeteaseMusicAdapter(private val viewModel: SearchViewModel,
                 toast("网易云暂无版权")
                 return@setOnClickListener
             }
-            //App.playQueue.clear()
-            //App.playQueue.addAll(musicData)
             App.playerController.value?.savePlayList(musicData.toMutableList())
             //权宜之计，实际上不应该让PlayerQueue被除了PlayerService之外的地方访问
             PlayerQueue.currentPosition.value = position

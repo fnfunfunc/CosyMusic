@@ -3,10 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.musicapp.cosymusic">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
-
-
     <application
         android:name=".application.App"
         android:allowBackup="true"
@@ -19,6 +15,9 @@
         android:theme="@style/Theme.CosyMusic"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
+        <activity
+            android:name=".activity.PlayHistoryActivity"
+            android:exported="false" />
         <activity
             android:name=".activity.PlayerActivity"
             android:exported="false" />
@@ -43,6 +42,8 @@
             android:enabled="true"
             android:exported="true" />
     </application>
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 
+    <uses-permission android:name="android.permission.INTERNET" />
 
 </manifest>

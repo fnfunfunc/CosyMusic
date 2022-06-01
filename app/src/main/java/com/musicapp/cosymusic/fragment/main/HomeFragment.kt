@@ -1,10 +1,12 @@
 package com.musicapp.cosymusic.fragment.main
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.musicapp.cosymusic.activity.PlayHistoryActivity
 import com.musicapp.cosymusic.databinding.FragmentHomeBinding
 import com.musicapp.cosymusic.fragment.BaseFragment
 
@@ -27,5 +29,10 @@ class HomeFragment: BaseFragment() {
         return binding.root
     }
 
-
+    override fun initListeners() {
+        binding.ivPlayHistory.setOnClickListener {
+            val intent = Intent(activity, PlayHistoryActivity::class.java)
+            startActivity(intent)
+        }
+    }
 }
