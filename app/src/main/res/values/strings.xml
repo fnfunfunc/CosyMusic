@@ -6,6 +6,7 @@
     <string name="menu">菜单</string>
     <string name="search">搜索</string>
     <string name="setting">设置</string>
+    <string name="back">返回</string>
     <string name="feedback">反馈</string>
     <string name="praise">赞赏</string>
     <string name="about">关于</string>
@@ -21,4 +22,9 @@
     <string name="play_history">播放历史</string>
     <string name="clear_play_history">清空播放历史</string>
     <string name="search_history">搜索历史</string>
+    <string name="chinese_song">华语</string>
+    <string name="eu_am">欧美</string>
+    <string name="korea">韩国</string>
+    <string name="japan">日本</string>
+    <string name="more">更多</string>
 </resources>

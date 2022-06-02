@@ -1,10 +1,8 @@
 package com.musicapp.cosymusic.local
 
 import android.os.Parcelable
-import android.util.Log
 import com.musicapp.cosymusic.application.App
-import com.musicapp.cosymusic.util.Config
-import com.musicapp.cosymusic.util.LogUtil
+import com.musicapp.cosymusic.util.KString
 import kotlinx.parcelize.Parcelize
 
 /**
@@ -24,19 +22,18 @@ object SearchHistory {
             searchHistoryData.list.remove(searchText)
             searchHistoryData.list.add(0, searchText)
         }
-        LogUtil.e("SearchHistory", searchHistoryData.list.toString())
-        App.mmkv.encode(Config.SEARCH_HISTORY, searchHistoryData)
+        App.mmkv.encode(KString.SEARCH_HISTORY, searchHistoryData)
     }
 
     fun readSearchHistory(): MutableList<String>{
-        searchHistoryData = App.mmkv.decodeParcelable(Config.SEARCH_HISTORY, SearchHistoryData::class.java)
+        searchHistoryData = App.mmkv.decodeParcelable(KString.SEARCH_HISTORY, SearchHistoryData::class.java)
             ?: SearchHistoryData(mutableListOf())
         return searchHistoryData.list
     }
 
     fun clearSearchHistory(){
         searchHistoryData.list.clear()
-        App.mmkv.encode(Config.SEARCH_HISTORY, searchHistoryData)
+        App.mmkv.encode(KString.SEARCH_HISTORY, searchHistoryData)
     }
 
     @Parcelize

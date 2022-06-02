@@ -1,4 +1,4 @@
-package com.musicapp.cosymusic.fragment
+package com.musicapp.cosymusic.base
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

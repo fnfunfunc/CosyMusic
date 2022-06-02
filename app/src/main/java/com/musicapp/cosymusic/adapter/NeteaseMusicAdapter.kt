@@ -10,8 +10,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.musicapp.cosymusic.R
 import com.musicapp.cosymusic.application.App
-import com.musicapp.cosymusic.model.netease.MusicResponse
+import com.musicapp.cosymusic.model.netease.StandardMusicResponse
 import com.musicapp.cosymusic.service.PlayerQueue
+import com.musicapp.cosymusic.util.getArtistsString
 import com.musicapp.cosymusic.util.toast
 
 
@@ -19,7 +20,7 @@ import com.musicapp.cosymusic.util.toast
  * @author Eternal Epoch
  * @date 2022/5/29 16:33
  */
-class NeteaseMusicAdapter(private val musicData: List<MusicResponse.MusicData>) :
+class NeteaseMusicAdapter(private val musicData: List<StandardMusicResponse.StandardMusicData>) :
     RecyclerView.Adapter<NeteaseMusicAdapter.ViewHolder>() {
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -52,7 +53,7 @@ class NeteaseMusicAdapter(private val musicData: List<MusicResponse.MusicData>) 
         val music = musicData[position]
         Glide.with(App.context).load(music.album.picUrl).into(holder.albumImage)
         holder.musicName.text = music.name
-        holder.artistName.text = music.artist?.get(0)?.name
+        holder.artistName.text = getArtistsString(music.artists)
         holder.ivDiamond.visibility = if(music.privilege.fee == 1){
             View.VISIBLE
         }else{

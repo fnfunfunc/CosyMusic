@@ -3,6 +3,7 @@ package com.musicapp.cosymusic.activity
 import android.content.Intent
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.google.android.material.tabs.TabLayoutMediator
 import com.musicapp.cosymusic.R
@@ -10,11 +11,16 @@ import com.musicapp.cosymusic.base.BaseActivity
 import com.musicapp.cosymusic.databinding.ActivityMainBinding
 import com.musicapp.cosymusic.fragment.main.DiscoverFragment
 import com.musicapp.cosymusic.fragment.main.HomeFragment
+import com.musicapp.cosymusic.viewmodel.MainViewModel
 
 class MainActivity : BaseActivity() {
 
     private val binding by lazy {
         ActivityMainBinding.inflate(layoutInflater)
+    }
+
+    private val viewModel by lazy {
+        ViewModelProvider(this).get(MainViewModel::class.java)
     }
 
     override fun initView() {

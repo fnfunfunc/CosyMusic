@@ -10,7 +10,9 @@ import com.musicapp.cosymusic.application.App
 import com.musicapp.cosymusic.base.BaseActivity
 import com.musicapp.cosymusic.databinding.ActivityPlayerBinding
 //import com.musicapp.cosymusic.player.Player
-import com.musicapp.cosymusic.player.PlayerViewModel
+import com.musicapp.cosymusic.viewmodel.PlayerViewModel
+import com.musicapp.cosymusic.util.cancelCache
+import com.musicapp.cosymusic.util.getArtistsString
 import java.util.*
 
 
@@ -32,7 +34,7 @@ class PlayerActivity : BaseActivity() {
         binding.ttvEnd.setText(0)
         App.playerController.value?.musicData?.value?.let {
             binding.musicName.text = it.name
-            binding.artistName.text = it.artist?.get(0)?.name
+            binding.artistName.text = getArtistsString(it.artists)
             Glide.with(this).load(it.album.picUrl).into(binding.albumImage)
 
             //在有songData的情况下进行此操作
@@ -68,15 +70,19 @@ class PlayerActivity : BaseActivity() {
     override fun initObservers() {
         App.playerController.value?.playState?.observe(this){ isPlaying ->
             if(isPlaying){
-                Glide.with(this).load(R.drawable.ic_pause).into(binding.ivPlayerController)
+                Glide.with(this).load(R.drawable.ic_pause)
+                    .cancelCache()
+                    .into(binding.ivPlayerController)
             }else{
-                Glide.with(this).load(R.drawable.ic_play).into(binding.ivPlayerController)
+                Glide.with(this).load(R.drawable.ic_play)
+                    .cancelCache()
+                    .into(binding.ivPlayerController)
             }
         }
 
         App.playerController.value?.musicData?.observe(this){ musicData ->
             binding.musicName.text = musicData.name
-            binding.artistName.text = musicData.artist?.get(0)?.name?:"未知"
+            binding.artistName.text = getArtistsString(musicData.artists)
             Glide.with(this).load(musicData.album.picUrl).into(binding.albumImage)
             binding.playProgressBar.max = musicData.duration
             binding.ttvEnd.setText(musicData.duration)

@@ -7,6 +7,18 @@
     tools:context=".activity.SearchActivity">
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvSearchSuggest"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginStart="10dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/miniPlayer"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/titleBar" />
+
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvPlayList"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -79,7 +91,7 @@
         android:id="@+id/clBody"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginBottom="96dp"
+        android:layout_marginBottom="64dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -95,6 +107,18 @@
             android:textAppearance="@style/bold_text_style"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvHotSearch"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvHotSearch" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -135,6 +159,16 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvSearchHistory"/>
+
+        <ImageView
+            android:id="@+id/ivClearHistory"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_dustbin" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -5,10 +5,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import com.musicapp.cosymusic.activity.PlayHistoryActivity
 import com.musicapp.cosymusic.databinding.FragmentHomeBinding
-import com.musicapp.cosymusic.fragment.BaseFragment
+import com.musicapp.cosymusic.base.BaseFragment
 
 /**
  * @author Eternal Epoch

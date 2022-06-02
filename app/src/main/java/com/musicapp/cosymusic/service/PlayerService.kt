@@ -6,7 +6,6 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.media.MediaPlayer
 import android.net.Uri
 import android.os.Binder
@@ -21,9 +20,11 @@ import com.musicapp.cosymusic.activity.PlayHistoryActivity
 import com.musicapp.cosymusic.application.App.Companion.mmkv
 import com.musicapp.cosymusic.base.BaseMediaService
 import com.musicapp.cosymusic.local.PlayHistory
-import com.musicapp.cosymusic.model.netease.MusicResponse
-import com.musicapp.cosymusic.util.Config
+import com.musicapp.cosymusic.model.netease.StandardMusicResponse
+import com.musicapp.cosymusic.util.BroadcastKString
+import com.musicapp.cosymusic.util.KString
 import com.musicapp.cosymusic.util.LogUtil
+import com.musicapp.cosymusic.util.getArtistsString
 
 class PlayerService : BaseMediaService() {
 
@@ -91,7 +92,7 @@ class PlayerService : BaseMediaService() {
     }
 
     override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
-        val playModeCode = intent.getIntExtra(Config.PLAY_MODE_CODE, -1)
+        val playModeCode = intent.getIntExtra(KString.PLAY_MODE_CODE, -1)
         when(playModeCode){
             CODE_PREVIOUS -> playerController.playPrev()
             CODE_PLAY_OR_PAUSE -> playerController.changePlayState()
@@ -128,7 +129,7 @@ class PlayerService : BaseMediaService() {
 
         val currentPosition get() = mediaPlayer.currentPosition
 
-        val musicData = MutableLiveData<MusicResponse.MusicData>()
+        val musicData = MutableLiveData<StandardMusicResponse.StandardMusicData>()
 
         fun prepare() = mediaPlayer.prepare()
 
@@ -189,7 +190,7 @@ class PlayerService : BaseMediaService() {
         fun isPlaying(): MutableLiveData<Boolean> = playState
 
         fun sendMusicBroadcast(){
-            val intent = Intent(Config.MUSIC_BROADCAST)
+            val intent = Intent(BroadcastKString.MUSIC_BROADCAST)
             intent.`package` = packageName
             sendBroadcast(intent)
         }
@@ -197,12 +198,12 @@ class PlayerService : BaseMediaService() {
         /**
          * @param playNext 当前歌曲播放失败时是否自动播放下一首(Not implemented)
          */
-        fun playMusic(playMusicData: MusicResponse.MusicData, playNext: Boolean = false){
+        fun playMusic(playMusicData: StandardMusicResponse.StandardMusicData, playNext: Boolean = false){
             isPrepared = false  //尚未准备
             musicData.value = playMusicData
 
             //保存当前播放的歌曲
-            mmkv.encode(Config.SERVICE_CURRENT_SONG, playMusicData)
+            mmkv.encode(KString.SERVICE_CURRENT_SONG, playMusicData)
 
             mediaPlayer.apply {
                 reset()
@@ -233,7 +234,7 @@ class PlayerService : BaseMediaService() {
             }
         }
 
-        fun savePlayList(musicList: MutableList<MusicResponse.MusicData>){
+        fun savePlayList(musicList: MutableList<StandardMusicResponse.StandardMusicData>){
             PlayerQueue.saveNormal(musicList)
         }
 
@@ -243,12 +244,12 @@ class PlayerService : BaseMediaService() {
 
 
 
-    private fun showNotification(music: MusicResponse.MusicData?, bitmap: Bitmap?){
+    private fun showNotification(music: StandardMusicResponse.StandardMusicData?, bitmap: Bitmap?){
         val notification = NotificationCompat.Builder(this, CHANNEL_ID).apply {
             setSmallIcon(R.drawable.ic_launcher_foreground)
             setLargeIcon(bitmap)
             setContentTitle(music?.name)
-            setContentText(music?.artist?.get(0)?.name ?: "")
+            setContentText(getArtistsString(music?.artists))
             addAction(R.drawable.ic_play_prev_24, "Previous", getPendingIntentPrevious())
             addAction(getPlayerStateIcon(), "Change player state", getPendingIntentPlay())
             addAction(R.drawable.ic_play_next_24, "Next", getPendingIntentNext())
@@ -268,19 +269,19 @@ class PlayerService : BaseMediaService() {
 
     private fun getPendingIntentPrevious(): PendingIntent{
         val intent = Intent(this, PlayerService::class.java)
-        intent.putExtra(Config.PLAY_MODE_CODE, CODE_PREVIOUS)
+        intent.putExtra(KString.PLAY_MODE_CODE, CODE_PREVIOUS)
         return buildServicePendingIntent(this, 1, intent)
     }
 
     private fun getPendingIntentPlay(): PendingIntent{
         val intent = Intent(this, PlayerService::class.java)
-        intent.putExtra(Config.PLAY_MODE_CODE, CODE_PLAY_OR_PAUSE)
+        intent.putExtra(KString.PLAY_MODE_CODE, CODE_PLAY_OR_PAUSE)
         return buildServicePendingIntent(this, 2, intent)
     }
 
     private fun getPendingIntentNext(): PendingIntent{
         val intent = Intent(this, PlayerService::class.java)
-        intent.putExtra(Config.PLAY_MODE_CODE, CODE_NEXT)
+        intent.putExtra(KString.PLAY_MODE_CODE, CODE_NEXT)
         return buildServicePendingIntent(this, 3, intent)
     }
 

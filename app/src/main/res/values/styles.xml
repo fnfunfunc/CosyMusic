@@ -6,6 +6,11 @@
         <item name="android:textColor">@color/black</item>
     </style>
 
+    <style name="title_text_style">
+        <item name="android:textSize">22sp</item>
+        <item name="textFillColor">@color/black</item>
+    </style>
+
     <style name="default_bottom_sheet_dialog">
         <item name="android:background">@color/white</item>
         <item name="android:windowBackground">@color/white</item>

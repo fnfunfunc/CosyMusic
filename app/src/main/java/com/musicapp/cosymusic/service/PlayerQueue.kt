@@ -1,7 +1,7 @@
 package com.musicapp.cosymusic.service
 
 import androidx.lifecycle.MutableLiveData
-import com.musicapp.cosymusic.model.netease.MusicResponse
+import com.musicapp.cosymusic.model.netease.StandardMusicResponse
 
 /**
  * @author Eternal Epoch
@@ -11,7 +11,7 @@ import com.musicapp.cosymusic.model.netease.MusicResponse
 object PlayerQueue {
 
     //当前的播放队列
-    val currentQueue = MutableLiveData<MutableList<MusicResponse.MusicData>>().also {
+    val currentQueue = MutableLiveData<MutableList<StandardMusicResponse.StandardMusicData>>().also {
         it.value = mutableListOf()
     }
 
@@ -19,11 +19,11 @@ object PlayerQueue {
     val currentPosition = MutableLiveData(-1)
 
     //常规播放模式下的队列
-    private val normalQueue = MutableLiveData<MutableList<MusicResponse.MusicData>>().also {
+    private val normalQueue = MutableLiveData<MutableList<StandardMusicResponse.StandardMusicData>>().also {
         it.value = mutableListOf()
     }
 
-    fun saveNormal(musicList: MutableList<MusicResponse.MusicData>){
+    fun saveNormal(musicList: MutableList<StandardMusicResponse.StandardMusicData>){
         normalQueue.value = musicList
         normal()
     }
@@ -33,7 +33,7 @@ object PlayerQueue {
         currentQueue.value = normalQueue.value
     }
 
-    fun getPrev(): MusicResponse.MusicData?{
+    fun getPrev(): StandardMusicResponse.StandardMusicData?{
         val size = currentQueue.value?.size
         if(size != null && size != 0){
             val prevPosition = if(currentPosition.value != 0)((currentPosition.value ?:0) - 1) % size
@@ -44,7 +44,7 @@ object PlayerQueue {
         return null
     }
 
-    fun getNext(): MusicResponse.MusicData?{
+    fun getNext(): StandardMusicResponse.StandardMusicData?{
         val size = currentQueue.value?.size
         if(size != null && size != 0){
             val nextPosition = ((currentPosition.value ?:0) + 1) % size

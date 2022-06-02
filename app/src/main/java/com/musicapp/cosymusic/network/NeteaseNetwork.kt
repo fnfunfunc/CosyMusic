@@ -14,13 +14,19 @@ import kotlin.coroutines.suspendCoroutine
  */
 object NeteaseNetwork {
 
-    private val neteaseSearchService = ServiceCreator.create<NeteaseSearchService>()
+    private val neteaseSearchService = ServiceCreator.create<NeteaseService>()
 
     suspend fun getSearchResponse(keywords: String) =
         neteaseSearchService.getSearchResponse(keywords).await()
 
-    suspend fun getMusicSourceById(id: Long) =
-        neteaseSearchService.getMusicSourceById(id).await()
+
+    suspend fun getHotSearchResponse() =
+        neteaseSearchService.getHotSearchResponse().await()
+
+    suspend fun getSearchSuggest(keywords: String) =
+        neteaseSearchService.getSearchSuggest(keywords).await()
+
+    suspend fun getSongExpressList(type: Int) = neteaseSearchService.getSongExpressList(type).await()
 
     private suspend fun<T> Call<T>.await(): T{
         return suspendCoroutine { continuation ->

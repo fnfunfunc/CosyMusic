@@ -1,4 +1,4 @@
-package com.musicapp.cosymusic.player
+package com.musicapp.cosymusic.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel

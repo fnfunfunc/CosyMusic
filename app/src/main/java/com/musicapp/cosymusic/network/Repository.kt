@@ -1,6 +1,7 @@
 package com.musicapp.cosymusic.network
 
 import androidx.lifecycle.liveData
+import com.musicapp.cosymusic.util.LogUtil
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.coroutineScope
 import kotlin.coroutines.CoroutineContext
@@ -23,13 +24,36 @@ object Repository {
         }
     }
 
-    fun getMusicSourceById(id: Long) = fire(Dispatchers.IO){
+
+    fun getHotSearchResponse() = fire(Dispatchers.IO){
         coroutineScope {
-            val response = NeteaseNetwork.getMusicSourceById(id)
+            val response = NeteaseNetwork.getHotSearchResponse()
             if(response.code == 200){
                 Result.success(response.data)
             }else{
-                Result.failure(RuntimeException("获取歌曲资源失败"))
+                Result.failure(RuntimeException("获取热搜列表失败"))
+            }
+        }
+    }
+
+    fun getSongExpressList(type: Int) = fire(Dispatchers.IO){
+        coroutineScope {
+            val response = NeteaseNetwork.getSongExpressList(type)
+            if(response.code == 200){
+                Result.success(response.data)
+            }else{
+                Result.failure(RuntimeException("The response of getSongExpressList body is null"))
+            }
+        }
+    }
+
+    fun getSearchSuggest(keywords: String) = fire(Dispatchers.IO){
+        coroutineScope {
+            val response = NeteaseNetwork.getSearchSuggest(keywords)
+            if(response.code == 200){
+                Result.success(response.result)
+            }else{
+                Result.failure(RuntimeException("The response of getSearchSuggest is null"))
             }
         }
     }

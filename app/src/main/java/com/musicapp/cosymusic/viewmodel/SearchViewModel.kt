@@ -21,14 +21,24 @@ class SearchViewModel: ViewModel() {
         searchMusicLiveData.value = keywords
     }
 
-    private val musicId = MutableLiveData<Long>()
+    private val hotSearchLiveData = MutableLiveData<Any?>()
 
-    val musicSourceResponse = Transformations.switchMap(musicId){ id ->
-        Repository.getMusicSourceById(id)
+    val hotSearchResponseData = Transformations.switchMap(hotSearchLiveData){
+        Repository.getHotSearchResponse()
     }
 
-    fun getMusicSourceById(id: Long){
-        musicId.value = id
+    fun getHotSearchResponse(){
+        hotSearchLiveData.value = hotSearchLiveData.value
+    }
+
+    private val searchTextLiveData = MutableLiveData<String>()
+
+    val searchSuggestData = Transformations.switchMap(searchTextLiveData){ keywords ->
+        Repository.getSearchSuggest(keywords)
+    }
+
+    fun getSearchSuggest(keywords: String){
+        searchTextLiveData.value = keywords
     }
 
 }

@@ -4,11 +4,14 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.musicapp.cosymusic.R
 import com.musicapp.cosymusic.activity.ActivityCollector
 import com.musicapp.cosymusic.activity.PlayerActivity
 import com.musicapp.cosymusic.application.App
 import com.musicapp.cosymusic.databinding.MiniPlayerBinding
+import com.musicapp.cosymusic.util.cancelCache
+import com.musicapp.cosymusic.util.getArtistsString
 
 abstract class BaseActivity : AppCompatActivity() {
 
@@ -18,19 +21,20 @@ abstract class BaseActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         ActivityCollector.addActivity(this)
 
+        requestData()
         initView()
         registerPermission()
-        initSettings()
         initData()
         initPlayer()
         initListeners()
         initObservers()
         initBroadcastReceivers()
+
     }
 
+    protected open fun requestData() { }
     protected open fun initView() { }
     protected open fun registerPermission() { }
-    protected open fun initSettings() { }
     protected open fun initData() { }
     protected open fun initListeners() { }
     protected open fun initObservers() { }
@@ -59,17 +63,25 @@ abstract class BaseActivity : AppCompatActivity() {
                     it.playState.observe(this@BaseActivity){state ->
                         if(state){
                             Glide.with(this@BaseActivity)
-                                .load(R.drawable.ic_mini_pause).into(ivPlayerController)
+                                .load(R.drawable.ic_mini_pause)
+                                .cancelCache()
+                                .into(ivPlayerController)
                         }else{
                             Glide.with(this@BaseActivity)
-                                .load(R.drawable.ic_mini_play).into(ivPlayerController)
+                                .load(R.drawable.ic_mini_play)
+                                .cancelCache()
+                                .into(ivPlayerController)
                         }
                     }
 
                     it.musicData.observe(this@BaseActivity){ musicData ->
                         musicName.text = musicData.name
-                        artistName.text = musicData.artist?.get(0)?.name ?: "未知"
-                        Glide.with(this@BaseActivity).load(musicData.album.picUrl).into(albumImage)
+
+                        artistName.text = getArtistsString(musicData.artists)
+
+                        Glide.with(this@BaseActivity)
+                            .load(musicData.album.picUrl)
+                            .into(albumImage)
                     }
                 }
             }
