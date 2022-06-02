@@ -1,0 +1,4 @@
+*.xml linguist-language=xml
+*.kt linguist-language=kotlin
+*.js linguist-language=javascript
+*.html linguist-language=html
