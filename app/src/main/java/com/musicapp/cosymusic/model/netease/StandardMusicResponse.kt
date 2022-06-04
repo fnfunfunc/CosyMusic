@@ -19,9 +19,9 @@ data class StandardMusicResponse(val result: Result, val code: Int): Parcelable{
         val id: Long,      //歌曲Id
         val name: String,   //歌曲名称
         @SerializedName("ar") val artists: List<ArtistInfo>?,
-        @SerializedName("al") val album: AlbumInfo,
+        @Embedded @SerializedName("al") val album: AlbumInfo,
         val pop: Int?,     //热度
-        val privilege: Privilege,
+        @Embedded val privilege: Privilege,
         @SerializedName("dt") val duration: Int
     ): Parcelable
 

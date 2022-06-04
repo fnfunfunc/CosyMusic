@@ -49,10 +49,11 @@
         <entry key="..\:/Android_Project/CosyMusic/app/src/main/res/layout/activity_base.xml" value="0.22826086956521738" />
         <entry key="..\:/Android_Project/CosyMusic/app/src/main/res/layout/activity_main.xml" value="0.176" />
         <entry key="..\:/Android_Project/CosyMusic/app/src/main/res/layout/activity_play_history.xml" value="0.152" />
-        <entry key="..\:/Android_Project/CosyMusic/app/src/main/res/layout/activity_player.xml" value="0.136" />
+        <entry key="..\:/Android_Project/CosyMusic/app/src/main/res/layout/activity_player.xml" value="0.264" />
         <entry key="..\:/Android_Project/CosyMusic/app/src/main/res/layout/activity_search.xml" value="0.176" />
         <entry key="..\:/Android_Project/CosyMusic/app/src/main/res/layout/activity_song_express.xml" value="0.152" />
         <entry key="..\:/Android_Project/CosyMusic/app/src/main/res/layout/activity_song_menu.xml" value="0.264" />
+        <entry key="..\:/Android_Project/CosyMusic/app/src/main/res/layout/dialog_play_list.xml" value="0.20726495726495728" />
         <entry key="..\:/Android_Project/CosyMusic/app/src/main/res/layout/dialog_player.xml" value="0.176" />
         <entry key="..\:/Android_Project/CosyMusic/app/src/main/res/layout/fragment_discover.xml" value="0.264" />
         <entry key="..\:/Android_Project/CosyMusic/app/src/main/res/layout/fragment_home.xml" value="0.4" />
@@ -61,6 +62,7 @@
         <entry key="..\:/Android_Project/CosyMusic/app/src/main/res/layout/header_user_info.xml" value="0.22826086956521738" />
         <entry key="..\:/Android_Project/CosyMusic/app/src/main/res/layout/item_hot_search.xml" value="0.2" />
         <entry key="..\:/Android_Project/CosyMusic/app/src/main/res/layout/item_music.xml" value="0.4" />
+        <entry key="..\:/Android_Project/CosyMusic/app/src/main/res/layout/item_music_in_play_list_dialog.xml" value="0.536" />
         <entry key="..\:/Android_Project/CosyMusic/app/src/main/res/layout/item_recommend_song_menu.xml" value="0.4" />
         <entry key="..\:/Android_Project/CosyMusic/app/src/main/res/layout/item_search_suggest.xml" value="0.4" />
         <entry key="..\:/Android_Project/CosyMusic/app/src/main/res/layout/mini_player.xml" value="0.4" />

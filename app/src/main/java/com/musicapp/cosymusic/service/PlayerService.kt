@@ -17,6 +17,7 @@ import androidx.lifecycle.MutableLiveData
 import com.musicapp.cosymusic.R
 import com.musicapp.cosymusic.activity.ActivityCollector
 import com.musicapp.cosymusic.activity.PlayHistoryActivity
+import com.musicapp.cosymusic.application.App
 import com.musicapp.cosymusic.application.App.Companion.mmkv
 import com.musicapp.cosymusic.base.BaseMediaService
 import com.musicapp.cosymusic.local.PlayHistory
@@ -232,6 +233,28 @@ class PlayerService : BaseMediaService() {
             }else{
                 LogUtil.e("PlayerService", "下一首播放的歌曲为空")
             }
+        }
+
+        /**
+         * 获取当前的播放列表
+         */
+        fun getCurrentPlayList(): List<StandardMusicResponse.StandardMusicData>?{
+           return PlayerQueue.currentQueue.value
+        }
+
+        /**
+         * 设置当前播放的音乐位于播放列表中的位置
+         */
+        fun setCurrentPlayPosition(position: Int){
+            PlayerQueue.currentPlayPosition.value = position
+            mmkv.encode(KString.CURRENT_PLAY_POSITION, position)
+        }
+
+        /**
+         * 获取当前播放的音乐位于播放列表中的位置
+         */
+        fun getCurrentPlayPosition(): Int{
+            return PlayerQueue.currentPlayPosition.value ?: 0
         }
 
         fun savePlayList(musicList: MutableList<StandardMusicResponse.StandardMusicData>){

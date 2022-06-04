@@ -14,6 +14,9 @@ object KString {
 
     const val SEARCH_HISTORY = "search_history"
 
+    //当前歌曲在播放列表的位置
+    const val CURRENT_PLAY_POSITION = "current_play_position"
+
     const val SONG_EXPRESS_DETAIL = "song_express_detail"
 
     const val HOT_SEARCH_CLICKED_POSITION = "hot_search_clicked_position"

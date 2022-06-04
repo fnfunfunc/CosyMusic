@@ -19,10 +19,7 @@ import com.musicapp.cosymusic.base.BaseActivity
 import com.musicapp.cosymusic.databinding.ActivityMainBinding
 import com.musicapp.cosymusic.fragment.main.DiscoverFragment
 import com.musicapp.cosymusic.fragment.main.HomeFragment
-import com.musicapp.cosymusic.util.BroadcastKString
-import com.musicapp.cosymusic.util.KString
-import com.musicapp.cosymusic.util.LogUtil
-import com.musicapp.cosymusic.util.dp
+import com.musicapp.cosymusic.util.*
 import com.musicapp.cosymusic.viewmodel.MainViewModel
 import eightbitlab.com.blurview.RenderScriptBlur
 
@@ -42,11 +39,10 @@ class MainActivity : BaseActivity() {
     override fun initView() {
         super.initView()
 
-        /*binding.root.setOnApplyWindowInsetsListener { _, insets ->
-            viewModel.statusBarHeight.value = insets.systemWindowInsetTop
-            viewModel.navigationBarHeight.value = insets.systemWindowInsetBottom
-            insets
-        }*/
+        //屏幕适配
+        (binding.titleBar.layoutParams as ConstraintLayout.LayoutParams).apply {
+            topMargin = StatusBarUtil.getStatusBarHeight(window, this@MainActivity)
+        }
 
         if(SDK_INT >= Build.VERSION_CODES.R) {
             window.setDecorFitsSystemWindows(false)

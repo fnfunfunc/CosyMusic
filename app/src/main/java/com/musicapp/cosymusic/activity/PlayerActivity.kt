@@ -1,14 +1,20 @@
 package com.musicapp.cosymusic.activity
 
 
+import android.os.Build
 import android.view.WindowManager
 import android.widget.SeekBar
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.ViewModelProvider
+import coil.load
+import coil.size.ViewSizeResolver
+import coil.transform.BlurTransformation
 import com.bumptech.glide.Glide
 import com.musicapp.cosymusic.R
 import com.musicapp.cosymusic.application.App
 import com.musicapp.cosymusic.base.BaseActivity
 import com.musicapp.cosymusic.databinding.ActivityPlayerBinding
+import com.musicapp.cosymusic.util.StatusBarUtil
 //import com.musicapp.cosymusic.player.Player
 import com.musicapp.cosymusic.viewmodel.PlayerViewModel
 import com.musicapp.cosymusic.util.cancelCache
@@ -26,6 +32,11 @@ class PlayerActivity : BaseActivity() {
 
     override fun initView() {
         setContentView(binding.root)
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            window.setDecorFitsSystemWindows(false)
+        }
+
         val params: WindowManager.LayoutParams = window.attributes
         params.windowAnimations = R.style.player_activity_animation
         window.attributes = params
@@ -36,6 +47,14 @@ class PlayerActivity : BaseActivity() {
             binding.musicName.text = it.name
             binding.artistName.text = getArtistsString(it.artists)
             Glide.with(this).load(it.album.picUrl).into(binding.albumImage)
+            binding.ivBackground.load(it.album.picUrl){
+                size(ViewSizeResolver(binding.ivBackground))
+                transformations(
+                    BlurTransformation(this@PlayerActivity,
+                    15f,
+                    15f))
+                crossfade(500)
+            }
 
             //在有songData的情况下进行此操作
             binding.playProgressBar.max = viewModel.duration.value?: 0

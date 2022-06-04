@@ -1,6 +1,5 @@
 package com.musicapp.cosymusic.activity
 
-import android.annotation.SuppressLint
 import android.os.Build
 import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -20,7 +19,6 @@ import com.musicapp.cosymusic.model.netease.StandardMusicResponse
 import com.musicapp.cosymusic.util.*
 import com.musicapp.cosymusic.util.StatusBarUtil.getStatusBarHeight
 import com.musicapp.cosymusic.viewmodel.SongMenuViewModel
-import java.util.*
 
 class SongMenuActivity : BaseActivity() {
 
@@ -43,6 +41,7 @@ class SongMenuActivity : BaseActivity() {
     override fun initView() {
         setContentView(binding.root)
 
+        //屏幕适配
         (binding.clTitleBar.layoutParams as ConstraintLayout.LayoutParams).apply {
             topMargin = getStatusBarHeight(window, this@SongMenuActivity)
         }
@@ -64,6 +63,7 @@ class SongMenuActivity : BaseActivity() {
 
         binding.rvMenuSong.layoutManager = LinearLayoutManager(this)
         binding.rvMenuSong.adapter = adapter
+
 
         var rvMenuSongScrollY = 0
         binding.rvMenuSong.setOnScrollChangeListener { _, _, _, _, oldScrollY ->

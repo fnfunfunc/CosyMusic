@@ -4,6 +4,7 @@ import android.app.Application
 import android.content.Context
 import android.content.Intent
 import androidx.lifecycle.MutableLiveData
+import com.musicapp.cosymusic.room.database.AppDatabase
 import com.tencent.mmkv.MMKV
 import com.musicapp.cosymusic.service.PlayerService
 import com.musicapp.cosymusic.service.PlayerServiceConnection
@@ -23,6 +24,8 @@ class App: Application() {
 
         val playerServiceConnection by lazy { PlayerServiceConnection() }
 
+        lateinit var appDatabase: AppDatabase
+
     }
 
     override fun onCreate() {
@@ -31,6 +34,8 @@ class App: Application() {
         //初始化MMKV的根目录
         MMKV.initialize(this)
         mmkv = MMKV.defaultMMKV()!!
+
+        appDatabase = AppDatabase.getDatabase(this)
 
         startPlayerService()
     }

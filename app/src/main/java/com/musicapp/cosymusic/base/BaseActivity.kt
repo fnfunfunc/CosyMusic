@@ -12,6 +12,7 @@ import com.musicapp.cosymusic.activity.ActivityCollector
 import com.musicapp.cosymusic.activity.PlayerActivity
 import com.musicapp.cosymusic.application.App
 import com.musicapp.cosymusic.databinding.MiniPlayerBinding
+import com.musicapp.cosymusic.ui.dialog.PlayListDialog
 import com.musicapp.cosymusic.util.cancelCache
 import com.musicapp.cosymusic.util.getArtistsString
 
@@ -58,6 +59,10 @@ abstract class BaseActivity : AppCompatActivity() {
 
             ivPlayerController.setOnClickListener {
                 App.playerController.value?.changePlayState()
+            }
+
+            ivPlayerQueue.setOnClickListener {
+                PlayListDialog().show(supportFragmentManager, null)
             }
 
             App.playerController.observe(this@BaseActivity){ playerController ->

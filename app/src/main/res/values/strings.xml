@@ -29,4 +29,5 @@
     <string name="more">更多</string>
     <string name="song_menu">歌单</string>
     <string name="play_all">播放全部(%d)</string>
+    <string name="play_list_num">播放列表(%d)</string>
 </resources>
