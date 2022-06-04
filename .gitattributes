@@ -2,3 +2,15 @@
 *.kt linguist-language=kotlin
 *.js linguist-language=javascript
 *.html linguist-language=html
+*.java linguist-language=java
+*.cpp linguist-language=cpp
+*.rs linguist-language=rust
+*.dart linguist-language=dart
+*.go linguist-languaage=go
+*.ts linguist-language=typescript
+*.rb linguist-language=ruby
+*.py linguist-language=python
+*.php linguist-language=php
+*.c linguist-language=c
+*.cs linguist-language=csharp
+*.lua lingusit-language=lua
