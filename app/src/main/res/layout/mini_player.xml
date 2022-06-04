@@ -49,28 +49,35 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_player_menu" />
 
-    <TextView
+    <com.musicapp.cosymusic.widget.MarqueeTextView
         android:id="@+id/musicName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="14dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="8dp"
+        android:ellipsize="marquee"
+        android:marqueeRepeatLimit="marquee_forever"
+        android:singleLine="true"
         android:text="有所思"
         android:textColor="@color/black"
         android:textSize="16sp"
         app:layout_constraintEnd_toStartOf="@+id/ivPlayerController"
         app:layout_constraintStart_toEndOf="@+id/cvCover"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="SpUsage" />
 
     <TextView
         android:id="@+id/artistName"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginTop="4dp"
+        android:layout_marginEnd="8dp"
         android:text="佚名"
         android:textColor="@color/grey"
         android:textSize="13sp"
+        app:layout_constraintEnd_toStartOf="@+id/ivPlayerController"
         app:layout_constraintStart_toEndOf="@+id/cvCover"
         app:layout_constraintTop_toBottomOf="@+id/musicName" />
 

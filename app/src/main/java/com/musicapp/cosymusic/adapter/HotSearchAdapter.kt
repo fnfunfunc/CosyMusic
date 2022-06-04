@@ -54,8 +54,16 @@ class HotSearchAdapter(private val hotSearchList: List<HotSearchResponse.Data>):
         if(hotSearch.iconUrl != null){
             Glide.with(App.context).load(hotSearch.iconUrl).into(holder.ivHotIcon)
         }
-        if(position < 3){
+        //以下这样写貌似有bug，会出现别的排名也变红的现象
+        /*if(position < 3){
             holder.tvRank.setTextColor(ContextCompat.getColor(App.context, R.color.app_theme_color))
+        }*/
+        holder.tvRank.let {
+            if(it.text == "1" || it.text == "2" || it.text == "3"){
+                it.setTextColor(ContextCompat.getColor(App.context, R.color.app_theme_color))
+            }else{
+                it.setTextColor(ContextCompat.getColor(App.context, R.color.black))
+            }
         }
     }
 

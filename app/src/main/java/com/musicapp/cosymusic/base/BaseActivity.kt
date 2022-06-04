@@ -3,6 +3,8 @@ package com.musicapp.cosymusic.base
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import coil.load
+import coil.size.ViewSizeResolver
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.musicapp.cosymusic.R
@@ -79,9 +81,13 @@ abstract class BaseActivity : AppCompatActivity() {
 
                         artistName.text = getArtistsString(musicData.artists)
 
-                        Glide.with(this@BaseActivity)
+                        /*Glide.with(this@BaseActivity)
                             .load(musicData.album.picUrl)
-                            .into(albumImage)
+                            .into(albumImage)*/
+                        albumImage.load(musicData.album.picUrl){
+                            size(ViewSizeResolver(albumImage))
+                            allowHardware(false)
+                        }
                     }
                 }
             }

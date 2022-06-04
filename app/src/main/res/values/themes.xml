@@ -14,5 +14,6 @@
         <!-- Customize your theme here. -->
         <item name="android:windowLightStatusBar">true</item><!--设置状态栏为白底黑字-->
         <item name="android:windowBackground">@color/white</item>
+        <item name="android:navigationBarColor">@color/transparent_color</item> <!--将底部小横条置为透明-->
     </style>
 </resources>

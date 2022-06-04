@@ -79,6 +79,13 @@ class SearchActivity : BaseActivity() {
 
         miniPlayer = binding.miniPlayer
 
+        //文本框获取焦点
+        binding.searchText.apply {
+            isFocusable = true
+            isFocusableInTouchMode = true
+            requestFocus()
+        }
+
         binding.rvPlayList.visibility = View.GONE
         binding.rvPlayList.layoutManager = LinearLayoutManager(this)
         binding.rvPlayList.adapter = musicAdapter
@@ -91,18 +98,18 @@ class SearchActivity : BaseActivity() {
 
         val totalSize = searchHistoryList.size
 
-        if(totalSize == 0){
+        if (totalSize == 0) {
             binding.clHistory.visibility = View.GONE
             return
         }
 
-        val historyList =  if(totalSize > 15){  //如果多于15条
+        val historyList = if (totalSize > 15) {  //如果多于15条
             searchHistoryList.slice(0 until 15)
-        }else{
+        } else {
             searchHistoryList
         }
 
-        for(searchHistory in historyList){
+        for (searchHistory in historyList) {
             val textView = TextView(this).run {
                 defaultSettings(searchHistory)
                 this
@@ -110,11 +117,13 @@ class SearchActivity : BaseActivity() {
             binding.flowLayout.addView(textView)
         }
 
-        if(totalSize > 15){
+        if (totalSize > 15) {
             val textView = TextView(this).run {
                 text = "..."
-                layoutParams = MarginLayoutParams(MarginLayoutParams.WRAP_CONTENT,
-                    MarginLayoutParams.WRAP_CONTENT).apply {
+                layoutParams = MarginLayoutParams(
+                    MarginLayoutParams.WRAP_CONTENT,
+                    MarginLayoutParams.WRAP_CONTENT
+                ).apply {
                     setMargins(4, 8, 4, 8)
                 }
                 setTextAppearance(R.style.search_text_style)
@@ -122,7 +131,7 @@ class SearchActivity : BaseActivity() {
                 setTextColor(ContextCompat.getColor(this@SearchActivity, R.color.shallow_black))
                 setOnClickListener {
                     binding.flowLayout.removeView(this) //移除出去
-                    for(searchHistory in searchHistoryList.slice(15 until totalSize)){
+                    for (searchHistory in searchHistoryList.slice(15 until totalSize)) {
                         val textView = TextView(this@SearchActivity).run {
                             defaultSettings(searchHistory)
                             this
@@ -156,7 +165,7 @@ class SearchActivity : BaseActivity() {
             }
             setOnEditorActionListener { textView, i, keyEvent ->
                 //软键盘点击了搜索
-                if(i == EditorInfo.IME_ACTION_SEARCH){
+                if (i == EditorInfo.IME_ACTION_SEARCH) {
                     search()
                 }
                 false
@@ -197,21 +206,21 @@ class SearchActivity : BaseActivity() {
             }
         }
 
-        viewModel.hotSearchResponseData.observe(this){ result ->
+        viewModel.hotSearchResponseData.observe(this) { result ->
             val response = result.getOrNull()
-            if(response != null){
+            if (response != null) {
                 hotSearchList.clear()
                 hotSearchList.addAll(response)
                 hotSearchAdapter.notifyDataSetChanged()
-            }else{
+            } else {
                 toast("未能获取到热搜列表")
                 LogUtil.e("SearchActivity", result.exceptionOrNull().toString())
             }
         }
 
-        viewModel.searchSuggestData.observe(this){ result ->
+        viewModel.searchSuggestData.observe(this) { result ->
             val response = result.getOrNull()
-            if(response != null){
+            if (response != null) {
                 val matchList = response.allMatch ?: return@observe
                 searchSuggestList.clear()
                 searchSuggestList.addAll(matchList)
@@ -220,7 +229,8 @@ class SearchActivity : BaseActivity() {
                 binding.rvSearchSuggest.visibility = View.VISIBLE
                 binding.clHistory.visibility = View.GONE
                 binding.clBody.visibility = View.GONE
-            }else{
+                binding.rvPlayList.visibility = View.GONE
+            } else {
                 LogUtil.e("SearchActivity", result.exceptionOrNull().toString())
             }
         }
@@ -240,9 +250,10 @@ class SearchActivity : BaseActivity() {
         unregisterReceiver(searchSuggestBroadcastReceiver)
     }
 
-    private fun search(){
+    private fun search() {
         //关闭软键盘
-        val inputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        val inputMethodManager =
+            getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         inputMethodManager.hideSoftInputFromWindow(window.decorView.windowToken, 0)
 
         val keywords = binding.searchText.text.toString()
@@ -252,10 +263,12 @@ class SearchActivity : BaseActivity() {
         }
     }
 
-    private fun TextView.defaultSettings(searchHistory: String){
+    private fun TextView.defaultSettings(searchHistory: String) {
         text = searchHistory
-        layoutParams = MarginLayoutParams(MarginLayoutParams.WRAP_CONTENT,
-            MarginLayoutParams.WRAP_CONTENT).apply {
+        layoutParams = MarginLayoutParams(
+            MarginLayoutParams.WRAP_CONTENT,
+            MarginLayoutParams.WRAP_CONTENT
+        ).apply {
             setMargins(4, 8, 4, 8)
         }
         setTextAppearance(R.style.search_text_style)
@@ -263,25 +276,32 @@ class SearchActivity : BaseActivity() {
         setTextColor(ContextCompat.getColor(this@SearchActivity, R.color.shallow_black))
         setOnClickListener {
             binding.searchText.setText(searchHistory)
+            binding.searchText.setSelection(searchHistory.length)
             search()
         }
     }
 
-    inner class HotSearchBroadcastReceiver: BroadcastReceiver(){
+    inner class HotSearchBroadcastReceiver : BroadcastReceiver() {
         override fun onReceive(p0: Context?, p1: Intent) {
             val position = p1.getIntExtra(KString.HOT_SEARCH_CLICKED_POSITION, -1)
-            if(position != -1){
-                binding.searchText.setText(hotSearchList[position].searchWord)
+            if (position != -1) {
+                hotSearchList[position].searchWord.let {
+                    binding.searchText.setText(it)
+                    binding.searchText.setSelection(it.length)
+                }
                 search()
             }
         }
     }
 
-    inner class SearchSuggestBroadcastReceiver: BroadcastReceiver(){
+    inner class SearchSuggestBroadcastReceiver : BroadcastReceiver() {
         override fun onReceive(p0: Context?, p1: Intent) {
             val position = p1.getIntExtra(KString.SEARCH_SUGGEST_CLICKED_POSITION, -1)
-            if(position != -1){
-                binding.searchText.setText(searchSuggestList[position].keyword)
+            if (position != -1) {
+                searchSuggestList[position].keyword.let {
+                    binding.searchText.setText(it)
+                    binding.searchText.setSelection(it.length)
+                }
                 search()
             }
         }

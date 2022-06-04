@@ -4,7 +4,6 @@
     package="com.musicapp.cosymusic">
 
     <uses-permission android:name="android.permission.INTERNET" />
-
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 
     <application
@@ -19,6 +18,9 @@
         android:theme="@style/Theme.CosyMusic"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
+        <activity
+            android:name=".activity.SongMenuActivity"
+            android:exported="false" />
         <activity
             android:name=".activity.SongExpressActivity"
             android:exported="false" />
@@ -49,6 +51,5 @@
             android:enabled="true"
             android:exported="true" />
     </application>
-
 
 </manifest>

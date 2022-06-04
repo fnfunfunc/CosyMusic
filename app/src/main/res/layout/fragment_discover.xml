@@ -60,8 +60,21 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/clNewSong"
                 android:layout_width="match_parent"
-                android:layout_height="350dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="20dp">
+
+                <Button
+                    android:id="@+id/btnShowMore"
+                    android:layout_width="60dp"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@null"
+                    android:text="@string/more"
+                    android:textColor="#757575"
+                    android:visibility="invisible"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/vp2NewSong" />
 
                 <TextView
                     android:id="@+id/tvNewSong"
@@ -77,12 +90,27 @@
                 <androidx.viewpager2.widget.ViewPager2
                     android:id="@+id/vp2NewSong"
                     android:layout_width="0dp"
-                    android:layout_height="210dp"
-                    android:layout_marginEnd="10dp"
+                    android:layout_height="200dp"
                     android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/songTypeTab" />
+                    app:layout_constraintTop_toBottomOf="@+id/songTypeTab">
+
+
+                </androidx.viewpager2.widget.ViewPager2>
+
+                <com.airbnb.lottie.LottieAnimationView
+                    android:id="@+id/lottieLoading1"
+                    android:layout_width="84dp"
+                    android:layout_height="84dp"
+                    android:padding="16dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/vp2NewSong"
+                    app:layout_constraintEnd_toEndOf="@+id/vp2NewSong"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/vp2NewSong"
+                    app:lottie_rawRes="@raw/lottie_loading"/>
 
                 <com.google.android.material.tabs.TabLayout
                     android:id="@+id/songTypeTab"
@@ -110,7 +138,9 @@
                     <com.google.android.material.tabs.TabItem
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/eu_am" />
+                        android:text="@string/eu_am"
+                        tools:layout_editor_absoluteX="134dp"
+                        tools:layout_editor_absoluteY="39dp" />
 
                     <com.google.android.material.tabs.TabItem
                         android:layout_width="wrap_content"
@@ -122,20 +152,53 @@
                         android:layout_height="wrap_content"
                         android:text="@string/korea" />
                 </com.google.android.material.tabs.TabLayout>
-
-                <Button
-                    android:id="@+id/btnShowMore"
-                    android:layout_width="60dp"
-                    android:layout_height="30dp"
-                    android:layout_marginTop="5dp"
-                    android:background="@null"
-                    android:text="@string/more"
-                    android:textColor="#757575"
-                    android:visibility="invisible"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/vp2NewSong" />
             </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/clRecommend"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp">
+
+
+                <TextView
+                    android:id="@+id/tvRecommend"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/recommended_music_menu"
+                    android:textAppearance="@style/bold_text_style"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.airbnb.lottie.LottieAnimationView
+                    android:id="@+id/lottieLoading2"
+                    android:layout_width="84dp"
+                    android:layout_height="84dp"
+                    android:padding="16dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/rvRecommend"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/rvRecommend"
+                    app:lottie_rawRes="@raw/lottie_loading" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvRecommend"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tvRecommend" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="96dp"/>
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>

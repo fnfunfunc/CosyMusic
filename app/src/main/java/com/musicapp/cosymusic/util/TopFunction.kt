@@ -4,12 +4,14 @@ import android.graphics.drawable.Drawable
 import android.os.Handler
 import android.os.Looper
 import android.widget.Toast
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.RequestBuilder
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.musicapp.cosymusic.application.App
 import com.musicapp.cosymusic.model.netease.SongExpressResponse.SongExpressData
 import com.musicapp.cosymusic.model.netease.StandardMusicResponse
 import com.musicapp.cosymusic.model.netease.StandardMusicResponse.StandardMusicData
+import com.musicapp.cosymusic.model.netease.TrackIdsResponse.MenuMusicData
 
 /**
  * @author Eternal Epoch
@@ -39,20 +41,25 @@ fun RequestBuilder<Drawable>.cancelCache(): RequestBuilder<Drawable>{
 }
 
 /**
- * 从SongExpressResponse转为StandardMusicData
+ * 从SongExpressData转为StandardMusicData
  */
-fun SongExpressData.toStandard(): StandardMusicData{
-    return StandardMusicData(id = id, name = name, artists = artists,
+fun SongExpressData.toStandard() = StandardMusicData(id = id, name = name, artists = artists,
         album = album, privilege = StandardMusicResponse.Privilege(fee = fee, pl = null),
         pop = null, duration = duration)
-}
+
+
+/**
+ * 从MenuMusicData转为StandardMusicData
+ */
+fun MenuMusicData.toStandard() = StandardMusicData(id = id, name = name, artists = artists,
+    album = album, privilege = StandardMusicResponse.Privilege(fee = fee, pl = null),
+    duration = duration, pop = pop)
 
 /**
  * 将artists的name转换为指定字符串
  */
 fun getArtistsString(artists: List<StandardMusicResponse.ArtistInfo>?): String{
-    val size = artists?.size ?: 0
-    return when(size){
+    return when(val size = artists?.size ?: 0){
         0 -> "未知"
         1 -> artists!![0].name
         else -> {
@@ -65,3 +72,23 @@ fun getArtistsString(artists: List<StandardMusicResponse.ArtistInfo>?): String{
         }
     }
 }
+
+/**
+ * 将dp转为px
+ */
+fun dp2px(dp: Float) = dp * App.context.resources.displayMetrics.density
+
+/**
+ * 数字转dp
+ */
+fun Int.dp() = dp2px(this.toFloat()).toInt()
+
+/**
+ * 判断RecyclerView是否滑动到底部
+ * computeVerticalScrollExtent()是当前屏幕显示的区域高度，
+ * computeVerticalScrollOffset() 是当前屏幕之前滑过的距离，
+ * computeVerticalScrollRange()是整个View控件的高度。
+ */
+fun RecyclerView.isSlideToBottom() =
+    (this.computeVerticalScrollExtent() + this.computeVerticalScrollOffset()
+            >= this.computeVerticalScrollRange())

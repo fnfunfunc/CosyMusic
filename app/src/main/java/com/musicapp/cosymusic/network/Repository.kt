@@ -1,9 +1,9 @@
 package com.musicapp.cosymusic.network
 
 import androidx.lifecycle.liveData
-import com.musicapp.cosymusic.util.LogUtil
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.coroutineScope
+import java.lang.StringBuilder
 import kotlin.coroutines.CoroutineContext
 
 /**
@@ -58,6 +58,43 @@ object Repository {
         }
     }
 
+    fun getRecommendMenu() = fire(Dispatchers.IO){
+        coroutineScope {
+            val response = NeteaseNetwork.getRecommendMenu()
+            if(response.code == 200){
+                Result.success(response.result)
+            }else{
+                Result.failure(RuntimeException("The response of getRecommendMenu is null"))
+            }
+        }
+    }
+
+    fun getSongMenuById(id: Long) = fire(Dispatchers.IO){
+        coroutineScope {
+            val response = NeteaseNetwork.getSongMenuById(id)
+            if(response.code == 200){
+                Result.success(response.playlist)
+            }else{
+                Result.failure(RuntimeException("The response of getSongById is null"))
+            }
+        }
+    }
+
+    fun getMusicByTrackIds(ids: List<Long>) = fire(Dispatchers.IO){
+        coroutineScope {
+            val str = StringBuilder("")
+            for(id in ids){
+                str.append("$id,")
+            }
+            //以下去掉了最后面的逗号
+            val response = NeteaseNetwork.getMusicByTracksId(str.slice(0..(str.length - 2)).toString())
+            if(response.code == 200){
+                Result.success(response.songs)
+            }else{
+                Result.failure(RuntimeException("The response of getMusicByTrackIds is null"))
+            }
+        }
+    }
 
     private fun<T> fire(context: CoroutineContext, block: suspend () -> Result<T>) =
         liveData(context) {

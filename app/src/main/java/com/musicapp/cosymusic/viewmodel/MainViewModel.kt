@@ -11,6 +11,9 @@ import com.musicapp.cosymusic.network.Repository
  */
 class MainViewModel: ViewModel() {
 
+    val statusBarHeight = MutableLiveData<Int>()
+
+    val navigationBarHeight = MutableLiveData<Int>()
 
     fun getSongExpressList(){
         chineseType.value = 7
@@ -41,6 +44,16 @@ class MainViewModel: ViewModel() {
 
     val koreanSongList = Transformations.switchMap(koreanType){ type ->
         Repository.getSongExpressList(type)
+    }
+
+    private val recommendMenu = MutableLiveData<Any?>()
+
+    val recommendMenuList = Transformations.switchMap(recommendMenu){
+        Repository.getRecommendMenu()
+    }
+
+    fun getRecommendMenu(){
+        recommendMenu.value = recommendMenu.value
     }
 
 }

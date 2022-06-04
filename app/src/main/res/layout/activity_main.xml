@@ -4,17 +4,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/drawerLayout"
     android:layout_height="match_parent"
-    android:layout_width="match_parent"
-    tools:context=".activity.MainActivity">
+    android:layout_width="match_parent">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clTotal"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        tools:context=".activity.MainActivity">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/titleBar"
             android:layout_width="0dp"
             android:layout_height="56dp"
+            android:layout_marginTop="20dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -72,6 +74,7 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/clMainBody"
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:layout_constraintBaseline_toTopOf="parent"
@@ -85,6 +88,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginStart="1dp"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
@@ -93,8 +97,8 @@
             <eightbitlab.com.blurview.BlurView
                 android:id="@+id/blurViewPlay"
                 android:layout_width="match_parent"
-                android:layout_height="64dp"
-                android:background="#73FFFFFF"
+                android:layout_height="74dp"
+                android:background="@drawable/bg_mini_play"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
@@ -103,7 +107,7 @@
                 android:id="@+id/miniPlayer"
                 layout="@layout/mini_player"
                 android:layout_width="match_parent"
-                android:layout_height="64dp"
+                android:layout_height="74dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
 

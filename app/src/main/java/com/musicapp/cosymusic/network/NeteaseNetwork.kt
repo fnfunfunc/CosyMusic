@@ -28,6 +28,12 @@ object NeteaseNetwork {
 
     suspend fun getSongExpressList(type: Int) = neteaseSearchService.getSongExpressList(type).await()
 
+    suspend fun getRecommendMenu() = neteaseSearchService.getRecommendMenu().await()
+
+    suspend fun getSongMenuById(id: Long) = neteaseSearchService.getSongMenuById(id).await()
+
+    suspend fun getMusicByTracksId(ids: String) = neteaseSearchService.getMusicByTracksId(ids).await()
+
     private suspend fun<T> Call<T>.await(): T{
         return suspendCoroutine { continuation ->
             enqueue(object : Callback<T>{

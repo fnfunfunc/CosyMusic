@@ -6,11 +6,13 @@ package com.musicapp.cosymusic.util
  */
 object BroadcastKString {
 
-    const val PACKAGE_NAME = "com.musicapp.cosymusic"
+    private const val PACKAGE_NAME = "com.musicapp.cosymusic"
 
     const val MUSIC_BROADCAST = "${PACKAGE_NAME}.music_broadcast"
 
     const val HOT_SEARCH_CLICKED = "${PACKAGE_NAME}.hot_search_clicked"
 
     const val SEARCH_SUGGEST_CLICKED = "${PACKAGE_NAME}.search_suggest_clicked"
+
+    const val RECOMMEND_MENU_CLICKED = "${PACKAGE_NAME}.recommend_menu_clicked"
 }

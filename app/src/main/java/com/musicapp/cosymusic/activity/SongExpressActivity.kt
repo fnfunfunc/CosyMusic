@@ -1,6 +1,7 @@
 package com.musicapp.cosymusic.activity
 
 import android.annotation.SuppressLint
+import android.view.View
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.musicapp.cosymusic.adapter.NeteaseMusicAdapter
@@ -42,6 +43,9 @@ class SongExpressActivity() : BaseActivity() {
 
         miniPlayer = binding.miniPlayer
 
+        binding.lottieLoading.repeatCount = -1
+        binding.lottieLoading.playAnimation()
+
         position = intent.getIntExtra(KString.SONG_EXPRESS_DETAIL, 0)
         binding.tvTitle.text = when(position){
             0 -> "华语"
@@ -65,6 +69,8 @@ class SongExpressActivity() : BaseActivity() {
                     showList.add(expressMusic.toStandard())
                 }
                 adapter.notifyDataSetChanged()
+                binding.lottieLoading.pauseAnimation()
+                binding.lottieLoading.visibility = View.GONE
             }else{
                 LogUtil.e("SongExpressActivity", result.exceptionOrNull().toString())
             }

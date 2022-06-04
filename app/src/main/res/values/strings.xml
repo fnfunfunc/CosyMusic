@@ -27,4 +27,6 @@
     <string name="korea">韩国</string>
     <string name="japan">日本</string>
     <string name="more">更多</string>
+    <string name="song_menu">歌单</string>
+    <string name="play_all">播放全部(%d)</string>
 </resources>

@@ -1,5 +1,6 @@
 package com.musicapp.cosymusic.fragment.main
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,12 +10,16 @@ import com.musicapp.cosymusic.databinding.FragmentDiscoverBinding
 import com.musicapp.cosymusic.base.BaseFragment
 import com.musicapp.cosymusic.viewmodel.MainViewModel
 import androidx.fragment.app.*
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.google.android.material.tabs.TabLayoutMediator
 import com.musicapp.cosymusic.R
 import com.musicapp.cosymusic.activity.SongExpressActivity
+import com.musicapp.cosymusic.adapter.RecommendMenuAdapter
+import com.musicapp.cosymusic.model.netease.RecommendMenuResponse
 import com.musicapp.cosymusic.util.KString
 import com.musicapp.cosymusic.util.LogUtil
+import com.musicapp.cosymusic.util.toast
 
 /**
  * @author Eternal Epoch
@@ -35,12 +40,27 @@ class DiscoverFragment: BaseFragment() {
 
     private val china = SongExpressFragment(7)
 
+    private val recommendMenuList = mutableListOf<RecommendMenuResponse.Result>()
+
+    private val recommendMenuAdapter by lazy {
+        RecommendMenuAdapter(recommendMenuList)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentDiscoverBinding.inflate(inflater, container, false)
+
+        binding.lottieLoading1.repeatCount = -1
+        binding.lottieLoading1.playAnimation()
+        binding.lottieLoading2.repeatCount = -1
+        binding.lottieLoading2.pauseAnimation()
+
+        binding.rvRecommend.layoutManager = GridLayoutManager(activity, 2,
+            GridLayoutManager.HORIZONTAL , false)
+        binding.rvRecommend.adapter = recommendMenuAdapter
 
         binding.vp2NewSong.offscreenPageLimit = 4
         binding.vp2NewSong.adapter = object : FragmentStateAdapter(this){
@@ -67,6 +87,8 @@ class DiscoverFragment: BaseFragment() {
 
         viewModel.getSongExpressList()
 
+        viewModel.getRecommendMenu()
+
         return binding.root
     }
 
@@ -79,9 +101,25 @@ class DiscoverFragment: BaseFragment() {
         }
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     override fun initObservers() {
         viewModel.chineseSongList.observe(this){
+            binding.lottieLoading1.pauseAnimation()
+            binding.lottieLoading1.visibility = View.GONE //隐藏动画
             binding.btnShowMore.visibility = View.VISIBLE
+        }
+
+        viewModel.recommendMenuList.observe(this){ result ->
+            binding.lottieLoading2.pauseAnimation()
+            binding.lottieLoading2.visibility = View.GONE
+            val response = result.getOrNull()
+            if(response != null){
+                recommendMenuList.clear()
+                recommendMenuList.addAll(response)
+                recommendMenuAdapter.notifyDataSetChanged()
+            }else{
+                toast("获取推荐歌单失败")
+            }
         }
     }
 }

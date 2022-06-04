@@ -42,5 +42,9 @@ class PlayHistoryActivity : BaseActivity() {
                 }
                 .show()
         }
+
+        binding.ivBack.setOnClickListener {
+            finish()
+        }
     }
 }
