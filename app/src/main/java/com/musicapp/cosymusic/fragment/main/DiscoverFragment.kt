@@ -15,6 +15,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.google.android.material.tabs.TabLayoutMediator
 import com.musicapp.cosymusic.R
 import com.musicapp.cosymusic.activity.SongExpressActivity
+import com.musicapp.cosymusic.activity.TopListActivity
 import com.musicapp.cosymusic.adapter.RecommendMenuAdapter
 import com.musicapp.cosymusic.model.netease.RecommendMenuResponse
 import com.musicapp.cosymusic.util.KString
@@ -97,6 +98,11 @@ class DiscoverFragment: BaseFragment() {
             val intent = Intent(activity, SongExpressActivity::class.java).apply {
                 putExtra(KString.SONG_EXPRESS_DETAIL, binding.vp2NewSong.currentItem)
             }
+            startActivity(intent)
+        }
+
+        binding.rankList.setOnClickListener {
+            val intent = Intent(activity, TopListActivity::class.java)
             startActivity(intent)
         }
     }

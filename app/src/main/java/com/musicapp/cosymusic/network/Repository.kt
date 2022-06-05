@@ -96,6 +96,17 @@ object Repository {
         }
     }
 
+    fun getTopListResponse() = fire(Dispatchers.IO){
+        coroutineScope {
+            val response = NeteaseNetwork.getTopListResponse()
+            if(response.code == 200){
+                Result.success(response.list)
+            }else{
+                Result.failure(RuntimeException("The response of getTopListResponse is null"))
+            }
+        }
+    }
+
     private fun<T> fire(context: CoroutineContext, block: suspend () -> Result<T>) =
         liveData(context) {
             val result = try{

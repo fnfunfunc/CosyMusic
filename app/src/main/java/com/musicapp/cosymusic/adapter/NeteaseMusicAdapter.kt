@@ -29,7 +29,6 @@ class NeteaseMusicAdapter(private val musicData: List<StandardMusicData>) :
         val musicName: TextView = view.findViewById(R.id.musicName)
         val artistName: TextView = view.findViewById(R.id.artistName)
         val albumImage: ImageView = view.findViewById(R.id.albumImage)
-        val ivDiamond: ImageView = view.findViewById(R.id.ivDiamond)
 
         fun cancelAnimation(){
             itemView.clearAnimation()
@@ -47,13 +46,9 @@ class NeteaseMusicAdapter(private val musicData: List<StandardMusicData>) :
         Glide.with(App.context).load(music.album.picUrl).into(holder.albumImage)
         holder.musicName.text = music.name
         holder.artistName.text = getArtistsString(music.artists)
-        holder.ivDiamond.visibility = if(music.privilege.fee == 1){
-            View.VISIBLE
-        }else{
-            View.INVISIBLE
-        }
-        //网易云无版权的音乐设为灰色
-        if(music.privilege.pl == 0){
+
+        //网易云无版权的音乐及vip歌曲设为灰色
+        if(music.privilege.pl == 0 || music.privilege.fee == 1){
             holder.musicName.setTextColor(ContextCompat.getColor(App.context ,R.color.grey))
             holder.artistName.setTextColor(ContextCompat.getColor(App.context ,R.color.grey))
         }else{
@@ -64,6 +59,11 @@ class NeteaseMusicAdapter(private val musicData: List<StandardMusicData>) :
         holder.itemView.setOnClickListener {
             if(music.privilege.pl == 0){
                 toast("网易云暂无版权")
+                return@setOnClickListener
+            }
+
+            if (music.privilege.fee == 1){
+                toast("暂不支持播放网易云VIP歌曲")
                 return@setOnClickListener
             }
 

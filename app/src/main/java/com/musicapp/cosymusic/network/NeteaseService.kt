@@ -34,4 +34,8 @@ interface NeteaseService {
 
     @GET("song/detail")
     fun getMusicByTracksId(@Query("ids") ids: String): Call<TrackIdsResponse>
+
+    @GET("toplist")
+    fun getTopListResponse(): Call<TopListResponse>
+
 }

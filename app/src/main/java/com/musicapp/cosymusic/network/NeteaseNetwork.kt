@@ -34,6 +34,8 @@ object NeteaseNetwork {
 
     suspend fun getMusicByTracksId(ids: String) = neteaseSearchService.getMusicByTracksId(ids).await()
 
+    suspend fun getTopListResponse() = neteaseSearchService.getTopListResponse().await()
+
     private suspend fun<T> Call<T>.await(): T{
         return suspendCoroutine { continuation ->
             enqueue(object : Callback<T>{

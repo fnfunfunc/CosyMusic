@@ -19,6 +19,9 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".activity.TopListActivity"
+            android:exported="false" />
+        <activity
             android:name=".activity.SongMenuActivity"
             android:exported="false" />
         <activity
@@ -32,7 +35,13 @@
             android:exported="false" />
         <activity
             android:name=".activity.SearchActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:windowSoftInputMode="adjustPan|stateHidden"/>
+        <!--adjustResize-调整模式：该模式下窗口总是调整屏幕的大小用以保证软键盘的显示空间；
+        这个选项不能和adjustPan同时使用，如果这两个属性都没有被设置，系统会根据窗口中的布局自动选择其中一个。
+        adjustPan-默认模式：该模式下通过不会调整来保证软键盘的空间，而是采取了另外一种策略，
+        系统会通过布局的移动，来保证用户要进行输入的输入框肯定在用户的视野范围里面，从而让用户可以看到自己输入的内容
+        stateHidden：进入Activity时不会自动弹出键盘，而是调用的时候再弹出-->
         <activity
             android:name=".base.BaseActivity"
             android:exported="false" />

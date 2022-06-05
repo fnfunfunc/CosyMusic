@@ -67,7 +67,7 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="SpUsage" />
 
-    <TextView
+    <com.musicapp.cosymusic.widget.MarqueeTextView
         android:id="@+id/artistName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -75,7 +75,11 @@
         android:layout_marginTop="4dp"
         android:layout_marginEnd="8dp"
         android:text="佚名"
-        android:textColor="@color/grey"
+        android:textColor="@color/black"
+        android:alpha="0.6"
+        android:ellipsize="marquee"
+        android:marqueeRepeatLimit="marquee_forever"
+        android:singleLine="true"
         android:textSize="13sp"
         app:layout_constraintEnd_toStartOf="@+id/ivPlayerController"
         app:layout_constraintStart_toEndOf="@+id/cvCover"

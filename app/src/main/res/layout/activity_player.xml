@@ -32,6 +32,8 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="40dp"
         android:text="@string/test"
+        android:singleLine="true"
+        android:ellipsize="end"
         android:textAppearance="@style/bold_text_style"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -45,6 +47,8 @@
         android:text="@string/test"
         android:textColor="#757575"
         android:textSize="14sp"
+        android:singleLine="true"
+        android:ellipsize="end"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/musicName" />
 

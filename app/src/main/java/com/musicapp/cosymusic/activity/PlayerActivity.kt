@@ -103,6 +103,14 @@ class PlayerActivity : BaseActivity() {
             binding.musicName.text = musicData.name
             binding.artistName.text = getArtistsString(musicData.artists)
             Glide.with(this).load(musicData.album.picUrl).into(binding.albumImage)
+            binding.ivBackground.load(musicData.album.picUrl){
+                size(ViewSizeResolver(binding.ivBackground))
+                transformations(
+                    BlurTransformation(this@PlayerActivity,
+                        15f,
+                        15f))
+                crossfade(500)
+            }
             binding.playProgressBar.max = musicData.duration
             binding.ttvEnd.setText(musicData.duration)
         }
