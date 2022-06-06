@@ -35,7 +35,9 @@ class SongExpressActivity() : BaseActivity() {
     }
 
     private val adapter by lazy {
-        NeteaseMusicAdapter(showList)
+        NeteaseMusicAdapter(showList, true){
+
+        }
     }
 
     override fun initView() {

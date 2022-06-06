@@ -33,7 +33,9 @@ class SongExpressFragment(val type: Int): BaseFragment() {
 
     private val showList = mutableListOf<StandardMusicResponse.StandardMusicData>()
 
-    private val adapter by lazy { NeteaseMusicAdapter(showList) }
+    private val adapter by lazy { NeteaseMusicAdapter(showList, false){
+
+    } }
 
     private val targetObserver by lazy {
         when(type){

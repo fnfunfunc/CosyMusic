@@ -28,7 +28,7 @@ import com.musicapp.cosymusic.util.KString
 import com.musicapp.cosymusic.util.LogUtil
 import com.musicapp.cosymusic.util.getArtistsString
 
-class PlayerService : BaseMediaService() {
+class MusicService : BaseMediaService() {
 
     private var mediaSession: MediaSessionCompat? = null
 
@@ -223,7 +223,7 @@ class PlayerService : BaseMediaService() {
             if(prevMusic != null){
                 playMusic(prevMusic)
             }else{
-                LogUtil.e("PlayerService", "上一首播放的歌曲为空")
+                LogUtil.e("MusicService", "上一首播放的歌曲为空")
             }
         }
 
@@ -232,8 +232,15 @@ class PlayerService : BaseMediaService() {
             if(nextMusic != null){
                 playMusic(nextMusic)
             }else{
-                LogUtil.e("PlayerService", "下一首播放的歌曲为空")
+                LogUtil.e("MusicService", "下一首播放的歌曲为空")
             }
+        }
+
+        /**
+         * 添加到下一首播放
+         */
+        fun addToNextPlay(nextMusicData: StandardMusicResponse.StandardMusicData){
+            PlayerQueue.addToNextPlay(nextMusicData)
         }
 
         /**
@@ -260,6 +267,35 @@ class PlayerService : BaseMediaService() {
 
         fun savePlayList(musicList: MutableList<StandardMusicResponse.StandardMusicData>){
             PlayerQueue.saveNormal(musicList)
+        }
+
+        /**
+         * 获取“我喜欢”列表
+         */
+        fun getFavoriteList() = FavoriteList.fList.toList()
+
+        /**
+         * 添加到“我喜欢”列表中
+         */
+        fun addToMyFavorite(favoriteMusicData: StandardMusicResponse.StandardMusicData){
+            FavoriteList.addToFavoriteList(favoriteMusicData)
+        }
+
+        fun addAllToMyFavorite(favoriteMusicDataList: List<StandardMusicResponse.StandardMusicData>){
+            FavoriteList.addAllToFavoriteList(favoriteMusicDataList)
+        }
+
+        /**
+         * 判断是否在“我喜欢”列表中
+         */
+        fun isInMyFavorite(musicData: StandardMusicResponse.StandardMusicData) =
+            FavoriteList.isInFavoriteList(musicData)
+
+        /**
+         * 从“我喜欢”列表中移除
+         */
+        fun removeFromMyFavorite(favoriteMusicData: StandardMusicResponse.StandardMusicData){
+            FavoriteList.removeFromFavoriteList(favoriteMusicData)
         }
 
         fun getAlbumImageBitmap() = albumCoverBitmap.value
@@ -291,19 +327,19 @@ class PlayerService : BaseMediaService() {
     else R.drawable.ic_mini_play
 
     private fun getPendingIntentPrevious(): PendingIntent{
-        val intent = Intent(this, PlayerService::class.java)
+        val intent = Intent(this, MusicService::class.java)
         intent.putExtra(KString.PLAY_MODE_CODE, CODE_PREVIOUS)
         return buildServicePendingIntent(this, 1, intent)
     }
 
     private fun getPendingIntentPlay(): PendingIntent{
-        val intent = Intent(this, PlayerService::class.java)
+        val intent = Intent(this, MusicService::class.java)
         intent.putExtra(KString.PLAY_MODE_CODE, CODE_PLAY_OR_PAUSE)
         return buildServicePendingIntent(this, 2, intent)
     }
 
     private fun getPendingIntentNext(): PendingIntent{
-        val intent = Intent(this, PlayerService::class.java)
+        val intent = Intent(this, MusicService::class.java)
         intent.putExtra(KString.PLAY_MODE_CODE, CODE_NEXT)
         return buildServicePendingIntent(this, 3, intent)
     }

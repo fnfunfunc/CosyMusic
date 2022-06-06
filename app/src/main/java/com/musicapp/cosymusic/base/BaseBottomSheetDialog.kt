@@ -18,7 +18,7 @@ abstract class BaseBottomSheetDialog(context: Context): BottomSheetDialog(contex
         super.onCreate(savedInstanceState)
 
         window?.setGravity(Gravity.BOTTOM)
-        window?.setLayout(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT)
+        window?.setLayout(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT)
         window?.setWindowAnimations(R.style.bottom_dialog_animation)
 
         initView()

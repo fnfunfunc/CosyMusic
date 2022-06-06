@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">CosyMusic</string>
-    <string name="test">测试</string>
-    <string name="my">我的</string>
+    <string name="test" translatable="false">测试</string>
+    <string name="my" translatable="false">我的</string>
     <string name="discover">发现</string>
     <string name="menu">菜单</string>
     <string name="search">搜索</string>
@@ -30,4 +30,12 @@
     <string name="song_menu">歌单</string>
     <string name="play_all">播放全部(%d)</string>
     <string name="play_list_num">播放列表(%d)</string>
+    <string name="next_song_to_play">下一首播放</string>
+    <string name="add_to_my_favor">添加到我喜欢</string>
+    <string name="music_info">歌曲信息</string>
+    <string name="remove_this_song">移除这首歌</string>
+    <string name="title_activity_fullscreen">FullscreenActivity</string>
+    <string name="my_love">我喜欢</string>
+    <string name="my_love_desc">收藏你喜欢的音乐</string>
+    <string name="cancel_collect">取消收藏</string>
 </resources>

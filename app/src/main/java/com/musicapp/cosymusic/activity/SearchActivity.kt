@@ -25,6 +25,7 @@ import com.musicapp.cosymusic.local.SearchHistory
 import com.musicapp.cosymusic.model.netease.HotSearchResponse
 import com.musicapp.cosymusic.model.netease.SearchSuggestResponse
 import com.musicapp.cosymusic.model.netease.StandardMusicResponse
+import com.musicapp.cosymusic.ui.dialog.MusicMoreDialog
 import com.musicapp.cosymusic.util.BroadcastKString
 import com.musicapp.cosymusic.util.KString
 import com.musicapp.cosymusic.util.LogUtil
@@ -45,7 +46,11 @@ class SearchActivity : BaseActivity() {
     private var musicDataList = mutableListOf<StandardMusicResponse.StandardMusicData>()
 
     private val musicAdapter by lazy {
-        NeteaseMusicAdapter(musicDataList)
+        NeteaseMusicAdapter(musicDataList, true){
+            MusicMoreDialog(this,  it){
+                toast("暂不支持删除")
+            }.show(supportFragmentManager, null)
+        }
     }
 
     //热搜数据
@@ -69,6 +74,8 @@ class SearchActivity : BaseActivity() {
     private val hotSearchBroadcastReceiver = HotSearchBroadcastReceiver()
 
     private val searchSuggestBroadcastReceiver = SearchSuggestBroadcastReceiver()
+
+    private var isSearching: Boolean = false    //判断当前是否处于搜索状态
 
     override fun requestData() {
         viewModel.getHotSearchResponse()
@@ -152,6 +159,7 @@ class SearchActivity : BaseActivity() {
 
         binding.searchText.apply {
             addTextChangedListener {
+                if(isSearching) return@addTextChangedListener
                 val content = binding.searchText.text.toString()
                 if (content.isNotEmpty()) {
                     viewModel.getSearchSuggest(content)
@@ -196,6 +204,7 @@ class SearchActivity : BaseActivity() {
                 binding.clHistory.visibility = View.GONE
                 binding.rvSearchSuggest.visibility = View.GONE
                 binding.rvPlayList.visibility = View.VISIBLE
+                isSearching = false   //搜索状态结束
                 musicDataList.clear()
                 musicDataList.addAll(musicResponse.songs)
                 musicAdapter.notifyDataSetChanged()
@@ -251,6 +260,7 @@ class SearchActivity : BaseActivity() {
     }
 
     private fun search() {
+
         //关闭软键盘
         val inputMethodManager =
             getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
@@ -258,6 +268,7 @@ class SearchActivity : BaseActivity() {
 
         val keywords = binding.searchText.text.toString()
         if (keywords.isNotEmpty()) {
+            binding.rvSearchSuggest.visibility = View.GONE  //点击搜索后就不要再展示搜索建议了
             viewModel.getSearchResponse(keywords)
             SearchHistory.addSearchHistory(keywords)
         }
@@ -275,6 +286,7 @@ class SearchActivity : BaseActivity() {
         setBackgroundResource(R.drawable.bg_search_text)
         setTextColor(ContextCompat.getColor(this@SearchActivity, R.color.shallow_black))
         setOnClickListener {
+            isSearching = true //开始搜索
             binding.searchText.setText(searchHistory)
             binding.searchText.setSelection(searchHistory.length)
             search()
@@ -286,6 +298,7 @@ class SearchActivity : BaseActivity() {
             val position = p1.getIntExtra(KString.HOT_SEARCH_CLICKED_POSITION, -1)
             if (position != -1) {
                 hotSearchList[position].searchWord.let {
+                    isSearching = true  //开始搜索
                     binding.searchText.setText(it)
                     binding.searchText.setSelection(it.length)
                 }

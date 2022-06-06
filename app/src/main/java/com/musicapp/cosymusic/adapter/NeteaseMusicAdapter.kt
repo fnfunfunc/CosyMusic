@@ -14,6 +14,7 @@ import com.bumptech.glide.Glide
 import com.musicapp.cosymusic.R
 import com.musicapp.cosymusic.application.App
 import com.musicapp.cosymusic.model.netease.StandardMusicResponse.StandardMusicData
+import com.musicapp.cosymusic.ui.dialog.MusicMoreDialog
 import com.musicapp.cosymusic.util.getArtistsString
 import com.musicapp.cosymusic.util.toast
 
@@ -22,13 +23,20 @@ import com.musicapp.cosymusic.util.toast
  * @author Eternal Epoch
  * @date 2022/5/29 16:33
  */
-class NeteaseMusicAdapter(private val musicData: List<StandardMusicData>) :
+
+/**
+ * @param showMore 是否展示更多的图标
+ */
+class NeteaseMusicAdapter(private val musicData: List<StandardMusicData>,
+                          private val showMore: Boolean = true,
+                          private val ivMusicMoreClickedListener: (StandardMusicData) -> Unit) :
     ListAdapter<StandardMusicData, NeteaseMusicAdapter.ViewHolder>(DiffCallback) {
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val musicName: TextView = view.findViewById(R.id.musicName)
         val artistName: TextView = view.findViewById(R.id.artistName)
         val albumImage: ImageView = view.findViewById(R.id.albumImage)
+        val ivMusicInfo: ImageView = view.findViewById(R.id.ivMusicInfo)
 
         fun cancelAnimation(){
             itemView.clearAnimation()
@@ -56,6 +64,10 @@ class NeteaseMusicAdapter(private val musicData: List<StandardMusicData>) :
             holder.artistName.setTextColor(ContextCompat.getColor(App.context ,R.color.black))
         }
 
+        if(!showMore){
+            holder.ivMusicInfo.visibility  = View.GONE
+        }
+
         holder.itemView.setOnClickListener {
             if(music.privilege.pl == 0){
                 toast("网易云暂无版权")
@@ -74,8 +86,11 @@ class NeteaseMusicAdapter(private val musicData: List<StandardMusicData>) :
             }
 
         }
-
         setAnimation(holder.itemView)
+
+        holder.ivMusicInfo.setOnClickListener {
+            music.let(ivMusicMoreClickedListener)
+        }
     }
 
     override fun getItemCount() = musicData.size

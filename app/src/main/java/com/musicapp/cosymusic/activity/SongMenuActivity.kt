@@ -15,7 +15,9 @@ import com.musicapp.cosymusic.R
 import com.musicapp.cosymusic.adapter.NeteaseMusicAdapter
 import com.musicapp.cosymusic.base.BaseActivity
 import com.musicapp.cosymusic.databinding.ActivitySongMenuBinding
+import com.musicapp.cosymusic.model.netease.SongMenuResponse
 import com.musicapp.cosymusic.model.netease.StandardMusicResponse
+import com.musicapp.cosymusic.ui.dialog.MusicMoreDialog
 import com.musicapp.cosymusic.util.*
 import com.musicapp.cosymusic.util.StatusBarUtil.getStatusBarHeight
 import com.musicapp.cosymusic.viewmodel.SongMenuViewModel
@@ -35,7 +37,11 @@ class SongMenuActivity : BaseActivity() {
     private var tracksIdList = emptyList<Long>()
 
     private val adapter by lazy {
-        NeteaseMusicAdapter(musicList)
+        NeteaseMusicAdapter(musicList, true){
+            MusicMoreDialog(this, it){
+                toast("暂不支持删除")
+            }
+        }
     }
 
     override fun initView() {
@@ -143,9 +149,6 @@ class SongMenuActivity : BaseActivity() {
         }
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-    }
 
     private fun getMusic(){
         tracksIdList = if (tracksIdList.size >= 50) {

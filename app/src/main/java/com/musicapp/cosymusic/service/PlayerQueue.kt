@@ -77,4 +77,10 @@ object PlayerQueue {
         }
         return null
     }
+
+    fun addToNextPlay(musicData: StandardMusicResponse.StandardMusicData){
+        currentQueue.value?.remove(musicData)   //如果它在目前的播放队列中，那么先将其删除
+        currentQueue.value?.add((currentPlayPosition.value ?: 0) + 1, musicData)
+        savePlayQueueToDatabase()
+    }
 }

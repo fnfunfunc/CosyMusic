@@ -6,8 +6,8 @@ import android.content.Intent
 import androidx.lifecycle.MutableLiveData
 import com.musicapp.cosymusic.room.database.AppDatabase
 import com.tencent.mmkv.MMKV
-import com.musicapp.cosymusic.service.PlayerService
-import com.musicapp.cosymusic.service.PlayerServiceConnection
+import com.musicapp.cosymusic.service.MusicService
+import com.musicapp.cosymusic.service.MusicServiceConnection
 
 /**
  * @author Eternal Epoch
@@ -20,9 +20,9 @@ class App: Application() {
         lateinit var context: Context
         lateinit var mmkv: MMKV
 
-        val playerController = MutableLiveData<PlayerService.PlayerController?>()
+        val playerController = MutableLiveData<MusicService.PlayerController?>()
 
-        val playerServiceConnection by lazy { PlayerServiceConnection() }
+        val musicServiceConnection by lazy { MusicServiceConnection() }
 
         lateinit var appDatabase: AppDatabase
 
@@ -40,9 +40,11 @@ class App: Application() {
         startPlayerService()
     }
 
+
+
     private fun startPlayerService(){
-        val intent = Intent(this, PlayerService::class.java)
+        val intent = Intent(this, MusicService::class.java)
         startForegroundService(intent)
-        bindService(intent, playerServiceConnection, BIND_AUTO_CREATE)
+        bindService(intent, musicServiceConnection, BIND_AUTO_CREATE)
     }
 }

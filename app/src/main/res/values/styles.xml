@@ -11,7 +11,7 @@
         <item name="textFillColor">@color/black</item>
     </style>
 
-    <style name="default_bottom_sheet_dialog">
+    <style name="white_bottom_sheet_dialog">
         <item name="android:background">@color/white</item>
         <item name="android:windowBackground">@color/white</item>
     </style>
@@ -42,6 +42,20 @@
 
     <style name="CustomBottomSheetStyle" parent="Widget.Design.BottomSheet.Modal">
         <item name="android:background">@android:color/transparent</item>
+    </style>
+
+    <style name="default_bottom_sheet_dialog" parent="android:style/Theme.Dialog">
+        <item name="android:background">@drawable/bg_transparency</item>
+        <item name="android:windowBackground">@drawable/bg_transparency</item>
+    </style>
+
+    <style name="Widget.Theme.CosyMusic.ActionBar.Fullscreen" parent="Widget.AppCompat.ActionBar">
+        <item name="android:background">@color/black_overlay</item>
+    </style>
+
+    <style name="Widget.Theme.CosyMusic.ButtonBar.Fullscreen" parent="">
+        <item name="android:background">@color/black_overlay</item>
+        <item name="android:buttonBarStyle">?android:attr/buttonBarStyle</item>
     </style>
 
 </resources>

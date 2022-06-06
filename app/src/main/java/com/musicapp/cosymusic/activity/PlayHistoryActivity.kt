@@ -16,7 +16,9 @@ class PlayHistoryActivity : BaseActivity() {
 
     private val playHistoryList by lazy{ PlayHistory.readPlayHistory() }
 
-    private val adapter by lazy { NeteaseMusicAdapter(playHistoryList) }
+    private val adapter by lazy { NeteaseMusicAdapter(playHistoryList, true){
+
+    } }
 
     override fun initView() {
         setContentView(binding.root)
