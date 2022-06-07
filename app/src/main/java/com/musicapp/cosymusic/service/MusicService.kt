@@ -42,10 +42,11 @@ class MusicService : BaseMediaService() {
     override fun onCreate() {
         //先创建通知
         val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE)
-                                    as NotificationManager
+                as NotificationManager
         val channel = NotificationChannel(
             CHANNEL_ID, "Cosy Music播放渠道",
-            NotificationManager.IMPORTANCE_DEFAULT)
+            NotificationManager.IMPORTANCE_DEFAULT
+        )
         channel.description = "用来显示音频控制器的通知"
         notificationManager.createNotificationChannel(channel)
 
@@ -57,13 +58,16 @@ class MusicService : BaseMediaService() {
 
     override fun initMediaSession() {
         //媒体会话的回调，Service通过该回调来控制mediaPlayer
-        mediaSessionCallback = object : MediaSessionCompat.Callback(){
+        mediaSessionCallback = object : MediaSessionCompat.Callback() {
 
             override fun onPlay() {
                 playerController.start()
                 playerController.playState.value = true
 
-                showNotification(playerController.musicData.value, playerController.getAlbumImageBitmap())
+                showNotification(
+                    playerController.musicData.value,
+                    playerController.getAlbumImageBitmap()
+                )
             }
 
             override fun onPause() {
@@ -72,7 +76,7 @@ class MusicService : BaseMediaService() {
             }
 
             override fun onSeekTo(pos: Long) {
-                if(playerController.isPrepared){
+                if (playerController.isPrepared) {
                     playerController.seekTo(pos.toInt())
                 }
             }
@@ -95,7 +99,7 @@ class MusicService : BaseMediaService() {
 
     override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
         val playModeCode = intent.getIntExtra(KString.PLAY_MODE_CODE, -1)
-        when(playModeCode){
+        when (playModeCode) {
             CODE_PREVIOUS -> playerController.playPrev()
             CODE_PLAY_OR_PAUSE -> playerController.changePlayState()
             CODE_NEXT -> playerController.playNext()
@@ -110,8 +114,8 @@ class MusicService : BaseMediaService() {
         playerController.release()
     }
 
-    inner class PlayerController: Binder(), MediaPlayer.OnPreparedListener,
-        MediaPlayer.OnCompletionListener{
+    inner class PlayerController : Binder(), MediaPlayer.OnPreparedListener,
+        MediaPlayer.OnCompletionListener {
 
 
         private val mediaPlayer = MediaPlayer()
@@ -127,7 +131,6 @@ class MusicService : BaseMediaService() {
 
         val isPlaying get() = mediaPlayer.isPlaying
 
-        val duration get() = mediaPlayer.duration
 
         val currentPosition get() = mediaPlayer.currentPosition
 
@@ -138,14 +141,13 @@ class MusicService : BaseMediaService() {
         fun prepareAsync() = mediaPlayer.prepareAsync()
 
 
-
         fun setOnPreparedListener(listener: MediaPlayer.OnPreparedListener) =
             mediaPlayer.setOnPreparedListener(listener)
 
-        fun changePlayState(){
-            if(mediaPlayer.isPlaying){
+        fun changePlayState() {
+            if (mediaPlayer.isPlaying) {
                 mediaSessionCallback?.onPause()
-            }else{
+            } else {
                 mediaSessionCallback?.onPlay()
             }
             playState.value = mediaPlayer.isPlaying
@@ -155,10 +157,10 @@ class MusicService : BaseMediaService() {
 
         fun pause() = mediaPlayer.pause()
 
-        fun play(){
-            if(isPrepared){
+        fun play() {
+            if (isPrepared) {
                 mediaSessionCallback?.onPlay()
-                if(ActivityCollector.getCurrentActivity() !is PlayHistoryActivity) {
+                if (ActivityCollector.getCurrentActivity() !is PlayHistoryActivity) {
                     PlayHistory.addPlayHistory(musicData.value!!)//添加到播放历史中
                 }
             }
@@ -191,16 +193,37 @@ class MusicService : BaseMediaService() {
 
         fun isPlaying(): MutableLiveData<Boolean> = playState
 
-        fun sendMusicBroadcast(){
+        fun sendMusicBroadcast() {
             val intent = Intent(BroadcastKString.MUSIC_BROADCAST)
             intent.`package` = packageName
             sendBroadcast(intent)
         }
 
+        fun getProgress() = if (isPrepared) {
+            mediaPlayer.currentPosition
+        } else {
+            0
+        }
+
+        fun setProgress(pos: Int) {
+            if (isPrepared) {
+                mediaSessionCallback?.onSeekTo(pos.toLong())
+            }
+        }
+
+        fun getDuration() = if(isPrepared){
+            mediaPlayer.duration
+        }else{
+            0
+        }
+
         /**
          * @param playNext 当前歌曲播放失败时是否自动播放下一首(Not implemented)
          */
-        fun playMusic(playMusicData: StandardMusicResponse.StandardMusicData, playNext: Boolean = false){
+        fun playMusic(
+            playMusicData: StandardMusicResponse.StandardMusicData,
+            playNext: Boolean = false
+        ) {
             isPrepared = false  //尚未准备
             musicData.value = playMusicData
 
@@ -209,8 +232,12 @@ class MusicService : BaseMediaService() {
 
             mediaPlayer.apply {
                 reset()
-                setDataSource(applicationContext, Uri.parse("https://music.163.com" +
-                        "/song/media/outer/url?id=${playMusicData.id}.mp3"))
+                setDataSource(
+                    applicationContext, Uri.parse(
+                        "https://music.163.com" +
+                                "/song/media/outer/url?id=${playMusicData.id}.mp3"
+                    )
+                )
                 prepareAsync()
                 setOnPreparedListener(this@PlayerController)
                 setOnCompletionListener(this@PlayerController)
@@ -218,20 +245,20 @@ class MusicService : BaseMediaService() {
 
         }
 
-        fun playPrev(){
+        fun playPrev() {
             val prevMusic = PlayerQueue.getPrev()
-            if(prevMusic != null){
+            if (prevMusic != null) {
                 playMusic(prevMusic)
-            }else{
+            } else {
                 LogUtil.e("MusicService", "上一首播放的歌曲为空")
             }
         }
 
-        fun playNext(){
+        fun playNext() {
             val nextMusic = PlayerQueue.getNext()
-            if(nextMusic != null){
+            if (nextMusic != null) {
                 playMusic(nextMusic)
-            }else{
+            } else {
                 LogUtil.e("MusicService", "下一首播放的歌曲为空")
             }
         }
@@ -239,21 +266,21 @@ class MusicService : BaseMediaService() {
         /**
          * 添加到下一首播放
          */
-        fun addToNextPlay(nextMusicData: StandardMusicResponse.StandardMusicData){
+        fun addToNextPlay(nextMusicData: StandardMusicResponse.StandardMusicData) {
             PlayerQueue.addToNextPlay(nextMusicData)
         }
 
         /**
          * 获取当前的播放列表
          */
-        fun getCurrentPlayList(): List<StandardMusicResponse.StandardMusicData>?{
-           return PlayerQueue.currentQueue.value
+        fun getCurrentPlayList(): List<StandardMusicResponse.StandardMusicData>? {
+            return PlayerQueue.currentQueue.value
         }
 
         /**
          * 设置当前播放的音乐位于播放列表中的位置
          */
-        fun setCurrentPlayPosition(position: Int){
+        fun setCurrentPlayPosition(position: Int) {
             PlayerQueue.currentPlayPosition.value = position
             mmkv.encode(KString.CURRENT_PLAY_POSITION, position)
         }
@@ -261,11 +288,11 @@ class MusicService : BaseMediaService() {
         /**
          * 获取当前播放的音乐位于播放列表中的位置
          */
-        fun getCurrentPlayPosition(): Int{
+        fun getCurrentPlayPosition(): Int {
             return PlayerQueue.currentPlayPosition.value ?: 0
         }
 
-        fun savePlayList(musicList: MutableList<StandardMusicResponse.StandardMusicData>){
+        fun savePlayList(musicList: MutableList<StandardMusicResponse.StandardMusicData>) {
             PlayerQueue.saveNormal(musicList)
         }
 
@@ -277,11 +304,11 @@ class MusicService : BaseMediaService() {
         /**
          * 添加到“我喜欢”列表中
          */
-        fun addToMyFavorite(favoriteMusicData: StandardMusicResponse.StandardMusicData){
+        fun addToMyFavorite(favoriteMusicData: StandardMusicResponse.StandardMusicData) {
             FavoriteList.addToFavoriteList(favoriteMusicData)
         }
 
-        fun addAllToMyFavorite(favoriteMusicDataList: List<StandardMusicResponse.StandardMusicData>){
+        fun addAllToMyFavorite(favoriteMusicDataList: List<StandardMusicResponse.StandardMusicData>) {
             FavoriteList.addAllToFavoriteList(favoriteMusicDataList)
         }
 
@@ -294,7 +321,7 @@ class MusicService : BaseMediaService() {
         /**
          * 从“我喜欢”列表中移除
          */
-        fun removeFromMyFavorite(favoriteMusicData: StandardMusicResponse.StandardMusicData){
+        fun removeFromMyFavorite(favoriteMusicData: StandardMusicResponse.StandardMusicData) {
             FavoriteList.removeFromFavoriteList(favoriteMusicData)
         }
 
@@ -303,8 +330,7 @@ class MusicService : BaseMediaService() {
     }
 
 
-
-    private fun showNotification(music: StandardMusicResponse.StandardMusicData?, bitmap: Bitmap?){
+    private fun showNotification(music: StandardMusicResponse.StandardMusicData?, bitmap: Bitmap?) {
         val notification = NotificationCompat.Builder(this, CHANNEL_ID).apply {
             setSmallIcon(R.drawable.ic_launcher_foreground)
             setContentTitle(music?.name)
@@ -323,30 +349,36 @@ class MusicService : BaseMediaService() {
         startForeground(START_FOREGROUND_ID, notification)
     }
 
-    private fun getPlayerStateIcon() = if(playerController.isPlaying) R.drawable.ic_mini_pause
+    private fun getPlayerStateIcon() = if (playerController.isPlaying) R.drawable.ic_mini_pause
     else R.drawable.ic_mini_play
 
-    private fun getPendingIntentPrevious(): PendingIntent{
+    private fun getPendingIntentPrevious(): PendingIntent {
         val intent = Intent(this, MusicService::class.java)
         intent.putExtra(KString.PLAY_MODE_CODE, CODE_PREVIOUS)
         return buildServicePendingIntent(this, 1, intent)
     }
 
-    private fun getPendingIntentPlay(): PendingIntent{
+    private fun getPendingIntentPlay(): PendingIntent {
         val intent = Intent(this, MusicService::class.java)
         intent.putExtra(KString.PLAY_MODE_CODE, CODE_PLAY_OR_PAUSE)
         return buildServicePendingIntent(this, 2, intent)
     }
 
-    private fun getPendingIntentNext(): PendingIntent{
+    private fun getPendingIntentNext(): PendingIntent {
         val intent = Intent(this, MusicService::class.java)
         intent.putExtra(KString.PLAY_MODE_CODE, CODE_NEXT)
         return buildServicePendingIntent(this, 3, intent)
     }
 
-    private fun buildServicePendingIntent(context: Context, requestCode: Int, intent: Intent): PendingIntent {
-        return PendingIntent.getForegroundService(context, requestCode, intent,
-            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
+    private fun buildServicePendingIntent(
+        context: Context,
+        requestCode: Int,
+        intent: Intent
+    ): PendingIntent {
+        return PendingIntent.getForegroundService(
+            context, requestCode, intent,
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        )
     }
 
 }

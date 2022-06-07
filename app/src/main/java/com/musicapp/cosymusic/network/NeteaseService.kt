@@ -38,4 +38,7 @@ interface NeteaseService {
     @GET("toplist")
     fun getTopListResponse(): Call<TopListResponse>
 
+    @GET("lyric")
+    fun getLyricResponse(@Query("id") id: Long): Call<LyricResponse>
+
 }

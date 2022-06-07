@@ -2,23 +2,26 @@ package com.musicapp.cosymusic.activity
 
 
 import android.os.Build
+import android.view.View
 import android.view.WindowManager
 import android.widget.SeekBar
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import coil.load
 import coil.size.ViewSizeResolver
 import coil.transform.BlurTransformation
 import com.bumptech.glide.Glide
+import com.dirror.lyricviewx.OnPlayClickListener
+import com.dirror.lyricviewx.OnSingleClickListener
 import com.musicapp.cosymusic.R
 import com.musicapp.cosymusic.application.App
 import com.musicapp.cosymusic.base.BaseActivity
+import com.musicapp.cosymusic.data.LyricViewData
 import com.musicapp.cosymusic.databinding.ActivityPlayerBinding
-import com.musicapp.cosymusic.util.StatusBarUtil
+import com.musicapp.cosymusic.util.*
 //import com.musicapp.cosymusic.player.Player
 import com.musicapp.cosymusic.viewmodel.PlayerViewModel
-import com.musicapp.cosymusic.util.cancelCache
-import com.musicapp.cosymusic.util.getArtistsString
 import java.util.*
 
 
@@ -33,6 +36,11 @@ class PlayerActivity : BaseActivity() {
     override fun initView() {
         setContentView(binding.root)
 
+        //屏幕适配
+        (binding.musicName.layoutParams as ConstraintLayout.LayoutParams).apply {
+            topMargin = StatusBarUtil.getStatusBarHeight(window, this@PlayerActivity)
+        }
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             window.setDecorFitsSystemWindows(false)
         }
@@ -41,8 +49,23 @@ class PlayerActivity : BaseActivity() {
         params.windowAnimations = R.style.player_activity_animation
         window.attributes = params
 
+        viewModel.getLyricData(App.playerController.value?.musicData?.value?.id ?: -1L) //获取歌词
+
         binding.ttvStart.setText(0)
         binding.ttvEnd.setText(0)
+
+        val blackColor = ContextCompat.getColor(this, R.color.black)
+        binding.lyricView.apply {
+            setLabel("聆听好音乐")
+            setTimelineTextColor(ContextCompat.getColor(this@PlayerActivity,
+                R.color.black))
+            setCurrentColor(blackColor)
+            setTimeTextColor(blackColor)
+            setTimelineColor(blackColor.setAlpha(0.25f))
+            setTimelineTextColor(blackColor)
+            setNormalColor(blackColor.setAlpha(0.35f))
+        }
+
         App.playerController.value?.musicData?.value?.let {
             binding.musicName.text = it.name
             binding.artistName.text = getArtistsString(it.artists)
@@ -84,6 +107,31 @@ class PlayerActivity : BaseActivity() {
         binding.ivPlayPrev.setOnClickListener { viewModel.playPrev() }
 
         binding.ivPlayNext.setOnClickListener { viewModel.playNext() }
+
+        binding.lyricView.setDraggable(true, object : OnPlayClickListener{
+            override fun onPlayClick(time: Long): Boolean {
+                App.playerController.value?.setProgress(time.toInt())
+                return true
+            }
+        })
+
+        binding.lyricView.setOnSingerClickListener(object : OnSingleClickListener{
+            override fun onClick() {
+                AnimationUtil.fadeIn(binding.clBody)
+                binding.clLyric.visibility = View.INVISIBLE
+            }
+        })
+
+        binding.clBody.setOnClickListener {
+            AnimationUtil.fadeOut(binding.clBody, true)
+            binding.clLyric.visibility = View.VISIBLE
+        }
+
+        binding.edgeTransparentView.setOnClickListener {
+            AnimationUtil.fadeIn(binding.clBody)
+            binding.clLyric.visibility = View.GONE
+        }
+
     }
 
     override fun initObservers() {
@@ -113,11 +161,22 @@ class PlayerActivity : BaseActivity() {
             }
             binding.playProgressBar.max = musicData.duration
             binding.ttvEnd.setText(musicData.duration)
+
+            viewModel.getLyricData(musicData.id) //获取新的歌词
         }
 
         viewModel.progress.observe(this){ progress ->
             binding.ttvStart.setText(progress)
             binding.playProgressBar.progress = progress
+            binding.lyricView.updateTime(progress.toLong())
+        }
+
+        viewModel.lyricLiveData.observe(this){ result ->
+            val response = result.getOrNull()
+            if(response != null){
+                val lyricViewData = LyricViewData(response.lyric?.lyric ?: "", "true")
+                binding.lyricView.loadLyric(lyricViewData.lyric, lyricViewData.secondLyric)
+            }
         }
     }
 

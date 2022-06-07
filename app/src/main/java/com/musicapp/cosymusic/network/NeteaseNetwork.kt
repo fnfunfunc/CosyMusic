@@ -36,6 +36,8 @@ object NeteaseNetwork {
 
     suspend fun getTopListResponse() = neteaseSearchService.getTopListResponse().await()
 
+    suspend fun getLyricResponse(id: Long) = neteaseSearchService.getLyricResponse(id).await()
+
     private suspend fun<T> Call<T>.await(): T{
         return suspendCoroutine { continuation ->
             enqueue(object : Callback<T>{

@@ -1,5 +1,6 @@
 package com.musicapp.cosymusic.util
 
+import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.os.Handler
 import android.os.Looper
@@ -92,3 +93,16 @@ fun Int.dp() = dp2px(this.toFloat()).toInt()
 fun RecyclerView.isSlideToBottom() =
     (this.computeVerticalScrollExtent() + this.computeVerticalScrollOffset()
             >= this.computeVerticalScrollRange())
+
+
+/**
+ * 设置颜色的透明度
+ */
+fun Int.setAlpha(alpha: Float): Int{
+    val a = if(alpha in 0f..1f){
+        Color.alpha(this) * alpha
+    }else{
+        255
+    }.toInt()
+    return Color.argb(a, Color.red(this), Color.green(this), Color.blue(this))
+}

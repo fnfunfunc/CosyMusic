@@ -18,10 +18,12 @@
         android:theme="@style/Theme.CosyMusic"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
-
-        <activity android:name=".activity.PlayerActivity"
-            android:exported="false"/>
-
+        <activity
+            android:name=".activity.SettingActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.PlayerActivity"
+            android:exported="false" />
         <activity
             android:name=".activity.TopListActivity"
             android:exported="false" />

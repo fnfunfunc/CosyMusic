@@ -107,6 +107,17 @@ object Repository {
         }
     }
 
+    fun getLyricResponse(id: Long) = fire(Dispatchers.IO){
+        coroutineScope {
+            val response = NeteaseNetwork.getLyricResponse(id)
+            if(response.code == 200){
+                Result.success(response)
+            }else{
+                Result.failure(RuntimeException("The response of getLyricResponse is null"))
+            }
+        }
+    }
+
     private fun<T> fire(context: CoroutineContext, block: suspend () -> Result<T>) =
         liveData(context) {
             val result = try{

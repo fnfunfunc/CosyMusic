@@ -111,6 +111,16 @@ class MainActivity : BaseActivity() {
             val intent = Intent(this, SearchActivity::class.java)
             startActivity(intent)
         }
+
+        binding.navigationView.setNavigationItemSelectedListener { menuItem ->
+            when(menuItem.itemId){
+                R.id.btnSetting -> {
+                    val intent = Intent(this, SettingActivity::class.java)
+                    startActivity(intent)
+                }
+            }
+            true
+        }
     }
 
     override fun onResume() {

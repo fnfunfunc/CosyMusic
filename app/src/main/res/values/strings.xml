@@ -38,4 +38,8 @@
     <string name="my_love">我喜欢</string>
     <string name="my_love_desc">收藏你喜欢的音乐</string>
     <string name="cancel_collect">取消收藏</string>
+    <string name="cache">缓存</string>
+    <string name="image_cache">图片缓存</string>
+    <string name="clear_image_cache">清除图片缓存</string>
+    <string name="translation">翻译</string>
 </resources>

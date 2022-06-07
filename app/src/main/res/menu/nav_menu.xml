@@ -3,20 +3,24 @@
 
     <group android:checkableBehavior="single">
 
-        <item android:id="@+id/settingBtn"
+        <item android:id="@+id/btnSetting"
             android:title="@string/setting"
+            android:checkable="false"
             android:icon="@drawable/ic_setting"/>
 
-        <item android:id="@+id/feedbackBtn"
+        <item android:id="@+id/btnFeedback"
             android:title="@string/feedback"
+            android:checkable="false"
             android:icon="@drawable/ic_feedback"/>
 
-        <item android:id="@+id/praiseBtn"
+        <item android:id="@+id/btnPraise"
             android:title="@string/praise"
+            android:checkable="false"
             android:icon="@drawable/ic_praise"/>
 
-        <item android:id="@+id/aboutBtn"
+        <item android:id="@+id/btnAbout"
             android:title="@string/about"
+            android:checkable="false"
             android:icon="@drawable/ic_about"/>
 
     </group>
