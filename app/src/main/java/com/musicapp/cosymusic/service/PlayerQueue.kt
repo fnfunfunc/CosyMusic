@@ -2,7 +2,7 @@ package com.musicapp.cosymusic.service
 
 import androidx.lifecycle.MutableLiveData
 import com.musicapp.cosymusic.application.App
-import com.musicapp.cosymusic.model.netease.StandardMusicResponse
+import com.musicapp.cosymusic.model.netease.standard.StdMusicData
 import com.musicapp.cosymusic.room.entity.PlayQueueData
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
@@ -16,7 +16,7 @@ import kotlinx.coroutines.launch
 object PlayerQueue {
 
     //当前的播放队列
-    val currentQueue = MutableLiveData<MutableList<StandardMusicResponse.StandardMusicData>>().also {
+    val currentQueue = MutableLiveData<MutableList<StdMusicData>>().also {
         it.value = mutableListOf()
     }
 
@@ -24,17 +24,17 @@ object PlayerQueue {
     val currentPlayPosition = MutableLiveData(-1)
 
     //常规播放模式下的队列
-    private val normalQueue = MutableLiveData<MutableList<StandardMusicResponse.StandardMusicData>>().also {
+    private val normalQueue = MutableLiveData<MutableList<StdMusicData>>().also {
         it.value = mutableListOf()
     }
 
-    fun saveNormal(musicList: MutableList<StandardMusicResponse.StandardMusicData>){
+    fun saveNormal(musicList: MutableList<StdMusicData>){
         normalQueue.value = musicList
         normal(musicList)
     }
 
     //正常播放模式
-    private fun normal(musicList: MutableList<StandardMusicResponse.StandardMusicData>){
+    private fun normal(musicList: MutableList<StdMusicData>){
         currentQueue.value?.clear()
         currentQueue.value?.addAll(musicList)
         savePlayQueueToDatabase()
@@ -57,7 +57,7 @@ object PlayerQueue {
         }
     }
 
-    fun getPrev(): StandardMusicResponse.StandardMusicData?{
+    fun getPrev(): StdMusicData?{
         val size = currentQueue.value?.size
         if(size != null && size != 0){
             val prevPosition = if(currentPlayPosition.value != 0)((currentPlayPosition.value ?:0) - 1) % size
@@ -68,7 +68,7 @@ object PlayerQueue {
         return null
     }
 
-    fun getNext(): StandardMusicResponse.StandardMusicData?{
+    fun getNext(): StdMusicData?{
         val size = currentQueue.value?.size
         if(size != null && size != 0){
             val nextPosition = ((currentPlayPosition.value ?:0) + 1) % size
@@ -78,7 +78,7 @@ object PlayerQueue {
         return null
     }
 
-    fun addToNextPlay(musicData: StandardMusicResponse.StandardMusicData){
+    fun addToNextPlay(musicData: StdMusicData){
         currentQueue.value?.remove(musicData)   //如果它在目前的播放队列中，那么先将其删除
         currentQueue.value?.add((currentPlayPosition.value ?: 0) + 1, musicData)
         savePlayQueueToDatabase()

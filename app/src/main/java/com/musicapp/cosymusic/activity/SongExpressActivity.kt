@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.musicapp.cosymusic.adapter.NeteaseMusicAdapter
 import com.musicapp.cosymusic.base.BaseActivity
 import com.musicapp.cosymusic.databinding.ActivitySongExpressBinding
-import com.musicapp.cosymusic.model.netease.StandardMusicResponse
+import com.musicapp.cosymusic.model.netease.standard.StdMusicData
 import com.musicapp.cosymusic.util.KString
 import com.musicapp.cosymusic.util.LogUtil
 import com.musicapp.cosymusic.util.toStandard
@@ -17,7 +17,7 @@ class SongExpressActivity() : BaseActivity() {
 
     private val viewModel: MainViewModel by viewModels()
 
-    private val showList = mutableListOf<StandardMusicResponse.StandardMusicData>()
+    private val showList = mutableListOf<StdMusicData>()
 
     private val binding by lazy{
         ActivitySongExpressBinding.inflate(layoutInflater)
@@ -59,6 +59,12 @@ class SongExpressActivity() : BaseActivity() {
         binding.rvSongExpress.layoutManager = LinearLayoutManager(this)
         binding.rvSongExpress.adapter = adapter
 
+    }
+
+    override fun initListeners() {
+        binding.ivBack.setOnClickListener {
+            finish()
+        }
     }
 
     @SuppressLint("NotifyDataSetChanged")

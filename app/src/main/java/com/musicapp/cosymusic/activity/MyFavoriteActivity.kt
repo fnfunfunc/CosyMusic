@@ -36,7 +36,7 @@ class MyFavoriteActivity : BaseActivity() {
 
     override fun initView() {
         //屏幕适配
-        (binding.clTitleBar.layoutParams as ConstraintLayout.LayoutParams).apply {
+        (binding.clTop.layoutParams as ConstraintLayout.LayoutParams).apply {
             topMargin = StatusBarUtil.getStatusBarHeight(window, this@MyFavoriteActivity)
         }
 

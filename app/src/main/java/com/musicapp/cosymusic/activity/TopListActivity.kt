@@ -34,7 +34,7 @@ class TopListActivity : BaseActivity() {
     }
 
     override fun initObservers() {
-        viewModel.topListResponse.observe(this) { result ->
+        viewModel.topListResult.observe(this) { result ->
             val response = result.getOrNull()
             if (response != null) {
                 binding.rvTopList.adapter = TopListAdapter(response)

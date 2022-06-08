@@ -19,6 +19,12 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".activity.AlbumActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.ArtistActivity"
+            android:exported="false" />
+        <activity
             android:name=".activity.SettingActivity"
             android:exported="false" />
         <activity

@@ -26,7 +26,7 @@ class PlayerViewModel: ViewModel() {
     }
 
     fun refreshProgress(){
-        progress.postValue(App.playerController.value?.currentPosition)
+        progress.postValue(App.playerController.value?.currentPosition ?: 0)
     }
 
     fun playPrev() = App.playerController.value?.playPrev()
@@ -36,7 +36,7 @@ class PlayerViewModel: ViewModel() {
     private val musicId = MutableLiveData<Long>()
 
     val lyricLiveData = Transformations.switchMap(musicId){ id ->
-        Repository.getLyricResponse(id)
+        Repository.getLyricResult(id)
     }
 
     fun getLyricData(id: Long){

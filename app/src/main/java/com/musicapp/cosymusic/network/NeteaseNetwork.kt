@@ -38,6 +38,16 @@ object NeteaseNetwork {
 
     suspend fun getLyricResponse(id: Long) = neteaseSearchService.getLyricResponse(id).await()
 
+    suspend fun getArtistInfoResponse(id: Long) = neteaseSearchService.getArtistInfoResponse(id).await()
+
+    suspend fun getArtistSingleSongResponse(id: Long) = neteaseSearchService.getArtistSingleSongResponse(id).await()
+
+    suspend fun getArtistAlbumResponse(id: Long) = neteaseSearchService.getArtistAlbumResponse(id).await()
+
+    suspend fun getArtistAlbumDataResponse(id: Long) = neteaseSearchService.getArtistAlbumDataResponse(id).await()
+
+    suspend fun getArtistDescResponse(id: Long) = neteaseSearchService.getArtistDescResponse(id).await()
+
     private suspend fun<T> Call<T>.await(): T{
         return suspendCoroutine { continuation ->
             enqueue(object : Callback<T>{

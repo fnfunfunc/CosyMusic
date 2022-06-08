@@ -24,7 +24,7 @@ import com.musicapp.cosymusic.databinding.ActivitySearchBinding
 import com.musicapp.cosymusic.local.SearchHistory
 import com.musicapp.cosymusic.model.netease.HotSearchResponse
 import com.musicapp.cosymusic.model.netease.SearchSuggestResponse
-import com.musicapp.cosymusic.model.netease.StandardMusicResponse
+import com.musicapp.cosymusic.model.netease.standard.StdMusicData
 import com.musicapp.cosymusic.ui.dialog.MusicMoreDialog
 import com.musicapp.cosymusic.util.BroadcastKString
 import com.musicapp.cosymusic.util.KString
@@ -43,7 +43,7 @@ class SearchActivity : BaseActivity() {
     }
 
     //音乐数据
-    private var musicDataList = mutableListOf<StandardMusicResponse.StandardMusicData>()
+    private var musicDataList = mutableListOf<StdMusicData>()
 
     private val musicAdapter by lazy {
         NeteaseMusicAdapter(musicDataList, true){
@@ -197,7 +197,7 @@ class SearchActivity : BaseActivity() {
 
     @SuppressLint("NotifyDataSetChanged")
     override fun initObservers() {
-        viewModel.musicResponseLiveData.observe(this) { result ->
+        viewModel.musicResultLiveData.observe(this) { result ->
             val musicResponse = result.getOrNull()
             if (musicResponse != null) {
                 binding.clBody.visibility = View.GONE
@@ -215,7 +215,7 @@ class SearchActivity : BaseActivity() {
             }
         }
 
-        viewModel.hotSearchResponseData.observe(this) { result ->
+        viewModel.hotSearchResultData.observe(this) { result ->
             val response = result.getOrNull()
             if (response != null) {
                 hotSearchList.clear()

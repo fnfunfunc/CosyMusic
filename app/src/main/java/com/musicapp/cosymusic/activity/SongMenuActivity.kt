@@ -15,8 +15,7 @@ import com.musicapp.cosymusic.R
 import com.musicapp.cosymusic.adapter.NeteaseMusicAdapter
 import com.musicapp.cosymusic.base.BaseActivity
 import com.musicapp.cosymusic.databinding.ActivitySongMenuBinding
-import com.musicapp.cosymusic.model.netease.SongMenuResponse
-import com.musicapp.cosymusic.model.netease.StandardMusicResponse
+import com.musicapp.cosymusic.model.netease.standard.StdMusicData
 import com.musicapp.cosymusic.ui.dialog.MusicMoreDialog
 import com.musicapp.cosymusic.util.*
 import com.musicapp.cosymusic.util.StatusBarUtil.getStatusBarHeight
@@ -32,7 +31,7 @@ class SongMenuActivity : BaseActivity() {
         ViewModelProvider(this).get(SongMenuViewModel::class.java)
     }
 
-    private val musicList = mutableListOf<StandardMusicResponse.StandardMusicData>()
+    private val musicList = mutableListOf<StdMusicData>()
 
     private var tracksIdList = emptyList<Long>()
 
@@ -48,7 +47,7 @@ class SongMenuActivity : BaseActivity() {
         setContentView(binding.root)
 
         //屏幕适配
-        (binding.clTitleBar.layoutParams as ConstraintLayout.LayoutParams).apply {
+        (binding.clTop.layoutParams as ConstraintLayout.LayoutParams).apply {
             topMargin = getStatusBarHeight(window, this@SongMenuActivity)
         }
 

@@ -10,9 +10,10 @@ import com.bumptech.glide.RequestBuilder
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.musicapp.cosymusic.application.App
 import com.musicapp.cosymusic.model.netease.SongExpressResponse.SongExpressData
-import com.musicapp.cosymusic.model.netease.StandardMusicResponse
-import com.musicapp.cosymusic.model.netease.StandardMusicResponse.StandardMusicData
 import com.musicapp.cosymusic.model.netease.TrackIdsResponse.MenuMusicData
+import com.musicapp.cosymusic.model.netease.standard.Privilege
+import com.musicapp.cosymusic.model.netease.standard.StdArtistInfo
+import com.musicapp.cosymusic.model.netease.standard.StdMusicData
 
 /**
  * @author Eternal Epoch
@@ -44,22 +45,22 @@ fun RequestBuilder<Drawable>.cancelCache(): RequestBuilder<Drawable>{
 /**
  * 从SongExpressData转为StandardMusicData
  */
-fun SongExpressData.toStandard() = StandardMusicData(id = id, name = name, artists = artists,
-        album = album, privilege = StandardMusicResponse.Privilege(fee = fee, pl = null),
+fun SongExpressData.toStandard() = StdMusicData(id = id, name = name, artists = artists,
+        album = album, privilege = Privilege(fee = fee, pl = null),
         pop = null, duration = duration)
 
 
 /**
  * 从MenuMusicData转为StandardMusicData
  */
-fun MenuMusicData.toStandard() = StandardMusicData(id = id, name = name, artists = artists,
-    album = album, privilege = StandardMusicResponse.Privilege(fee = fee, pl = null),
+fun MenuMusicData.toStandard() = StdMusicData(id = id, name = name, artists = artists,
+    album = album, privilege = Privilege(fee = fee, pl = null),
     duration = duration, pop = pop)
 
 /**
  * 将artists的name转换为指定字符串
  */
-fun getArtistsString(artists: List<StandardMusicResponse.ArtistInfo>?): String{
+fun getArtistsString(artists: List<StdArtistInfo>?): String{
     return when(val size = artists?.size ?: 0){
         0 -> "未知"
         1 -> artists!![0].name

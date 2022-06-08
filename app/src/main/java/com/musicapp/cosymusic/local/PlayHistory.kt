@@ -2,8 +2,8 @@ package com.musicapp.cosymusic.local
 
 import android.os.Parcelable
 import com.musicapp.cosymusic.application.App
+import com.musicapp.cosymusic.model.netease.standard.StdMusicData
 import kotlinx.parcelize.Parcelize
-import com.musicapp.cosymusic.model.netease.StandardMusicResponse.StandardMusicData
 import com.musicapp.cosymusic.util.KString
 
 /**
@@ -18,7 +18,7 @@ object PlayHistory {
     private var playHistoryData = PlayHistoryData(mutableListOf())
 
 
-    fun addPlayHistory(musicData: StandardMusicData){
+    fun addPlayHistory(musicData: StdMusicData){
         //如果不在先前的播放历史中，则直接添加
         if(musicData !in playHistoryData.list){
             playHistoryData.list.add(0, musicData)
@@ -30,7 +30,7 @@ object PlayHistory {
         App.mmkv.encode(KString.PLAY_HISTORY, playHistoryData)
     }
 
-    fun readPlayHistory(): MutableList<StandardMusicData>{
+    fun readPlayHistory(): MutableList<StdMusicData>{
         playHistoryData = App.mmkv.decodeParcelable(KString.PLAY_HISTORY, PlayHistoryData::class.java)
             ?: PlayHistoryData(mutableListOf())
         return playHistoryData.list
@@ -43,7 +43,7 @@ object PlayHistory {
 
     @Parcelize
     data class PlayHistoryData(
-        val list: MutableList<StandardMusicData>
+        val list: MutableList<StdMusicData>
     ): Parcelable
 
 }

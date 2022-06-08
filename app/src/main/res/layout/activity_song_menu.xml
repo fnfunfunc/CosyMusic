@@ -25,7 +25,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/clTitleBar"
+        android:id="@+id/clTop"
         android:layout_width="0dp"
         android:layout_height="56dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -66,7 +66,7 @@
         app:layout_constraintBottom_toBottomOf="@id/miniPlayer"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/clTitleBar"
+        app:layout_constraintTop_toBottomOf="@id/clTop"
         tools:context=".ui.activity.PlaylistActivity">
 
         <com.google.android.material.appbar.AppBarLayout
@@ -155,7 +155,7 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/clNav"
+                android:id="@+id/tabLayoutArtist"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:background="@drawable/bg_slide_layout"
@@ -216,9 +216,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:lottie_rawRes="@raw/lottie_loading">
-
-                </com.airbnb.lottie.LottieAnimationView>
+                    app:lottie_rawRes="@raw/lottie_loading"/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -237,7 +235,7 @@
         android:id="@+id/miniPlayer"
         layout="@layout/mini_player"
         android:layout_width="0dp"
-        android:layout_height="64dp"
+        android:layout_height="@dimen/mini_player_height"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

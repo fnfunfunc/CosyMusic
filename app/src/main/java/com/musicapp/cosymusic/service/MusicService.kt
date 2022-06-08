@@ -6,7 +6,6 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.media.MediaPlayer
 import android.net.Uri
 import android.os.Binder
@@ -18,11 +17,10 @@ import androidx.lifecycle.MutableLiveData
 import com.musicapp.cosymusic.R
 import com.musicapp.cosymusic.activity.ActivityCollector
 import com.musicapp.cosymusic.activity.PlayHistoryActivity
-import com.musicapp.cosymusic.application.App
 import com.musicapp.cosymusic.application.App.Companion.mmkv
 import com.musicapp.cosymusic.base.BaseMediaService
 import com.musicapp.cosymusic.local.PlayHistory
-import com.musicapp.cosymusic.model.netease.StandardMusicResponse
+import com.musicapp.cosymusic.model.netease.standard.StdMusicData
 import com.musicapp.cosymusic.util.BroadcastKString
 import com.musicapp.cosymusic.util.KString
 import com.musicapp.cosymusic.util.LogUtil
@@ -134,7 +132,7 @@ class MusicService : BaseMediaService() {
 
         val currentPosition get() = mediaPlayer.currentPosition
 
-        val musicData = MutableLiveData<StandardMusicResponse.StandardMusicData>()
+        val musicData = MutableLiveData<StdMusicData>()
 
         fun prepare() = mediaPlayer.prepare()
 
@@ -221,7 +219,7 @@ class MusicService : BaseMediaService() {
          * @param playNext 当前歌曲播放失败时是否自动播放下一首(Not implemented)
          */
         fun playMusic(
-            playMusicData: StandardMusicResponse.StandardMusicData,
+            playMusicData: StdMusicData,
             playNext: Boolean = false
         ) {
             isPrepared = false  //尚未准备
@@ -266,14 +264,14 @@ class MusicService : BaseMediaService() {
         /**
          * 添加到下一首播放
          */
-        fun addToNextPlay(nextMusicData: StandardMusicResponse.StandardMusicData) {
+        fun addToNextPlay(nextMusicData: StdMusicData) {
             PlayerQueue.addToNextPlay(nextMusicData)
         }
 
         /**
          * 获取当前的播放列表
          */
-        fun getCurrentPlayList(): List<StandardMusicResponse.StandardMusicData>? {
+        fun getCurrentPlayList(): List<StdMusicData>? {
             return PlayerQueue.currentQueue.value
         }
 
@@ -292,7 +290,7 @@ class MusicService : BaseMediaService() {
             return PlayerQueue.currentPlayPosition.value ?: 0
         }
 
-        fun savePlayList(musicList: MutableList<StandardMusicResponse.StandardMusicData>) {
+        fun savePlayList(musicList: MutableList<StdMusicData>) {
             PlayerQueue.saveNormal(musicList)
         }
 
@@ -304,24 +302,24 @@ class MusicService : BaseMediaService() {
         /**
          * 添加到“我喜欢”列表中
          */
-        fun addToMyFavorite(favoriteMusicData: StandardMusicResponse.StandardMusicData) {
+        fun addToMyFavorite(favoriteMusicData: StdMusicData) {
             FavoriteList.addToFavoriteList(favoriteMusicData)
         }
 
-        fun addAllToMyFavorite(favoriteMusicDataList: List<StandardMusicResponse.StandardMusicData>) {
+        fun addAllToMyFavorite(favoriteMusicDataList: List<StdMusicData>) {
             FavoriteList.addAllToFavoriteList(favoriteMusicDataList)
         }
 
         /**
          * 判断是否在“我喜欢”列表中
          */
-        fun isInMyFavorite(musicData: StandardMusicResponse.StandardMusicData) =
+        fun isInMyFavorite(musicData: StdMusicData) =
             FavoriteList.isInFavoriteList(musicData)
 
         /**
          * 从“我喜欢”列表中移除
          */
-        fun removeFromMyFavorite(favoriteMusicData: StandardMusicResponse.StandardMusicData) {
+        fun removeFromMyFavorite(favoriteMusicData: StdMusicData) {
             FavoriteList.removeFromFavoriteList(favoriteMusicData)
         }
 
@@ -330,7 +328,7 @@ class MusicService : BaseMediaService() {
     }
 
 
-    private fun showNotification(music: StandardMusicResponse.StandardMusicData?, bitmap: Bitmap?) {
+    private fun showNotification(music: StdMusicData?, bitmap: Bitmap?) {
         val notification = NotificationCompat.Builder(this, CHANNEL_ID).apply {
             setSmallIcon(R.drawable.ic_launcher_foreground)
             setContentTitle(music?.name)

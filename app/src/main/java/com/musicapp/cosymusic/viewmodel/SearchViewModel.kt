@@ -13,8 +13,8 @@ class SearchViewModel: ViewModel() {
 
     private val searchMusicLiveData = MutableLiveData<String>()
 
-    val musicResponseLiveData = Transformations.switchMap(searchMusicLiveData){ keywords ->
-        Repository.getSearchResponse(keywords)
+    val musicResultLiveData = Transformations.switchMap(searchMusicLiveData){ keywords ->
+        Repository.getSearchResult(keywords)
     }
 
     fun getSearchResponse(keywords: String){
@@ -23,8 +23,8 @@ class SearchViewModel: ViewModel() {
 
     private val hotSearchLiveData = MutableLiveData<Any?>()
 
-    val hotSearchResponseData = Transformations.switchMap(hotSearchLiveData){
-        Repository.getHotSearchResponse()
+    val hotSearchResultData = Transformations.switchMap(hotSearchLiveData){
+        Repository.getHotSearchResult()
     }
 
     fun getHotSearchResponse(){

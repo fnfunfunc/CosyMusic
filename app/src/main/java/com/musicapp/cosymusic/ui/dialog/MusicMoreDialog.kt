@@ -1,28 +1,24 @@
 package com.musicapp.cosymusic.ui.dialog
 
-import android.content.Context
+import android.app.Activity
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.DialogFragment.STYLE_NORMAL
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.musicapp.cosymusic.R
 import com.musicapp.cosymusic.application.App
-import com.musicapp.cosymusic.base.BaseActivity
-import com.musicapp.cosymusic.base.BaseBottomSheetDialog
 import com.musicapp.cosymusic.databinding.DialogMusicMoreBinding
-import com.musicapp.cosymusic.model.netease.StandardMusicResponse
+import com.musicapp.cosymusic.model.netease.standard.StdMusicData
 import com.musicapp.cosymusic.util.toast
-import kotlin.properties.Delegates
 
 /**
  * @author Eternal Epoch
  * @date 2022/6/5 15:04
  */
 class MusicMoreDialog(
-    private val activity: BaseActivity,
-    private val musicData: StandardMusicResponse.StandardMusicData,
+    private val activity: Activity,
+    private val musicData: StdMusicData,
     private val musicDeleteListener: () -> Unit
 ) : BottomSheetDialogFragment() {
 

@@ -1,6 +1,7 @@
 package com.musicapp.cosymusic.activity
 
 
+import android.content.Intent
 import android.os.Build
 import android.view.View
 import android.view.WindowManager
@@ -132,6 +133,12 @@ class PlayerActivity : BaseActivity() {
             binding.clLyric.visibility = View.GONE
         }
 
+        binding.artistName.setOnClickListener {
+            val intent = Intent(this, ArtistActivity::class.java).apply {
+                putExtra(KString.ARTIST_ID, App.playerController.value?.musicData?.value?.artists?.get(0)?.artistId)
+            }
+            startActivity(intent)
+        }
     }
 
     override fun initObservers() {

@@ -13,8 +13,8 @@ class TopListViewModel: ViewModel() {
 
     private val topList = MutableLiveData<Any?>()
 
-    val topListResponse = Transformations.switchMap(topList){
-        Repository.getTopListResponse()
+    val topListResult = Transformations.switchMap(topList){
+        Repository.getTopListResult()
     }
 
     fun getTopListResponse(){

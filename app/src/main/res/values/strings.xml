@@ -42,4 +42,10 @@
     <string name="image_cache">图片缓存</string>
     <string name="clear_image_cache">清除图片缓存</string>
     <string name="translation">翻译</string>
+    <string name="single_song">单曲</string>
+    <string name="album">专辑</string>
+    <string name="mv">MV</string>
+    <string name="detail">详情</string>
+    <string name="brief_introduction">简要介绍</string>
+    <string name="detailed_introduction">详细介绍</string>
 </resources>

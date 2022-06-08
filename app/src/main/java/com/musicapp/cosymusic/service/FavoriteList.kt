@@ -1,7 +1,7 @@
 package com.musicapp.cosymusic.service
 
 import com.musicapp.cosymusic.application.App
-import com.musicapp.cosymusic.model.netease.StandardMusicResponse.StandardMusicData
+import com.musicapp.cosymusic.model.netease.standard.StdMusicData
 import com.musicapp.cosymusic.room.entity.FavoriteListData
 import kotlinx.coroutines.*
 
@@ -11,22 +11,22 @@ import kotlinx.coroutines.*
  */
 object FavoriteList {
 
-    val fList = mutableListOf<StandardMusicData>()
+    val fList = mutableListOf<StdMusicData>()
 
 
-    fun addToFavoriteList(musicData: StandardMusicData){
+    fun addToFavoriteList(musicData: StdMusicData){
         fList.add(musicData)
         saveToDatabase()
     }
 
-    fun addAllToFavoriteList(musicDataList: List<StandardMusicData>){
+    fun addAllToFavoriteList(musicDataList: List<StdMusicData>){
         fList.addAll(musicDataList)
         saveToDatabase()
     }
 
-    fun isInFavoriteList(musicData: StandardMusicData) = musicData in fList
+    fun isInFavoriteList(musicData: StdMusicData) = musicData in fList
 
-    fun removeFromFavoriteList(musicData: StandardMusicData){
+    fun removeFromFavoriteList(musicData: StdMusicData){
         fList.remove(musicData)
         saveToDatabase()
     }

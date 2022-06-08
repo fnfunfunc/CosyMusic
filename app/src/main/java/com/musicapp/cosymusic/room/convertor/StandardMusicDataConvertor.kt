@@ -3,8 +3,8 @@ package com.musicapp.cosymusic.room.convertor
 import androidx.room.TypeConverter
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.musicapp.cosymusic.model.netease.StandardMusicResponse.ArtistInfo
-import com.musicapp.cosymusic.model.netease.StandardMusicResponse.StandardMusicData
+import com.musicapp.cosymusic.model.netease.standard.StdArtistInfo
+import com.musicapp.cosymusic.model.netease.standard.StdMusicData
 import java.lang.reflect.Type
 
 /**
@@ -14,11 +14,11 @@ import java.lang.reflect.Type
 class StandardMusicDataConvertor {
 
     @TypeConverter
-    fun objectToString(musicData: StandardMusicData) = Gson().toJson(musicData)
+    fun objectToString(musicData: StdMusicData) = Gson().toJson(musicData)
 
     @TypeConverter
-    fun stringToObject(json: String): StandardMusicData {
-        val songType: Type = object : TypeToken<StandardMusicData>(){}.type
+    fun stringToObject(json: String): StdMusicData {
+        val songType: Type = object : TypeToken<StdMusicData>(){}.type
         return Gson().fromJson(json, songType)
     }
 
@@ -27,11 +27,11 @@ class StandardMusicDataConvertor {
 class StandardArtistDataConvertor{
 
     @TypeConverter
-    fun objectToString(list: List<ArtistInfo>) = Gson().toJson(list)
+    fun objectToString(list: List<StdArtistInfo>) = Gson().toJson(list)
 
     @TypeConverter
-    fun stringToObject(json: String): List<ArtistInfo>{
-        val listType = object : TypeToken<List<ArtistInfo>>(){}.type
+    fun stringToObject(json: String): List<StdArtistInfo>{
+        val listType = object : TypeToken<List<StdArtistInfo>>(){}.type
         return Gson().fromJson(json, listType)
     }
 }

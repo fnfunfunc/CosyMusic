@@ -8,14 +8,14 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.musicapp.cosymusic.R
 import com.musicapp.cosymusic.application.App
-import com.musicapp.cosymusic.model.netease.StandardMusicResponse.StandardMusicData
+import com.musicapp.cosymusic.model.netease.standard.StdMusicData
 import com.musicapp.cosymusic.util.getArtistsString
 
 /**
  * @author Eternal Epoch
  * @date 2022/6/4 22:01
  */
-class PlayListDialogAdapter(private val musicList: List<StandardMusicData>):
+class PlayListDialogAdapter(private val musicList: List<StdMusicData>):
     RecyclerView.Adapter<PlayListDialogAdapter.ViewHolder>(){
 
     inner class ViewHolder(view: View): RecyclerView.ViewHolder(view){

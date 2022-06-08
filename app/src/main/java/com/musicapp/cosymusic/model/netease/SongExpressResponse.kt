@@ -1,5 +1,8 @@
 package com.musicapp.cosymusic.model.netease
 
+import com.musicapp.cosymusic.model.netease.standard.StdAlbumInfo
+import com.musicapp.cosymusic.model.netease.standard.StdArtistInfo
+
 
 /**
  * @author Eternal Epoch
@@ -7,7 +10,7 @@ package com.musicapp.cosymusic.model.netease
  */
 data class SongExpressResponse(val code: Int, val data: List<SongExpressData>){
 
-    data class SongExpressData(val id: Long ,val name: String, val fee: Int, val duration: Int,
-    val artists: List<StandardMusicResponse.ArtistInfo>, val album: StandardMusicResponse.AlbumInfo)
+    data class SongExpressData(val id: Long, val name: String, val fee: Int, val duration: Int,
+                               val artists: List<StdArtistInfo>, val album: StdAlbumInfo)
 
 }

@@ -12,7 +12,7 @@ import kotlin.coroutines.CoroutineContext
  */
 object Repository {
 
-    fun getSearchResponse(keywords: String) = fire(Dispatchers.IO){
+    fun getSearchResult(keywords: String) = fire(Dispatchers.IO){
         coroutineScope {
             val neteaseMusicResponse = NeteaseNetwork.getSearchResponse(keywords)
             if(neteaseMusicResponse.code == 200){
@@ -25,7 +25,7 @@ object Repository {
     }
 
 
-    fun getHotSearchResponse() = fire(Dispatchers.IO){
+    fun getHotSearchResult() = fire(Dispatchers.IO){
         coroutineScope {
             val response = NeteaseNetwork.getHotSearchResponse()
             if(response.code == 200){
@@ -96,24 +96,79 @@ object Repository {
         }
     }
 
-    fun getTopListResponse() = fire(Dispatchers.IO){
+    fun getTopListResult() = fire(Dispatchers.IO){
         coroutineScope {
             val response = NeteaseNetwork.getTopListResponse()
             if(response.code == 200){
                 Result.success(response.list)
             }else{
-                Result.failure(RuntimeException("The response of getTopListResponse is null"))
+                Result.failure(RuntimeException("The response of getTopListResult is null"))
             }
         }
     }
 
-    fun getLyricResponse(id: Long) = fire(Dispatchers.IO){
+    fun getLyricResult(id: Long) = fire(Dispatchers.IO){
         coroutineScope {
             val response = NeteaseNetwork.getLyricResponse(id)
             if(response.code == 200){
                 Result.success(response)
             }else{
-                Result.failure(RuntimeException("The response of getLyricResponse is null"))
+                Result.failure(RuntimeException("The response of getLyricResult is null"))
+            }
+        }
+    }
+
+    fun getArtistInfoResult(id: Long) = fire(Dispatchers.IO){
+        coroutineScope {
+            val response = NeteaseNetwork.getArtistInfoResponse(id)
+            if(response.code == 200){
+                Result.success(response.data)
+            }else{
+                Result.failure(RuntimeException("The response of getArtistInfoResult is null"))
+            }
+        }
+    }
+
+    fun getArtistSingleSongResult(id: Long) = fire(Dispatchers.IO){
+        coroutineScope {
+            val response = NeteaseNetwork.getArtistSingleSongResponse(id)
+            if(response.code == 200){
+                Result.success(response.hotSongs)
+            }else{
+                Result.failure(RuntimeException("The response of getArtistSingleSongResult is null"))
+            }
+        }
+    }
+
+    fun getArtistAlbumResult(id: Long) = fire(Dispatchers.IO){
+        coroutineScope {
+            val response = NeteaseNetwork.getArtistAlbumResponse(id)
+            if(response.code == 200){
+                Result.success(response.hotAlbums)
+            }else{
+                Result.failure(RuntimeException("The response of getArtistAlbumResult is null"))
+            }
+        }
+    }
+
+    fun getArtistAlbumDataResult(id: Long) = fire(Dispatchers.IO){
+        coroutineScope {
+            val response = NeteaseNetwork.getArtistAlbumDataResponse(id)
+            if(response.code == 200){
+                Result.success(response)
+            }else{
+                Result.failure(RuntimeException("The response of getArtistAlbumDataResult is null"))
+            }
+        }
+    }
+
+    fun getArtistDescResult(id: Long) = fire(Dispatchers.IO){
+        coroutineScope {
+            val response = NeteaseNetwork.getArtistDescResponse(id)
+            if(response.code == 200){
+                Result.success(response)
+            }else{
+                Result.failure(RuntimeException("The response of getArtistDescResult is null"))
             }
         }
     }

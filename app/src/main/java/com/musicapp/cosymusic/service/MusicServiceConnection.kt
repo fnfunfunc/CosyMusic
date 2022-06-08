@@ -5,7 +5,7 @@ import android.content.ServiceConnection
 import android.net.Uri
 import android.os.IBinder
 import com.musicapp.cosymusic.application.App
-import com.musicapp.cosymusic.model.netease.StandardMusicResponse
+import com.musicapp.cosymusic.model.netease.standard.StdMusicData
 import com.musicapp.cosymusic.room.entity.toStandardList
 import com.musicapp.cosymusic.util.KString
 import com.musicapp.cosymusic.util.runOnMainThread
@@ -22,7 +22,7 @@ class MusicServiceConnection: ServiceConnection {
         thread {
             //恢复musicData
             val recoverMusicData = App.mmkv.decodeParcelable(KString.SERVICE_CURRENT_SONG,
-                StandardMusicResponse.StandardMusicData::class.java)
+                StdMusicData::class.java)
             //恢复playQueue
             val recoverPlayQueue = App.appDatabase.playQueueDao().loadAll().toStandardList()
             //恢复currentPlayPosition

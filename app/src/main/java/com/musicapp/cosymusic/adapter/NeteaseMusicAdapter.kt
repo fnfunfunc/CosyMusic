@@ -13,8 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.musicapp.cosymusic.R
 import com.musicapp.cosymusic.application.App
-import com.musicapp.cosymusic.model.netease.StandardMusicResponse.StandardMusicData
-import com.musicapp.cosymusic.ui.dialog.MusicMoreDialog
+import com.musicapp.cosymusic.model.netease.standard.StdMusicData
 import com.musicapp.cosymusic.util.getArtistsString
 import com.musicapp.cosymusic.util.toast
 
@@ -27,10 +26,10 @@ import com.musicapp.cosymusic.util.toast
 /**
  * @param showMore 是否展示更多的图标
  */
-class NeteaseMusicAdapter(private val musicData: List<StandardMusicData>,
+class NeteaseMusicAdapter(private val musicData: List<StdMusicData>,
                           private val showMore: Boolean = true,
-                          private val ivMusicMoreClickedListener: (StandardMusicData) -> Unit) :
-    ListAdapter<StandardMusicData, NeteaseMusicAdapter.ViewHolder>(DiffCallback) {
+                          private val ivMusicMoreClickedListener: (StdMusicData) -> Unit) :
+    ListAdapter<StdMusicData, NeteaseMusicAdapter.ViewHolder>(DiffCallback) {
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val musicName: TextView = view.findViewById(R.id.musicName)
@@ -106,17 +105,17 @@ class NeteaseMusicAdapter(private val musicData: List<StandardMusicData>,
         viewToAnimation.startAnimation(animation)
     }
 
-    object DiffCallback: DiffUtil.ItemCallback<StandardMusicData>(){
+    object DiffCallback: DiffUtil.ItemCallback<StdMusicData>(){
         override fun areItemsTheSame(
-            oldItem: StandardMusicData,
-            newItem: StandardMusicData
+            oldItem: StdMusicData,
+            newItem: StdMusicData
         ): Boolean {
             return oldItem.id == newItem.id
         }
 
         override fun areContentsTheSame(
-            oldItem: StandardMusicData,
-            newItem: StandardMusicData
+            oldItem: StdMusicData,
+            newItem: StdMusicData
         ): Boolean {
             return oldItem == newItem
         }

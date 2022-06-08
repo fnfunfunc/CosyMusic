@@ -1,7 +1,6 @@
 package com.musicapp.cosymusic.room.dao
 
 import androidx.room.*
-import com.musicapp.cosymusic.model.netease.StandardMusicResponse.StandardMusicData
 import com.musicapp.cosymusic.room.entity.FavoriteListData
 
 /**
