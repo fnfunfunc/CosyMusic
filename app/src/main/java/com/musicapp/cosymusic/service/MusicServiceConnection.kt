@@ -35,7 +35,7 @@ class MusicServiceConnection: ServiceConnection {
                         it.musicData.value = musicData
                         it.setDataSource(App.context, Uri.parse("https://music.163.com" +
                                 "/song/media/outer/url?id=${musicData.id}.mp3"))
-                        it.prepareAsync()
+                        it.prepareAsync(false)
                     }
                 }
             }

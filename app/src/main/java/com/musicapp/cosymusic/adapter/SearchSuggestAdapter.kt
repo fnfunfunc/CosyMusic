@@ -16,7 +16,8 @@ import com.musicapp.cosymusic.util.KString
  * @author Eternal Epoch
  * @date 2022/6/2 14:30
  */
-class SearchSuggestAdapter(private val matchList: List<SearchSuggestResponse.Match>):
+class SearchSuggestAdapter(private val matchList: List<SearchSuggestResponse.Match>,
+                           private val onItemViewClickListener: (Int) -> Unit):
     RecyclerView.Adapter<SearchSuggestAdapter.ViewHolder>(){
 
     inner class ViewHolder(view: View): RecyclerView.ViewHolder(view){
@@ -26,20 +27,22 @@ class SearchSuggestAdapter(private val matchList: List<SearchSuggestResponse.Mat
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_search_suggest,
         parent, false)
-        val viewHolder = ViewHolder(view)
-        viewHolder.itemView.setOnClickListener {
+        return ViewHolder(view)
+        /*viewHolder.itemView.setOnClickListener {
             val position = viewHolder.adapterPosition
             val intent = Intent(BroadcastKString.SEARCH_SUGGEST_CLICKED).apply {
                 putExtra(KString.SEARCH_SUGGEST_CLICKED_POSITION, position)
             }
             App.context.sendBroadcast(intent)
-        }
-        return viewHolder
+        }*/
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val match = matchList[position]
         holder.tvSearchSuggest.text = match.keyword
+        holder.itemView.setOnClickListener {
+            position.let(onItemViewClickListener)
+        }
     }
 
     override fun getItemCount() = matchList.size

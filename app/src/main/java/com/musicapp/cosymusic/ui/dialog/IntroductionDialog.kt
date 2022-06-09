@@ -15,6 +15,7 @@ import com.musicapp.cosymusic.model.netease.artist.ArtistDescResponse.Introducti
 /**
  * @author Eternal Epoch
  * @date 2022/6/8 19:38
+ * 歌手的详细信息
  */
 class IntroductionDialog(private val introduction: List<Introduction>): BottomSheetDialogFragment() {
 

@@ -53,7 +53,6 @@ class ArtistAlbumFragment: BaseFragment() {
                 }
                 binding.lottieLoading.pauseAnimation()
                 binding.lottieLoading.visibility = View.GONE
-                LogUtil.e("ArtistAlbumFragment", response.map { it.id }.toString())
             }else{
                 toast("获取歌手专辑信息失败")
             }

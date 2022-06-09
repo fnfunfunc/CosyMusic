@@ -39,7 +39,7 @@ class SongMenuActivity : BaseActivity() {
         NeteaseMusicAdapter(musicList, true){
             MusicMoreDialog(this, it){
                 toast("暂不支持删除")
-            }
+            }.show(supportFragmentManager, "")
         }
     }
 

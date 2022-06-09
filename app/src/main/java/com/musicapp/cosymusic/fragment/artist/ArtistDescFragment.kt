@@ -52,7 +52,9 @@ class ArtistDescFragment: BaseFragment() {
                 binding.tvBriefIntro.text = response.briefDesc
                 binding.lottieLoading.pauseAnimation()
                 binding.lottieLoading.visibility = View.GONE
-                binding.tvShowMoreDesc.visibility = View.VISIBLE
+                if(response.introduction.isNotEmpty()) {
+                    binding.tvShowMoreDesc.visibility = View.VISIBLE
+                }
                 binding.tvShowMoreDesc.setOnClickListener {
                     IntroductionDialog(response.introduction)
                         .show(requireActivity().supportFragmentManager, "")

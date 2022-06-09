@@ -16,10 +16,12 @@ import com.bumptech.glide.Glide
 import com.dirror.lyricviewx.OnPlayClickListener
 import com.dirror.lyricviewx.OnSingleClickListener
 import com.musicapp.cosymusic.R
+import com.musicapp.cosymusic.adapter.ArtistAdapter
 import com.musicapp.cosymusic.application.App
 import com.musicapp.cosymusic.base.BaseActivity
 import com.musicapp.cosymusic.data.LyricViewData
 import com.musicapp.cosymusic.databinding.ActivityPlayerBinding
+import com.musicapp.cosymusic.ui.dialog.ArtistDialog
 import com.musicapp.cosymusic.util.*
 //import com.musicapp.cosymusic.player.Player
 import com.musicapp.cosymusic.viewmodel.PlayerViewModel
@@ -134,10 +136,19 @@ class PlayerActivity : BaseActivity() {
         }
 
         binding.artistName.setOnClickListener {
-            val intent = Intent(this, ArtistActivity::class.java).apply {
-                putExtra(KString.ARTIST_ID, App.playerController.value?.musicData?.value?.artists?.get(0)?.artistId)
+            if(App.playerController.value?.musicData?.value?.artists?.size == 1) {
+                val intent = Intent(this, ArtistActivity::class.java).apply {
+                    putExtra(
+                        KString.ARTIST_ID,
+                        App.playerController.value?.musicData?.value?.artists?.get(0)?.artistId
+                    )
+                }
+                startActivity(intent)
+            }else{
+                App.playerController.value?.musicData?.value?.artists?.let {
+                    ArtistDialog(it).show(supportFragmentManager, "")
+                }
             }
-            startActivity(intent)
         }
     }
 

@@ -78,7 +78,7 @@ class AlbumActivity : BaseActivity() {
                     rvAlbumSong.adapter = NeteaseMusicAdapter(response.songs) {
                         MusicMoreDialog(this@AlbumActivity, it) {
                             toast("暂不支持删除")
-                        }
+                        }.show(supportFragmentManager, "")
                     }
 
                     tvPlayAll.text = getString(R.string.play_all, response.songs.size)

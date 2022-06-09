@@ -22,7 +22,8 @@ import com.musicapp.cosymusic.util.LogUtil
  * @author Eternal Epoch
  * @date 2022/6/1 17:44
  */
-class HotSearchAdapter(private val hotSearchList: List<HotSearchResponse.Data>):
+class HotSearchAdapter(private val hotSearchList: List<HotSearchResponse.Data>,
+                       private val itemViewClickListener: (Int) -> Unit):
     RecyclerView.Adapter<HotSearchAdapter.ViewHolder>() {
 
     inner class ViewHolder(view: View): RecyclerView.ViewHolder(view){
@@ -35,14 +36,7 @@ class HotSearchAdapter(private val hotSearchList: List<HotSearchResponse.Data>):
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_hot_search,
         parent, false)
-        val holder = ViewHolder(view)
-        holder.itemView.setOnClickListener {
-            val position = holder.adapterPosition
-            val intent = Intent(BroadcastKString.HOT_SEARCH_CLICKED)
-            intent.putExtra(KString.HOT_SEARCH_CLICKED_POSITION, position)
-            App.context.sendBroadcast(intent)
-        }
-        return holder
+        return ViewHolder(view)
     }
 
     @SuppressLint("SetTextI18n")
@@ -64,6 +58,10 @@ class HotSearchAdapter(private val hotSearchList: List<HotSearchResponse.Data>):
             }else{
                 it.setTextColor(ContextCompat.getColor(App.context, R.color.black))
             }
+        }
+
+        holder.itemView.setOnClickListener {
+            position.let(itemViewClickListener)
         }
     }
 

@@ -21,10 +21,7 @@ import com.musicapp.cosymusic.application.App.Companion.mmkv
 import com.musicapp.cosymusic.base.BaseMediaService
 import com.musicapp.cosymusic.local.PlayHistory
 import com.musicapp.cosymusic.model.netease.standard.StdMusicData
-import com.musicapp.cosymusic.util.BroadcastKString
-import com.musicapp.cosymusic.util.KString
-import com.musicapp.cosymusic.util.LogUtil
-import com.musicapp.cosymusic.util.getArtistsString
+import com.musicapp.cosymusic.util.*
 
 class MusicService : BaseMediaService() {
 
@@ -96,8 +93,7 @@ class MusicService : BaseMediaService() {
     }
 
     override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
-        val playModeCode = intent.getIntExtra(KString.PLAY_MODE_CODE, -1)
-        when (playModeCode) {
+        when (intent.getIntExtra(KString.PLAY_MODE_CODE, -1)) {
             CODE_PREVIOUS -> playerController.playPrev()
             CODE_PLAY_OR_PAUSE -> playerController.changePlayState()
             CODE_NEXT -> playerController.playNext()
@@ -121,6 +117,8 @@ class MusicService : BaseMediaService() {
         //专辑封面的bitmap
         private val albumCoverBitmap = MutableLiveData<Bitmap>()
 
+        private var immediateStartPlay: Boolean = true
+
         var isPrepared = false
 
         val playState = MutableLiveData<Boolean>().also {
@@ -134,9 +132,20 @@ class MusicService : BaseMediaService() {
 
         val musicData = MutableLiveData<StdMusicData>()
 
+        init {
+            mediaPlayer.setOnPreparedListener(this)
+            mediaPlayer.setOnCompletionListener(this)
+        }
+
         fun prepare() = mediaPlayer.prepare()
 
-        fun prepareAsync() = mediaPlayer.prepareAsync()
+        /**
+         *@param startPlay 是否在准备后立即开始播放
+         */
+        fun prepareAsync(startPlay: Boolean = true) {
+            immediateStartPlay = startPlay
+            mediaPlayer.prepareAsync()
+        }
 
 
         fun setOnPreparedListener(listener: MediaPlayer.OnPreparedListener) =
@@ -176,6 +185,8 @@ class MusicService : BaseMediaService() {
 
         override fun onPrepared(p0: MediaPlayer?) {
             isPrepared = true
+            if(!immediateStartPlay) return
+
             play()
 
             sendMusicBroadcast()
@@ -236,11 +247,8 @@ class MusicService : BaseMediaService() {
                                 "/song/media/outer/url?id=${playMusicData.id}.mp3"
                     )
                 )
-                prepareAsync()
-                setOnPreparedListener(this@PlayerController)
-                setOnCompletionListener(this@PlayerController)
             }
-
+            prepareAsync()
         }
 
         fun playPrev() {
