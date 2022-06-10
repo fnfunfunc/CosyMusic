@@ -7,6 +7,7 @@ import kotlinx.parcelize.Parcelize
 /**
  * @author Eternal Epoch
  * @date 2022/6/7 21:33
+ * Artist的简要信息
  */
 @Parcelize
 data class StdArtistInfo(

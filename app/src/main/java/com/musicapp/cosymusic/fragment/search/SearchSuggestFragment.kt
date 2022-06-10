@@ -18,7 +18,7 @@ import com.musicapp.cosymusic.viewmodel.SearchViewModel
  * @author Eternal Epoch
  * @date 2022/6/9 0:14
  */
-class SearchSuggestFragment(private val listener: SearchSuggestListener): BaseFragment() {
+class SearchSuggestFragment: BaseFragment() {
 
     private lateinit var _binding: FragmentSearchSuggestBinding
     private val binding get() = _binding
@@ -30,7 +30,7 @@ class SearchSuggestFragment(private val listener: SearchSuggestListener): BaseFr
     private val searchSuggestAdapter by lazy {
         SearchSuggestAdapter(searchSuggestList){ position ->
             searchSuggestList[position].keyword.let{ word ->
-                listener.onSuggestClickLister(word)
+                viewModel.searchSuggestListener.onSuggestClickLister(word)
             }
         }
     }
@@ -58,12 +58,7 @@ class SearchSuggestFragment(private val listener: SearchSuggestListener): BaseFr
                 searchSuggestList.clear()
                 searchSuggestList.addAll(matchList)
                 searchSuggestAdapter.notifyDataSetChanged()
-                listener.onReceiveData()
-                /*binding.cancelBtn.visibility = View.VISIBLE
-                binding.rvSearchSuggest.visibility = View.VISIBLE
-                binding.clHistory.visibility = View.GONE
-                binding.clBody.visibility = View.GONE
-                binding.rvPlayList.visibility = View.GONE*/
+                viewModel.searchSuggestListener.onReceiveData()
             } else {
                 LogUtil.e("SearchActivity", result.exceptionOrNull().toString())
             }

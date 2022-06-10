@@ -16,7 +16,6 @@ import com.bumptech.glide.Glide
 import com.dirror.lyricviewx.OnPlayClickListener
 import com.dirror.lyricviewx.OnSingleClickListener
 import com.musicapp.cosymusic.R
-import com.musicapp.cosymusic.adapter.ArtistAdapter
 import com.musicapp.cosymusic.application.App
 import com.musicapp.cosymusic.base.BaseActivity
 import com.musicapp.cosymusic.data.LyricViewData
@@ -72,7 +71,7 @@ class PlayerActivity : BaseActivity() {
         App.playerController.value?.musicData?.value?.let {
             binding.musicName.text = it.name
             binding.artistName.text = getArtistsString(it.artists)
-            Glide.with(this).load(it.album.picUrl).into(binding.albumImage)
+            Glide.with(this).load(it.album.picUrl).into(binding.ivAlbumCover)
             binding.ivBackground.load(it.album.picUrl){
                 size(ViewSizeResolver(binding.ivBackground))
                 transformations(
@@ -168,7 +167,7 @@ class PlayerActivity : BaseActivity() {
         App.playerController.value?.musicData?.observe(this){ musicData ->
             binding.musicName.text = musicData.name
             binding.artistName.text = getArtistsString(musicData.artists)
-            Glide.with(this).load(musicData.album.picUrl).into(binding.albumImage)
+            Glide.with(this).load(musicData.album.picUrl).into(binding.ivAlbumCover)
             binding.ivBackground.load(musicData.album.picUrl){
                 size(ViewSizeResolver(binding.ivBackground))
                 transformations(

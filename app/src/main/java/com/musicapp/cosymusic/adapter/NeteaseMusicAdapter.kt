@@ -34,7 +34,7 @@ class NeteaseMusicAdapter(private val musicData: List<StdMusicData>,
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val musicName: TextView = view.findViewById(R.id.musicName)
         val artistName: TextView = view.findViewById(R.id.artistName)
-        val albumImage: ImageView = view.findViewById(R.id.albumImage)
+        val albumImage: ImageView = view.findViewById(R.id.ivArtistCover)
         val ivMusicInfo: ImageView = view.findViewById(R.id.ivMusicInfo)
 
         fun cancelAnimation(){

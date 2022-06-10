@@ -16,9 +16,17 @@ object NeteaseNetwork {
 
     private val neteaseSearchService = ServiceCreator.create<NeteaseService>()
 
-    suspend fun getSearchResponse(keywords: String) =
-        neteaseSearchService.getSearchResponse(keywords).await()
+    suspend fun getSearchMusicResponse(keywords: String) =
+        neteaseSearchService.getSearchMusicResponse(keywords).await()
 
+    suspend fun getSearchArtistResponse(keywords: String) =
+        neteaseSearchService.getSearchArtistResponse(keywords).await()
+
+    suspend fun getSearchSongMenuResponse(keywords: String) =
+        neteaseSearchService.getSearchSongMenuResponse(keywords).await()
+
+    suspend fun getSearchAlbumResponse(keywords: String) =
+        neteaseSearchService.getSearchAlbumResponse(keywords).await()
 
     suspend fun getHotSearchResponse() =
         neteaseSearchService.getHotSearchResponse().await()

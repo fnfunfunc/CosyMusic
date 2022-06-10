@@ -3,12 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="80dp">
+    android:layout_height="64dp">
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/ivAlbumCover"
-        android:layout_width="56dp"
-        android:layout_height="56dp"
+    <ImageView
+        android:id="@+id/ivSongMenuCover"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
         android:layout_marginStart="10dp"
         android:src="@drawable/ic_music"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -16,37 +16,28 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/tvAlbumName"
+        android:id="@+id/tvSongMenuName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
         android:layout_marginEnd="48dp"
         android:ellipsize="end"
         android:singleLine="true"
         android:textAppearance="@style/bold_text_style"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/ivAlbumCover"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/tvAlbumDesc"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="11dp"
-        android:layout_marginEnd="48dp"
-        android:layout_marginBottom="16dp"
-        android:ellipsize="end"
-        android:singleLine="true"
-        android:textColor="@color/black"
-        android:alpha="0.7"
-        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/ivAlbumCover"
-        app:layout_constraintTop_toBottomOf="@+id/tvAlbumName" />
+        app:layout_constraintStart_toEndOf="@+id/ivSongMenuCover"
+        app:layout_constraintTop_toTopOf="parent" />
 
+    <ImageView
+        android:id="@+id/ivSongMenuInfo"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:padding="5dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/musicName"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_more_vertical" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

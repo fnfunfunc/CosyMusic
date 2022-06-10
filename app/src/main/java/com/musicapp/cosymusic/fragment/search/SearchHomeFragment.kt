@@ -9,6 +9,7 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.dirror.lyricviewx.OnSingleClickListener
 import com.musicapp.cosymusic.R
 import com.musicapp.cosymusic.adapter.HotSearchAdapter
 import com.musicapp.cosymusic.application.App
@@ -26,7 +27,8 @@ import com.musicapp.cosymusic.viewmodel.SearchViewModel
  * 搜索的主页
  */
 
-class SearchHomeFragment(private val onTextViewClickListener:(String) -> Unit): BaseFragment() {
+class SearchHomeFragment : BaseFragment() {
+
 
     private lateinit var _binding: FragmentSearchHomeBinding
     private val binding get() = _binding
@@ -39,8 +41,8 @@ class SearchHomeFragment(private val onTextViewClickListener:(String) -> Unit): 
     private val hotSearchList = mutableListOf<HotSearchResponse.Data>()
 
     private val hotSearchAdapter by lazy {
-        HotSearchAdapter(hotSearchList){
-            hotSearchList[it].searchWord.let(onTextViewClickListener)
+        HotSearchAdapter(hotSearchList) {
+            hotSearchList[it].searchWord.let(viewModel.onTextViewClickListener)
         }
     }
 
@@ -143,7 +145,7 @@ class SearchHomeFragment(private val onTextViewClickListener:(String) -> Unit): 
         setBackgroundResource(R.drawable.bg_search_text)
         setTextColor(ContextCompat.getColor(App.context, R.color.shallow_black))
         setOnClickListener {
-            searchHistory.let(onTextViewClickListener)
+            searchHistory.let(viewModel.onTextViewClickListener)
         }
     }
 

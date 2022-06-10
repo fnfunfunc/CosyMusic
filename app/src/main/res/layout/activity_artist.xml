@@ -47,7 +47,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
-            android:text="@string/song_menu"
+            android:text="@string/singer"
             android:singleLine="true"
             android:textAppearance="@style/bold_text_style"
             app:layout_constraintBottom_toBottomOf="parent"

@@ -9,7 +9,7 @@ import retrofit2.converter.gson.GsonConverterFactory
  */
 object ServiceCreator {
 
-    private const val BASE_URL = "http://www.orientsky.xyz/"
+    private const val BASE_URL = "https://www.orientsky.xyz/"
 
     private val retrofit = Retrofit.Builder()
         .baseUrl(BASE_URL)

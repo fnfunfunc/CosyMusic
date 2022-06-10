@@ -42,6 +42,7 @@
     <string name="image_cache">图片缓存</string>
     <string name="clear_image_cache">清除图片缓存</string>
     <string name="translation">翻译</string>
+    <string name="singer">歌手</string>
     <string name="single_song">单曲</string>
     <string name="album">专辑</string>
     <string name="mv">MV</string>

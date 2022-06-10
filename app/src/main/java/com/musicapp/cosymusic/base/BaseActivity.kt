@@ -25,9 +25,10 @@ abstract class BaseActivity : AppCompatActivity() {
         ActivityCollector.addActivity(this)
 
         requestData()
+        initViewModel()
         initView()
-        registerPermission()
         initData()
+        registerPermission()
         initPlayer()
         initListeners()
         initObservers()
@@ -36,6 +37,7 @@ abstract class BaseActivity : AppCompatActivity() {
     }
 
     protected open fun requestData() { }
+    protected open fun initViewModel() { }
     protected open fun initView() { }
     protected open fun registerPermission() { }
     protected open fun initData() { }
@@ -86,11 +88,9 @@ abstract class BaseActivity : AppCompatActivity() {
 
                         artistName.text = getArtistsString(musicData.artists)
 
-                        /*Glide.with(this@BaseActivity)
-                            .load(musicData.album.picUrl)
-                            .into(albumImage)*/
-                        albumImage.load(musicData.album.picUrl){
-                            size(ViewSizeResolver(albumImage))
+
+                        ivAlbumCover.load(musicData.album.picUrl){
+                            size(ViewSizeResolver(ivAlbumCover))
                             allowHardware(false)
                         }
                     }

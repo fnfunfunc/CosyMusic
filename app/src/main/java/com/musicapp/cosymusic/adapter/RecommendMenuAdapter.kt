@@ -40,7 +40,7 @@ class RecommendMenuAdapter(private val menuList: List<RecommendMenuResponse.Resu
             val position = viewHolder.adapterPosition
             val songMenu = menuList[position]
             val intent = Intent(BroadcastKString.RECOMMEND_MENU_CLICKED).apply {
-                putExtra(KString.RECOMMEND_SONG_MENU_CLICKED_ID, songMenu.id)
+                putExtra(KString.SONG_MENU_CLICKED_ID, songMenu.id)
             }
             App.context.sendBroadcast(intent)
         }

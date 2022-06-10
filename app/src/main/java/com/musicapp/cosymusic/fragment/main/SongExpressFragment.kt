@@ -19,7 +19,7 @@ import com.musicapp.cosymusic.viewmodel.MainViewModel
  * @author Eternal Epoch
  * @date 2022/6/1 22:47
  */
-class SongExpressFragment(val type: Int): BaseFragment() {
+class SongExpressFragment(): BaseFragment() {
 
     private lateinit var _binding: FragmentSongExpressBinding
     private val binding get() = _binding
@@ -35,7 +35,7 @@ class SongExpressFragment(val type: Int): BaseFragment() {
     } }
 
     private val targetObserver by lazy {
-        when(type){
+        when(arguments?.get("TYPE")){
             96 -> viewModel.euAmSongList
             8 -> viewModel.japaneseSongList
             16 -> viewModel.koreanSongList

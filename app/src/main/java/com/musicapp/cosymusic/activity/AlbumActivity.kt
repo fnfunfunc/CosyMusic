@@ -45,7 +45,7 @@ class AlbumActivity : BaseActivity() {
 
         miniPlayer = binding.miniPlayer
 
-        val id = intent.getLongExtra(KString.ARTIST_ID, 0L)
+        val id = intent.getLongExtra(KString.ALBUM_ID, 0L)
         viewModel.getAlbumData(id)
 
         binding.lottieLoading.repeatCount = -1

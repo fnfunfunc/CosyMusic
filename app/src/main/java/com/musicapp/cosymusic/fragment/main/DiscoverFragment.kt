@@ -33,13 +33,29 @@ class DiscoverFragment: BaseFragment() {
 
     private val viewModel: MainViewModel by activityViewModels()    //共享MainActivity的viewModel
 
-    private val euAm = SongExpressFragment(96)
+    private val euAm = SongExpressFragment().apply {
+        arguments = Bundle().also {
+            it.putInt("TYPE", 96)
+        }
+    }
 
-    private val japan = SongExpressFragment(8)
+    private val japan = SongExpressFragment().apply{
+        arguments = Bundle().also {
+            it.putInt("TYPE", 8)
+        }
+    }
 
-    private val korea = SongExpressFragment(16)
+    private val korea = SongExpressFragment().apply{
+        arguments = Bundle().also {
+            it.putInt("TYPE", 16)
+        }
+    }
 
-    private val china = SongExpressFragment(7)
+    private val china = SongExpressFragment().apply {
+        arguments = Bundle().also {
+            it.putInt("TYPE", 7)
+        }
+    }
 
     private val recommendMenuList = mutableListOf<RecommendMenuResponse.Result>()
 
@@ -72,6 +88,10 @@ class DiscoverFragment: BaseFragment() {
                     3 ->   korea    //韩国
                     else -> china  //华语
                 }
+            }
+
+            override fun containsItem(itemId: Long): Boolean {
+                return true
             }
 
             override fun getItemCount() = 4

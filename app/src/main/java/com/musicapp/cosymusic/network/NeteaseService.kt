@@ -14,9 +14,21 @@ import retrofit2.http.Query
 //网易云Service
 interface NeteaseService {
 
-    //搜索结果
-    @GET("cloudsearch")
-    fun getSearchResponse(@Query("keywords") keywords: String): Call<StandardMusicResponse>
+    //搜索歌曲结果
+    @GET("cloudsearch?type=1")
+    fun getSearchMusicResponse(@Query("keywords") keywords: String): Call<StandardMusicResponse>
+
+    //搜索专辑结果
+    @GET("cloudsearch?type=10")
+    fun getSearchAlbumResponse(@Query("keywords") keywords: String): Call<SearchAlbumResponse>
+    
+    //搜索歌手结果
+    @GET("cloudsearch?type=100")
+    fun getSearchArtistResponse(@Query("keywords") keywords: String): Call<SearchArtistResponse>
+
+    //搜索歌单结果
+    @GET("cloudsearch?type=1000")
+    fun getSearchSongMenuResponse(@Query("keywords") keywords: String): Call<SearchSongMenuResponse>
 
     //热搜列表
     @GET("search/hot/detail")
@@ -36,7 +48,7 @@ interface NeteaseService {
 
     //歌单详情
     @GET("playlist/detail")
-    fun getSongMenuById(@Query("id") id: Long): Call<SongMenuResponse>
+    fun getSongMenuById(@Query("id") id: Long): Call<RecommendSongMenuResponse>
 
     //歌曲详情
     @GET("song/detail")

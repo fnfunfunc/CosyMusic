@@ -48,7 +48,7 @@ class TopListAdapter(private val topList: List<TopList>): RecyclerView.Adapter<T
         holder.itemView.setOnClickListener {
             val id = top.id
             val intent = Intent(BroadcastKString.RECOMMEND_MENU_CLICKED).apply {
-                putExtra(KString.RECOMMEND_SONG_MENU_CLICKED_ID, id)
+                putExtra(KString.SONG_MENU_CLICKED_ID, id)
             }
             App.context.sendBroadcast(intent)
         }

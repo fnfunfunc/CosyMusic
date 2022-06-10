@@ -28,6 +28,6 @@ object KString {
     const val SEARCH_SUGGEST_CLICKED_POSITION = "search_suggest_clicked_position"
 
     //被点击的（推荐）歌单的ID
-    const val RECOMMEND_SONG_MENU_CLICKED_ID = "recommend_song_menu_clicked_id"
+    const val SONG_MENU_CLICKED_ID = "recommend_song_menu_clicked_id"
 
 }

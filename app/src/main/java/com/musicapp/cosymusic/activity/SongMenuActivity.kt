@@ -13,6 +13,7 @@ import coil.transform.BlurTransformation
 import coil.transform.RoundedCornersTransformation
 import com.musicapp.cosymusic.R
 import com.musicapp.cosymusic.adapter.NeteaseMusicAdapter
+import com.musicapp.cosymusic.application.App
 import com.musicapp.cosymusic.base.BaseActivity
 import com.musicapp.cosymusic.databinding.ActivitySongMenuBinding
 import com.musicapp.cosymusic.model.netease.standard.StdMusicData
@@ -62,7 +63,7 @@ class SongMenuActivity : BaseActivity() {
             window.setDecorFitsSystemWindows(false)
         }
 
-        val id = intent.getLongExtra(KString.RECOMMEND_SONG_MENU_CLICKED_ID, 0L)
+        val id = intent.getLongExtra(KString.SONG_MENU_CLICKED_ID, 0L)
 
         viewModel.getSongMenuById(id)
 
@@ -96,6 +97,16 @@ class SongMenuActivity : BaseActivity() {
                 }
             }
         })
+
+        binding.ivPlayAll.setOnClickListener {
+            App.playerController.value?.let {
+                if(musicList.size > 0) {
+                    it.savePlayList(musicList.toMutableList())
+                    it.setCurrentPlayPosition(0)
+                    it.playMusic(musicList[0], false)
+                }
+            }
+        }
 
         binding.ivBack.setOnClickListener {
             finish()

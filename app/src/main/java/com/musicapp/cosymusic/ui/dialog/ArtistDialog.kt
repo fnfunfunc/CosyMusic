@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.musicapp.cosymusic.R
 import com.musicapp.cosymusic.activity.ArtistActivity
-import com.musicapp.cosymusic.adapter.ArtistAdapter
+import com.musicapp.cosymusic.adapter.ArtistInfoAdapter
 import com.musicapp.cosymusic.databinding.DialogArtistBinding
 import com.musicapp.cosymusic.model.netease.standard.StdArtistInfo
 import com.musicapp.cosymusic.util.KString
@@ -31,7 +31,7 @@ class ArtistDialog(val artists: List<StdArtistInfo>): BottomSheetDialogFragment(
     ): View {
         _binding = DialogArtistBinding.inflate(inflater, container, false)
         binding.rvArtist.layoutManager = LinearLayoutManager(activity)
-        binding.rvArtist.adapter = ArtistAdapter(artists){
+        binding.rvArtist.adapter = ArtistInfoAdapter(artists){
             val intent = Intent(activity, ArtistActivity::class.java).apply {
                 putExtra(KString.ARTIST_ID, it)
             }

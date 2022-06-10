@@ -12,14 +12,50 @@ import kotlin.coroutines.CoroutineContext
  */
 object Repository {
 
-    fun getSearchResult(keywords: String) = fire(Dispatchers.IO){
+    fun getSearchMusicResult(keywords: String) = fire(Dispatchers.IO){
         coroutineScope {
-            val neteaseMusicResponse = NeteaseNetwork.getSearchResponse(keywords)
+            val neteaseMusicResponse = NeteaseNetwork.getSearchMusicResponse(keywords)
             if(neteaseMusicResponse.code == 200){
                 Result.success(neteaseMusicResponse.result)
             }else{
                 Result.failure(RuntimeException("The result code of search response is " +
                         "${neteaseMusicResponse.code}"))
+            }
+        }
+    }
+
+    fun getSearchArtistResult(keywords: String) = fire(Dispatchers.IO){
+        coroutineScope {
+            val response = NeteaseNetwork.getSearchArtistResponse(keywords)
+            if(response.code == 200){
+                Result.success(response.result)
+            }else{
+                Result.failure(RuntimeException("The result code of search artist is " +
+                        "${response.code}"))
+            }
+        }
+    }
+
+    fun getSearchSongMenuResult(keywords: String) = fire(Dispatchers.IO){
+        coroutineScope {
+            val response = NeteaseNetwork.getSearchSongMenuResponse(keywords)
+            if(response.code == 200){
+                Result.success(response.result)
+            }else{
+                Result.failure(RuntimeException("The result code of search song menu is " +
+                        "${response.code}"))
+            }
+        }
+    }
+
+    fun getSearchAlbumResult(keywords: String) = fire(Dispatchers.IO){
+        coroutineScope {
+            val response = NeteaseNetwork.getSearchAlbumResponse(keywords)
+            if(response.code == 200){
+                Result.success(response.result)
+            }else{
+                Result.failure(RuntimeException("The result code of search album is " +
+                        "${response.code}"))
             }
         }
     }

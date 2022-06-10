@@ -6,5 +6,7 @@ package com.musicapp.cosymusic.model.netease.standard
  */
 
 data class StdAlbumData(
-    val id: Long, val name: String, val picUrl: String, val description: String
-    )
+    val id: Long, val name: String, val picUrl: String,
+    val description: String, val publishTime: Long,
+    val artistData: List<StdArtistInfo>
+)

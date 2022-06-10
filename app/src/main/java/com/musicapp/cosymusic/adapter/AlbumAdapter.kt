@@ -1,5 +1,6 @@
 package com.musicapp.cosymusic.adapter
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +12,8 @@ import com.bumptech.glide.Glide
 import com.musicapp.cosymusic.R
 import com.musicapp.cosymusic.application.App
 import com.musicapp.cosymusic.model.netease.standard.StdAlbumDetailInfo
+import com.musicapp.cosymusic.util.convertTimeStampToDate
+import com.musicapp.cosymusic.util.getArtistsString
 
 /**
  * @author Eternal Epoch
@@ -22,7 +25,7 @@ class AlbumAdapter(private val albumList: List<StdAlbumDetailInfo>, private val 
     inner class ViewHolder(view: View): RecyclerView.ViewHolder(view){
         val tvAlbumName: TextView = view.findViewById(R.id.tvAlbumName)
         val ivAlbumCover: ImageView = view.findViewById(R.id.ivAlbumCover)
-
+        val tvAlbumDesc: TextView = view.findViewById(R.id.tvAlbumDesc)
         fun cancelAnimation(){
             itemView.clearAnimation()
         }
@@ -34,10 +37,12 @@ class AlbumAdapter(private val albumList: List<StdAlbumDetailInfo>, private val 
         return ViewHolder(view)
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val album = albumList[position]
         holder.tvAlbumName.text = album.name
         Glide.with(App.context).load(album.picUrl).into(holder.ivAlbumCover)
+        holder.tvAlbumDesc.text = "${getArtistsString(album.artists)}  ${convertTimeStampToDate(album.publishTime)}"
 
         holder.itemView.setOnClickListener{
             album.id.let(itemClickListener)

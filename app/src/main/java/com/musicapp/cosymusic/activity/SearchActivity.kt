@@ -11,7 +11,7 @@ import com.musicapp.cosymusic.base.BaseActivity
 import com.musicapp.cosymusic.base.BaseFragment
 import com.musicapp.cosymusic.databinding.ActivitySearchBinding
 import com.musicapp.cosymusic.fragment.search.SearchHomeFragment
-import com.musicapp.cosymusic.fragment.search.SearchMainFragment
+import com.musicapp.cosymusic.fragment.search.SearchResultFragment
 import com.musicapp.cosymusic.fragment.search.SearchSuggestFragment
 import com.musicapp.cosymusic.fragment.search.SearchSuggestListener
 import com.musicapp.cosymusic.local.SearchHistory
@@ -31,43 +31,51 @@ class SearchActivity : BaseActivity() {
     companion object{
         const val SEARCH_HOME = "search_home"
         const val SEARCH_SUGGEST = "search_suggest"
-        const val SEARCH_MAIN = "search_main"
+        const val SEARCH_RESULT = "search_result"
     }
 
-    private val searchHomeFragment = SearchHomeFragment{
-        isSearching = true //开始搜索
-        binding.searchText.setText(it)
-        binding.searchText.setSelection(it.length)
-        search()
-    }
+    private val searchHomeFragment = SearchHomeFragment()
 
-    private val searchSuggestFragment = SearchSuggestFragment(object : SearchSuggestListener{
+    private val searchSuggestFragment = SearchSuggestFragment()
 
-        override fun onSuggestClickLister(suggest: String) {
-            isSearching = true
-            suggest.let {
-                binding.searchText.setText(it)
-                binding.searchText.setSelection(it.length)
-            }
-            search()
-        }
-
-        override fun onReceiveData() {
-            if(binding.fragmentContainer.getFragment<BaseFragment>() !is SearchSuggestFragment) {
-                toggleFragment(SEARCH_SUGGEST)
-            }
-        }
-    })
-
-    private val searchMainFragment = SearchMainFragment{
-        isSearching = false
-        if(binding.fragmentContainer.getFragment<BaseFragment>() !is SearchMainFragment) {
-            toggleFragment(SEARCH_MAIN)
-        }
-    }
+    private val searchResultFragment = SearchResultFragment()
 
 
     private var isSearching: Boolean = false    //判断当前是否处于搜索状态
+
+    override fun initViewModel() {
+        viewModel.initOnTextViewClickListener = fun(str: String){
+            isSearching = true
+            binding.searchText.setText(str)
+            binding.searchText.setSelection(str.length)
+            search()
+        }
+
+        viewModel.initOnReceiveData = fun(){
+            isSearching = false
+            if(binding.fragmentContainer.getFragment<BaseFragment>() !is SearchResultFragment) {
+                toggleFragment(SEARCH_RESULT)
+            }
+        }
+
+        viewModel.initSearchSuggestListener = object : SearchSuggestListener{
+
+            override fun onSuggestClickLister(suggest: String) {
+                isSearching = true
+                suggest.let {
+                    binding.searchText.setText(it)
+                    binding.searchText.setSelection(it.length)
+                }
+                search()
+            }
+
+            override fun onReceiveData() {
+                if(binding.fragmentContainer.getFragment<BaseFragment>() !is SearchSuggestFragment) {
+                    toggleFragment(SEARCH_SUGGEST)
+                }
+            }
+        }
+    }
 
     override fun initView() {
         setContentView(binding.root)
@@ -92,14 +100,15 @@ class SearchActivity : BaseActivity() {
 
         binding.searchText.apply {
             addTextChangedListener {
-                if(isSearching) return@addTextChangedListener
                 val content = binding.searchText.text.toString()
-                if (content.isNotEmpty()) {
-                    viewModel.getSearchSuggest(content)
+                if(content.isNotEmpty()){
                     binding.cancelBtn.visibility = View.VISIBLE
+                    if(isSearching) return@addTextChangedListener
+                    viewModel.getSearchSuggest(content)
                     toggleFragment(SEARCH_SUGGEST)
-                } else {
+                }else{
                     binding.cancelBtn.visibility = View.INVISIBLE
+                    if(isSearching) return@addTextChangedListener
                     toggleFragment(SEARCH_HOME)
                 }
             }
@@ -132,7 +141,7 @@ class SearchActivity : BaseActivity() {
         val keywords = binding.searchText.text.toString()
         if (keywords.isNotEmpty()) {
             viewModel.getSearchResponse(keywords)
-            toggleFragment(SEARCH_MAIN)
+            toggleFragment(SEARCH_RESULT)
             SearchHistory.addSearchHistory(keywords)
         }
     }
@@ -142,7 +151,7 @@ class SearchActivity : BaseActivity() {
         val fragment = when(msg){
             SEARCH_HOME -> searchHomeFragment
             SEARCH_SUGGEST -> searchSuggestFragment
-            SEARCH_MAIN -> searchMainFragment
+            SEARCH_RESULT -> searchResultFragment
             else -> searchHomeFragment
         }
         transaction.replace(R.id.fragmentContainer, fragment)

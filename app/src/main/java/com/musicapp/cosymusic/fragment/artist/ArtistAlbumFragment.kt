@@ -47,7 +47,7 @@ class ArtistAlbumFragment: BaseFragment() {
             if(response != null){
                 binding.rvArtistAlbum.adapter = AlbumAdapter(response){ id ->
                     val intent = Intent(activity, AlbumActivity::class.java).apply {
-                        putExtra(KString.ARTIST_ID, id)
+                        putExtra(KString.ALBUM_ID, id)
                     }
                     startActivity(intent)
                 }

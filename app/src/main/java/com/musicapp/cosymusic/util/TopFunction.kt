@@ -14,6 +14,8 @@ import com.musicapp.cosymusic.model.netease.TrackIdsResponse.MenuMusicData
 import com.musicapp.cosymusic.model.netease.standard.Privilege
 import com.musicapp.cosymusic.model.netease.standard.StdArtistInfo
 import com.musicapp.cosymusic.model.netease.standard.StdMusicData
+import java.text.SimpleDateFormat
+import java.util.*
 
 /**
  * @author Eternal Epoch
@@ -106,4 +108,12 @@ fun Int.setAlpha(alpha: Float): Int{
         255
     }.toInt()
     return Color.argb(a, Color.red(this), Color.green(this), Color.blue(this))
+}
+
+/**
+ * 将时间戳转为日期
+ */
+fun convertTimeStampToDate(timeStamp: Long): String{
+    val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.CHINA)
+    return sdf.format(timeStamp)
 }

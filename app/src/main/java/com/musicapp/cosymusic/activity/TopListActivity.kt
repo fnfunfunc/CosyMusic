@@ -57,11 +57,11 @@ class TopListActivity : BaseActivity() {
 
     inner class TopListClickedReceiver : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent) {
-            val id = intent.getLongExtra(KString.RECOMMEND_SONG_MENU_CLICKED_ID, 0L)
+            val id = intent.getLongExtra(KString.SONG_MENU_CLICKED_ID, 0L)
             if (id != 0L) {
                 val intentToSongMenu = Intent(this@TopListActivity,
                     SongMenuActivity::class.java).apply {
-                    putExtra(KString.RECOMMEND_SONG_MENU_CLICKED_ID, id)
+                    putExtra(KString.SONG_MENU_CLICKED_ID, id)
                 }
                 startActivity(intentToSongMenu)
             }

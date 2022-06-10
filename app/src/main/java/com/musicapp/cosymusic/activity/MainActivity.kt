@@ -136,9 +136,9 @@ class MainActivity : BaseActivity() {
 
     inner class SongMenuClickedReceiver: BroadcastReceiver(){
         override fun onReceive(context: Context?, fromIntent: Intent) {
-            val id = fromIntent.getLongExtra(KString.RECOMMEND_SONG_MENU_CLICKED_ID, 0L)
+            val id = fromIntent.getLongExtra(KString.SONG_MENU_CLICKED_ID, 0L)
             val intent = Intent(this@MainActivity, SongMenuActivity::class.java).apply {
-                putExtra(KString.RECOMMEND_SONG_MENU_CLICKED_ID, id)
+                putExtra(KString.SONG_MENU_CLICKED_ID, id)
             }
             startActivity(intent)
         }

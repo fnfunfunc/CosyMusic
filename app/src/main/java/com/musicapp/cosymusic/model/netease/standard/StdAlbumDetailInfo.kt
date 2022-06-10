@@ -8,5 +8,6 @@ package com.musicapp.cosymusic.model.netease.standard
 /**
  * 专辑列表获取到的信息
  */
-data class StdAlbumDetailInfo(val id: Long, val name: String,
-                              val onSale: Boolean, val picUrl: String)
+data class StdAlbumDetailInfo(val id: Long, val name: String, val publishTime: Long,
+                              val onSale: Boolean, val picUrl: String,
+                              val artists: List<StdArtistInfo>)
